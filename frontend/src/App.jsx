@@ -1,41 +1,22 @@
-import Counter from "./components/Counter";
-import logo from "./assets/logo.svg";
-
+import { MapContainer, TileLayer } from "react-leaflet";
+import DraggableMarker from "./DraggableMarker";
+import LocationMarker from "./LocationMarker";
 import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React !</p>
-
-        <Counter />
-
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {" | "}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
+    <MapContainer
+      center={{ lat: 51.505, lng: -0.09 }}
+      zoom={13}
+      scrollWheelZoom={false}
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      <DraggableMarker center={{ lat: 51.505, lng: -0.09 }} />
+      <LocationMarker />
+    </MapContainer>
   );
 }
 
