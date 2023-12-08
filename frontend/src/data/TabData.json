@@ -3,7 +3,7 @@
       "id": "1",
       "name": "Home",
       "icon": "assets/svg/home-icon.svg",
-      "linkurl": "/",
+      "linkurl": "/#",
       "connected": false
     },
     {
