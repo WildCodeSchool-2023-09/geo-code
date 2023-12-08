@@ -1,4 +1,5 @@
 @import "../color-config.scss";
+
 @media screen and (min-width: 1000px) {
   .TAB {
     display: none;
@@ -19,10 +20,8 @@
     margin: 0;
 
     font-family: $font;
-    
 
     &__svg-transition {
-      
       width: 110vw;
       height: 40px;
       background: url(assets/svg/tab_phone_lineeffect.svg);
@@ -39,7 +38,7 @@
       padding: 0 1rem 1rem;
       box-sizing: border-box;
       transition: 0.5s;
-      
+
       &__item {
         display: flex;
         flex-direction: column;
@@ -55,7 +54,7 @@
         }
         &:hover {
           color: $color-light-hover;
-          transform: scale(0.90);
+          transform: scale(0.9);
         }
         &__icon {
           display: flex;
