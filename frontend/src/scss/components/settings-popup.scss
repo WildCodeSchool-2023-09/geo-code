@@ -11,13 +11,13 @@
     display: flex;
     position: fixed;
     box-sizing: border-box;
-    right: 0;  
+    right: 0;
 
     :checked ~ ul {
       right: 0;
     }
     li {
-        text-align: center;
+      text-align: center;
     }
   }
 
@@ -52,7 +52,6 @@
     cursor: pointer;
     opacity: 0;
     -webkit-touch-callout: none;
-    
   }
 
   .m-nav {
@@ -67,8 +66,8 @@
     padding-top: 180px;
     background: $navmobile-color;
     list-style-type: none;
-    transition: all  0.2s ease;
-    transform: translate(100%, 0 );
+    transition: all 0.2s ease;
+    transform: translate(100%, 0);
     overflow-x: scroll;
     gap: 1rem;
 

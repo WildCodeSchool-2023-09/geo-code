@@ -1,20 +1,19 @@
-
 // Colors
-$color-primary: #19776D;
-$color-primary-light: #21A89A;
-$color-secondary: #55963C;
-$color-secondary-light: #7CD858;
-$color-white: #E5E9E7;
+$color-primary: #19776d;
+$color-primary-light: #21a89a;
+$color-secondary: #55963c;
+$color-secondary-light: #7cd858;
+$color-white: #e5e9e7;
 $color-white-hover: #c9c9c9;
 $color-light: #fefefe;
 $color-light-hover: #efefef;
 $color-black: #101010;
-$color-grey: #525B5A;
+$color-grey: #525b5a;
+$color-grey-hover: #424948;
 
-// Pages 
+// Pages
 $bg-color: $color-black;
-$font: 'Hanken Grotesk', 'Roboto', 'SF Pro Text', sans-serif;
-
+$font: "Hanken Grotesk", "Roboto", "SF Pro Text", sans-serif;
 
 // Navigation Bar Web
 $navbar-color: $color-primary;
@@ -23,7 +22,6 @@ $nav-dropdown: $color-light;
 $nav-dropdown-hover: $color-light-hover;
 $nav-title: $color-primary;
 $nav-description: $color-black;
-
 
 // Navigation Bar Mobile
 $navmobile-color: $color-primary;
