@@ -5,7 +5,7 @@ import "../scss/components/navbar.scss";
 import "../scss/root.scss";
 
 import PrimaryButton from "./buttons/PrimaryButton";
-import SettingsPhone from "./SettingsPhone";
+import SettingsPhone from "./popups/popup-slider";
 
 export default function Navbar({ navData }) {
   return (
