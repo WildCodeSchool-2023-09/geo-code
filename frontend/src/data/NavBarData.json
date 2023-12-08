@@ -1,0 +1,27 @@
+[
+  {
+    "id": "1",
+    "linkname": "Accueil",
+    "linkurl": "/",
+    "btn": false
+  },
+  {
+    "id": "2",
+    "linkname": "Carte",
+    "linkurl": "/map",
+    "btn": false
+  },
+  {
+    "id": "3",
+    "linkname": "Actualités",
+    "linkurl": "/news",
+    "btn": false
+  },
+  {
+    "id": "4",
+    "linkname": "Réservations",
+    "linkurl": "/reservations",
+    "btn": false
+  }
+ 
+]

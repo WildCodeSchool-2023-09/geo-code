@@ -1,0 +1,44 @@
+@import "./color-config.scss";
+
+.admin-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+
+  h1 {
+    font-size: 40px;
+  }
+
+  .buttons {
+    height: 50px;
+    margin-top: 32px;
+    border-radius: 8px;
+    color: $color-light;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+  }
+
+  .blue-button {
+    background-color: $color-primary-light;
+  }
+
+  .grey-button {
+    background-color: $color-grey;
+  }
+}
+
+@media screen and (min-width: 601px) {
+  .buttons {
+    width: 500px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .buttons {
+    width: 300px;
+  }
+}
