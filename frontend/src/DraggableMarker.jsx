@@ -40,6 +40,6 @@ function DraggableMarker({ center }) {
 }
 
 DraggableMarker.propTypes = {
-  center: PropTypes.isRequired,
+  center: PropTypes.func.isRequired,
 };
 export default DraggableMarker;
