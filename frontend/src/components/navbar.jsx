@@ -14,7 +14,7 @@ export default function Navbar({ navData }) {
         className="logo"
         to="/accueil"
         aria-label="Retourner à la page d'accueil"
-        title="Logo XmassClick"
+        title="Logo GeoCode"
       />
       <div className="navbar">
         <ul className="nav-list">
