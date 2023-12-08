@@ -10,8 +10,6 @@
   font-family: $font;
   text-align: left;
 
-  
-
   .section {
     display: flex;
     flex-direction: column;
@@ -74,7 +72,7 @@
       }
     }
   }
- 
+
   .set-logo {
     background-image: url(./assets/svg/logo.svg);
     background-size: contain;
@@ -97,5 +95,4 @@
     color: $color-light;
     text-align: center;
   }
-  
 }
