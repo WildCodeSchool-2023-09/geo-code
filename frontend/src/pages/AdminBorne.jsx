@@ -15,7 +15,7 @@ export default function AdminBorne() {
   return (
     <main className="admin-borne">
       <h1>Liste des Bornes</h1>
-      <div className="search">
+      <div className="borneSearch">
         <form onSubmit={updateForm}>
           <div className="search-bar">
             <div className="search-icon" />

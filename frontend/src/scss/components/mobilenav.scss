@@ -21,13 +21,6 @@
 
     font-family: $font;
 
-    &__svg-transition {
-      width: 110vw;
-      height: 40px;
-      background: url(assets/svg/tab_phone_lineeffect.svg);
-      background-repeat: no-repeat;
-      background-size: cover;
-    }
     &__container {
       display: flex;
       width: 100%;

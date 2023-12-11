@@ -15,7 +15,7 @@ export default function AdminUtilisateur() {
   return (
     <main className="admin-utilisateur">
       <h1>Liste des Utilisateurs</h1>
-      <div className="search">
+      <div className="userSearch">
         <form onSubmit={updateForm}>
           <div className="search-bar">
             <div className="search-icon" />
