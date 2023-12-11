@@ -71,9 +71,9 @@ export default function Home() {
         </video>
         <div className="section1">
           <p>Avec GéoCode</p>
-          <h1>
-            <span>trouvez</span> la borne de recharge <br />
-            proche de <span>chez vous</span>
+          <h1 className="hometitle">
+            Trouvez la borne de recharge <br />
+            proche de chez vous
           </h1>
           <div className="btnsection">
             <SecondaryButton btnText="En savoir plus" btnLink="/#about" />

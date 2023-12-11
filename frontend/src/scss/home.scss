@@ -45,7 +45,7 @@
       color: $color-primary;
     }
 
-    h1 {
+    .hometitle {
       width: fit-content;
       height: fit-content;
       font-family: $font;
@@ -55,10 +55,6 @@
       text-align: center;
       line-height: 0.8;
       margin: 0;
-
-      span {
-        color: $color-primary;
-      }
 
       @media screen and (max-width: 999px) {
         font-size: max(6.5vw, 40px);
