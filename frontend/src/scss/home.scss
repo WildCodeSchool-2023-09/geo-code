@@ -78,6 +78,7 @@
   height: fit-content;
   background-color: $color-light;
   font-family: $font;
+  margin-bottom: -16vh;
 
   h2 {
     font-size: 1.6rem;
@@ -201,7 +202,7 @@
     flex-direction: column;
     width: 100%;
     height: fit-content;
-    padding: 4rem 0 8rem;
+    padding: 4rem 0 12rem;
     background-color: $color-primary-light;
     justify-content: center;
     align-items: center;
