@@ -1,0 +1,22 @@
+[
+  {
+    "firstname": "Baptiste",
+    "lastname": "Save",
+    "img": "https://picsum.photos/200",
+    "sexe": "Homme",
+    "code_postal": "75000",
+    "ville": "Paris",
+    "email": "baptiste.save@test.com",
+    "nb_vehicule": 1
+  },
+  {
+    "firstname": "John",
+    "lastname": "Doe",
+    "img": "https://picsum.photos/200",
+    "sexe": "Homme",
+    "code_postal": "75000",
+    "ville": "Paris",
+    "email": "baptiste.save@test.com",
+    "nb_vehicule": 1
+  }
+]

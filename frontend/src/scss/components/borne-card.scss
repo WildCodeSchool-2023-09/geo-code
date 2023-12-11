@@ -1,0 +1,60 @@
+@import "../color-config.scss";
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 330px;
+  height: 290px;
+  align-items: center;
+  justify-content: center;
+  background-color: $color-grey;
+  border: 0;
+  border-radius: 16px;
+
+  h2 {
+    margin-top: 1rem;
+    margin-bottom: 0.3rem;
+    color: $color-light;
+  }
+
+  h3 {
+    margin-bottom: 1rem;
+    color: $color-light;
+    font-size: 1rem;
+  }
+
+  button {
+    width: 200px;
+    height: 40px;
+    border-radius: 12px;
+    border: 0;
+    margin-bottom: 10px;
+  }
+
+  .white-button {
+    color: $color-black;
+    background-color: $color-white;
+  }
+
+  .white-button:hover {
+    background-color: $color-white-hover;
+  }
+
+  .blue-button {
+    color: $color-white;
+    background-color: $color-primary-light;
+  }
+
+  .blue-button:hover {
+    background-color: $color-primary;
+  }
+
+  .dark-blue-button {
+    color: $color-white;
+    background-color: $color-primary;
+  }
+
+  .dark-blue-button:hover {
+    background-color: $bg-color;
+  }
+}

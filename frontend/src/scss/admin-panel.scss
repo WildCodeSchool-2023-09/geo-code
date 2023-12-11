@@ -26,8 +26,16 @@
     background-color: $color-primary-light;
   }
 
+  .blue-button:hover {
+    background-color: $color-primary;
+  }
+
   .grey-button {
     background-color: $color-grey;
+  }
+
+  .grey-button:hover {
+    background-color: $color-grey-hover;
   }
 }
 
