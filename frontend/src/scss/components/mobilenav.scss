@@ -1,12 +1,12 @@
 @import "../color-config.scss";
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 560px) {
   .TAB {
     display: none;
   }
 }
 
-@media screen and (max-width: 999px) {
+@media screen and (max-width: 559px) {
   .TAB {
     display: flex;
     flex-direction: column;

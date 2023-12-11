@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "logo": "assets/svg/sleepless_night.svg",
+        "name": "Association Sleepless Night"
+    },
+    {
+        "id": 2,
+        "logo": "assets/svg/bs_production.svg",
+        "name": "BS Production"
+    },
+    {
+        "id": 3,
+        "logo": "assets/svg/topstats.svg",
+        "name": "TopStats"
+    },
+    {
+        "id": 4,
+        "logo": "assets/svg/book_of_wilders.svg",
+        "name": "Book of Wilders"
+    }
+]
