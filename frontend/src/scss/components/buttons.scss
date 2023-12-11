@@ -2,7 +2,7 @@
 
 .primary-button {
   display: flex;
-  padding: 0.6rem 1rem;
+  padding: 1rem 1rem;
   width: fit-content;
   height: fit-content;
   background-color: $color-primary-light;
@@ -27,20 +27,20 @@
 .secondary-button {
   display: flex;
   padding: 1rem 1rem;
-  background-color: var(--color-white);
+  background-color: $color-grey;
   border-radius: 0.6rem;
   justify-content: center;
   width: fit-content;
   height: fit-content;
   text-decoration: none;
-  font-family: var(--font);
-  color: var(--color-black) !important;
+  font-family: $font;
+  color: $color-light;
   text-align: center;
   font-size: 1rem;
   transition: transform 0.1s ease-in-out;
 
   &:hover {
     transform: scale(0.95);
-    background-color: var(--color-white-hover);
+    background-color: $color-grey-hover;
   }
 }

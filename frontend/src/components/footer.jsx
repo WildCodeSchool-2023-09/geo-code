@@ -121,7 +121,6 @@ export default function Footer() {
             </li>
           </ul>
         </div>
-        {/* <div className="spacing" /> */}
       </div>
       <div className="footer-section">
         <p className="copyright">© 2024 | GéoCode. Tous droits réservés.</p>
