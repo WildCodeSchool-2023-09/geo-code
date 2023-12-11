@@ -1,6 +1,14 @@
 @import "../color-config.scss";
 
 @media screen and (min-width: 560px) {
+  .footermain {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .footer-wave {
+    width: 100%;
+  }
   .footer {
     display: flex;
     flex-direction: column;
