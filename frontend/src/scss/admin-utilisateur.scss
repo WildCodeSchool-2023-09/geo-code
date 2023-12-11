@@ -19,7 +19,6 @@ h1 {
   form {
     width: 100%;
     height: 100%;
-    padding-right: 2rem;
     display: flex;
     justify-content: center;
 
@@ -71,4 +70,32 @@ h1 {
   gap: 20px;
   padding: 0;
   justify-content: center;
+}
+
+@media screen and (max-width: 600px) {
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .search {
+    form {
+      flex-direction: column;
+
+      .search-bar {
+        width: auto;
+        margin-left: 2rem;
+        margin-right: 2rem;
+      }
+
+      .search-button {
+        width: auto;
+        margin-top: 10px;
+        margin-left: 2rem;
+        margin-right: 2rem;
+        padding-top: 5px;
+        padding-bottom: 5px;
+      }
+    }
+  }
 }
