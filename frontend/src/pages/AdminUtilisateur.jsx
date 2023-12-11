@@ -4,7 +4,7 @@ import UserCard from "../components/UserCard";
 
 export default function AdminUtilisateur() {
   return (
-    <div>
+    <main>
       <h1>Liste des Utilisateurs</h1>
       <div className="search">
         <div className="search-bar">
@@ -34,6 +34,6 @@ export default function AdminUtilisateur() {
           nb_vehicule="1"
         />
       </div>
-    </div>
+    </main>
   );
 }
