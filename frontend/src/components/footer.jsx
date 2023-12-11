@@ -13,25 +13,16 @@ export default function Footer() {
           title="Aller à la page d'accueil"
         />
         <div className="section">
-          <p className="section-title">Informations</p>
+          <p className="section-title">A Propos</p>
           <span className="separator" />
           <p className="section-text">
-            XXX
-            <br />
-            XXX
-            <br />
-            XXX
-            <br />
-            XXX
+            Portail GéoCode, est une Web App développée par la société GéoCode.
+            Basée en France à Cergy Pontoise, l’entreprise est leader dans le
+            domaine de réservation de borne de recharge de véhicules
+            électriques.
           </p>
         </div>
         <div className="section">
-          <p className="section-title">A propos</p>
-          <span className="separator" />
-          <p className="section-text">Description</p>
-        </div>
-
-        <div className="section">
           <p className="section-title">Légale</p>
           <span className="separator" />
           <ul className="section-list">
@@ -65,42 +56,75 @@ export default function Footer() {
           </ul>
         </div>
         <div className="section">
-          <p className="section-title">Légale</p>
+          <p className="section-title">Réseaux Sociaux</p>
           <span className="separator" />
           <ul className="section-list">
             <li className="section-item">
               <Link
                 className="underline-animation"
-                to="/mentionslegales"
+                to="/#"
                 title="Aller à la page Mentions Légales"
               >
-                Mentions Légales
+                Instagram
               </Link>
             </li>
             <li className="section-item">
               <Link
                 className="underline-animation"
-                to="/cookies"
+                to="/#"
                 title="Aller à la page Cookies"
               >
-                Cookies
+                Facebook
               </Link>
             </li>
             <li className="section-item">
               <Link
                 className="underline-animation"
-                to="/contact"
+                to="/#"
                 title="Aller à la page Contact"
               >
-                Contact
+                LinkedIn
+              </Link>
+            </li>
+            <li className="section-item">
+              <Link
+                className="underline-animation"
+                to="/#"
+                title="Aller à la page Contact"
+              >
+                Twitter
               </Link>
             </li>
           </ul>
         </div>
-        <div className="spacing" />
+        <div className="section">
+          <p className="section-title">Informations</p>
+          <span className="separator" />
+          <ul className="section-list">
+            <li className="section-item">
+              <Link
+                className="underline-animation"
+                to="/#"
+                title="Aller à la page Mentions Légales"
+              >
+                Nous Contacter
+              </Link>
+            </li>
+            <li className="section-item">
+              <Link
+                className="underline-animation"
+                to="/#"
+                title="Aller à la page Cookies"
+              >
+                Devenir Partenaire
+              </Link>
+            </li>
+          </ul>
+        </div>
+        {/* <div className="spacing" /> */}
       </div>
       <div className="footer-section">
-        <p className="copyright">© 2023 | XX. Tous droits réservés.</p>
+        <p className="copyright">© 2024 | GéoCode. Tous droits réservés.</p>
       </div>
     </footer>
   );

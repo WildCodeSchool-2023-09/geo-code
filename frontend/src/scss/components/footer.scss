@@ -1,6 +1,6 @@
 @import "../color-config.scss";
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 560px) {
   .footer {
     display: flex;
     flex-direction: column;
@@ -9,7 +9,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: $color-black;
+    background-color: $footerbar-color;
     padding: 2rem 0;
     gap: 2rem;
 
@@ -25,7 +25,7 @@
     }
 
     .footer-logo {
-      background-image: url(/svg/logo.svg);
+      background-image: url(assets/svg/logo.svg);
       background-size: contain;
       background-position: center;
       background-repeat: no-repeat;
@@ -116,7 +116,7 @@
   }
 }
 
-@media screen and (max-width: 999px) {
+@media screen and (max-width: 560px) {
   .footer {
     display: none;
   }
