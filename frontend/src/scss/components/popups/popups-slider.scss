@@ -1,12 +1,12 @@
 @import "../../color-config.scss";
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 560px) {
   .menuToggle {
     display: none;
   }
 }
 
-@media screen and (max-width: 999px) {
+@media screen and (max-width: 559px) {
   .menuToggle {
     display: flex;
     position: fixed;
@@ -60,7 +60,7 @@
     position: absolute;
     align-items: center;
     width: 100vw;
-    height: 110vh;
+    height: 130vh;
     margin: -100px 0 0 -230px;
     padding: 1.2rem;
     padding-top: 180px;
