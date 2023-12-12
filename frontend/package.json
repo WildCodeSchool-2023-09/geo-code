@@ -9,12 +9,9 @@
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-<<<<<<< HEAD
-    "react-leaflet": "^4.2.1",
-=======
     "react-helmet": "^6.1.0",
+    "react-leaflet": "^4.2.1",
     "react-lottie-player": "^1.5.5",
->>>>>>> d8cfb585c37177ae2bae629140af19411de68faf
     "react-router-dom": "^6.14.2"
   },
   "devDependencies": {
@@ -28,6 +25,7 @@
     "eslint-plugin-react": "^7.33.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^3.0.0",
+    "sass": "^1.69.5",
     "vite": "^4.4.7"
   },
   "lint-staged": {

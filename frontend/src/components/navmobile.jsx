@@ -8,7 +8,7 @@ export default function navmobile() {
       <div className="TAB__svg-transition" />
       <div className="TAB__container">
         {data.map((dataIndex) => (
-          <div className="TAB__container__item">
+          <div className="TAB__container__item" key={dataIndex.id}>
             <div className="TAB__container__item__icon">
               <img src={dataIndex.icon} alt={dataIndex.name} />
             </div>
