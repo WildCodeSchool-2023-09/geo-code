@@ -10,7 +10,6 @@ import AdminBorne from "./pages/AdminBorne";
 import AdminAddBornes from "./pages/AdminAddBornes";
 import Map from "./pages/Map";
 
-
 const router = createBrowserRouter([
   {
     path: "/",
