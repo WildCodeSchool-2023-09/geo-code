@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Marker, Popup, useMap } from "react-leaflet";
 
 function LocationMarker() {
-  const [position, setPosition] = useState(null);
+  const [position, setPosition] = useState({ lat: 0, lng: 0 });
   const map = useMap();
   useEffect(() => {
     map.locate().on("locationfound", (e) => {
@@ -11,7 +11,7 @@ function LocationMarker() {
     });
   }, []);
 
-  return position === null ? null : (
+  return (
     <Marker position={position}>
       <Popup>You are here</Popup>
     </Marker>

@@ -5,6 +5,7 @@ import App from "./App";
 import Home from "./pages/Home";
 import ErrorPage from "./pages/404";
 import AdminPanel from "./pages/AdminPanel";
+import Map from "./pages/Map";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "*",
         element: <ErrorPage />,
+      },
+      {
+        path: "/map",
+        element: <Map />,
       },
     ],
   },
