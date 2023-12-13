@@ -64,7 +64,7 @@ function Filtre() {
           </div>
         </div>
         <div className="separates">
-          <label htmlFor="prix">Disponibilité</label>
+          <label htmlFor="disponibilite">Disponibilité</label>
           <div className="Dispo">
             <button type="button">Semaine</button>
             <button type="button">24/24-7/7</button>

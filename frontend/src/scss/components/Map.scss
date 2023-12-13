@@ -183,12 +183,3 @@ h2 {
   width: 100%;
   text-align: center;
 }
-.separate {
-  display: flex;
-  flex-direction: column;
-  @media screen and (max-width: 980px) {
-    width: 18%;
-    padding: 0.7rem;
-    margin: 0rem 0.4rem 0rem 0.2rem;
-  }
-}
