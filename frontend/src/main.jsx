@@ -7,6 +7,7 @@ import ErrorPage from "./pages/404";
 import AdminPanel from "./pages/AdminPanel";
 import AdminUtilisateur from "./pages/AdminUtilisateur";
 import AdminBorne from "./pages/AdminBorne";
+import Reservation from "./pages/Reservation";
 import AdminAddBornes from "./pages/AdminAddBornes";
 import Map from "./pages/Map";
 
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/liste-bornes",
         element: <AdminBorne />,
+      },
+      {
+        path: "/reservations",
+        element: <Reservation />,
       },
       {
         path: "/ajout-bornes",
