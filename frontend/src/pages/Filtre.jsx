@@ -1,12 +1,9 @@
-import { useState } from "react";
+import { useContext } from "react";
+import "../scss/components/Filtermobil.scss";
+import FilterContext from "../Context/ResearchContext";
 
 function Filtre() {
-  const [research, setResearch] = useState({
-    adresse: "Paris",
-    enseignes: "Toutes",
-    rayon: 25,
-    puissance: 1250,
-  });
+  const { research, setResearch } = useContext(FilterContext);
   const handleChange = (e) => {
     setResearch({ ...research, [e.target.name]: e.target.value });
   };
