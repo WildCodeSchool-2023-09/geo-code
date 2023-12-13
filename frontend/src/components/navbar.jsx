@@ -12,7 +12,7 @@ export default function Navbar({ navData }) {
     <nav className="header-main">
       <Link
         className="logo"
-        to="/accueil"
+        to="/"
         aria-label="Retourner à la page d'accueil"
         title="Logo GeoCode"
       />
