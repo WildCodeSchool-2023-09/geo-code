@@ -8,6 +8,7 @@ import AdminPanel from "./pages/AdminPanel";
 import AdminUtilisateur from "./pages/AdminUtilisateur";
 import AdminBorne from "./pages/AdminBorne";
 import Map from "./pages/Map";
+import Profil from "./pages/Profil";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/liste-bornes",
         element: <AdminBorne />,
+      },
+      {
+        path: "/profil",
+        element: <Profil />,
       },
       {
         path: "*",
