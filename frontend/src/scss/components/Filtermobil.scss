@@ -10,58 +10,73 @@
     display: none;
   }
 }
+main {
+  margin: 0;
+}
 .filters {
   @media screen and (max-width: 390px) {
     display: flex;
     flex-direction: column;
     background-color: $color-primary-light;
     height: 100vh;
-    width: 100%;
+    width: 100vw;
   }
   button {
-    @media screen and (max-width: 980px) {
-      width: 6rem;
-      height: 3rem;
+    @media screen and (max-width: 390px) {
+      width: 100%;
+      pad: 1.5rem;
+      border-radius: 10px;
+      margin: 0.3rem;
+      border: none;
     }
   }
   input {
-    @media screen and (max-width: 980px) {
-      width: 10rem;
-      height: 3rem;
-      margin: 0;
+    @media screen and (max-width: 390px) {
+      width: 90%;
+      padding: 0.6rem;
+      margin: 0 auto;
+      border-radius: 10px;
+      border: none;
     }
   }
   label {
-    padding: 1rem;
+    @media screen and (max-width: 390px) {
+      margin-left: 1rem;
+      padding: 0.2rem;
+    }
   }
   .submitResearch {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 2rem auto;
-    width: 50%;
+    @media screen and (max-width: 390px) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 2rem auto;
+      width: 90%;
+      border-radius: 10px;
+    }
   }
   select {
-    @media screen and (max-width: 980px) {
-      width: 10rem;
-      height: 3rem;
-      margin: 0;
+    @media screen and (max-width: 390px) {
+      width: 90%;
+      height: 2rem;
+      margin: 0 auto;
+      border-radius: 10px;
+      border: none;
     }
   }
   .priseButton {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    @media screen and (max-width: 390px) {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+    }
   }
-}
-.leaflet-container {
-  height: 90vh;
-  width: 70vw;
-  z-index: 0;
-  border-radius: 20px;
-  @media screen and (max-width: 980px) {
-    display: flex;
-    width: 90vw;
-    height: 50vh;
+  .Price,
+  .Dispo {
+    @media screen and (max-width: 390px) {
+      display: flex;
+      justify-content: center;
+    }
   }
 }

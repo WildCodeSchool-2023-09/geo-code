@@ -17,16 +17,6 @@ function App() {
     [research, setResearch]
   );
 
-  // const [research, setResearch] = useState({});
-
-  // useEffect(() => {
-  //   setResearch({
-  //    adresse: "Paris",
-  //   enseignes: "Toutes",
-  //     rayon: 25,
-  //     puissance: 1250,
-  //  });
-  // }, []);
   return (
     <>
       <Navbar navData={navData} />

@@ -2,12 +2,12 @@ import { MapContainer, TileLayer } from "react-leaflet";
 import Filtre from "./Filtre";
 import LocationMarker from "../components/LocationMarker";
 import BornesMarker from "../components/BornesMarker";
-
+import "../scss/root.scss";
 import "../scss/components/Map.scss";
 
 function Map() {
   return (
-    <section className="allMap">
+    <div className="allMap">
       <div className="buttonContainer">
         <button type="button" className="mapButton">
           Map
@@ -34,7 +34,7 @@ function Map() {
           </MapContainer>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 
