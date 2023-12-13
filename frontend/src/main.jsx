@@ -36,7 +36,7 @@ const router = createBrowserRouter([
         path: "/reservations",
         element: <Reservation />,
       },
-
+      {
         path: "/ajout-bornes",
         element: <AdminAddBornes />,
       },
