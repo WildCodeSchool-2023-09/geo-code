@@ -7,6 +7,7 @@ import data from "../data/BorneDataTest.json";
 
 export default function AdminBorne() {
   const [searchForm, setSearchForm] = useState("");
+
   function updateForm(e) {
     e.preventDefault();
     setSearchForm(e.target[0].value);
@@ -29,14 +30,16 @@ export default function AdminBorne() {
         </form>
       </div>
 
-      <div className="card-list">
-        {data
-          .filter((borne) =>
-            borne.name.toLowerCase().includes(searchForm.toLowerCase())
-          )
-          .map((borne) => (
-            <BorneCard name={borne.name} adresse={borne.adresse} />
-          ))}
+      <div className="card-container">
+        <div className="card-list">
+          {data
+            .filter((borne) =>
+              borne.name.toLowerCase().includes(searchForm.toLowerCase())
+            )
+            .map((borne) => (
+              <BorneCard name={borne.name} adresse={borne.adresse} />
+            ))}
+        </div>
       </div>
     </main>
   );

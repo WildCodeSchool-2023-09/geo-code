@@ -11,6 +11,7 @@ import Reservation from "./pages/Reservation";
 import AdminAddBornes from "./pages/AdminAddBornes";
 import Map from "./pages/Map";
 import Filtre from "./pages/Filtre";
+import Profil from "./pages/Profil";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/liste-bornes",
         element: <AdminBorne />,
+      },
+      {
+        path: "/profil",
+        element: <Profil />,
       },
       {
         path: "/reservations",
