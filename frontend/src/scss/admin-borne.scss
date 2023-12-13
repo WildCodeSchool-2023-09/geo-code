@@ -82,11 +82,14 @@
   }
 }
 
-.card-list {
-  margin-top: 3rem;
+.card-container {
+  width: 100%;
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 0;
   justify-content: center;
+
+  .card-list {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+  }
 }
