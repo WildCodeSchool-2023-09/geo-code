@@ -10,7 +10,16 @@ import "./scss/components/footer.scss";
 import navData from "./data/NavBarData.json";
 
 function App() {
-  const [research, setResearch] = useState({});
+  const [research, setResearch] = useState({
+    adresse: "Paris",
+    enseigne: "oui",
+    rayon: 25,
+    puissance: 1250,
+    disponible: "Oui",
+    prix: "Toutes",
+    disponibilite: "Toutes",
+    typeDePrise: "Type 2",
+  });
 
   const value = useMemo(
     () => ({ research, setResearch }),

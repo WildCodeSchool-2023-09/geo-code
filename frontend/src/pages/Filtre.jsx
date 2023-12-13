@@ -24,7 +24,7 @@ function Filtre() {
         </div>
         <div className="separate">
           <label htmlFor="enseigne">Enseigne</label>
-          <select>
+          <select value={research.enseigne}>
             <option value="Toutes">Toutes</option>
             <option value="Une">Une</option>
           </select>{" "}
