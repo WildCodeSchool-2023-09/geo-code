@@ -2,7 +2,9 @@ main {
   padding: 0;
 }
 .leaflet-container {
+  display: flex;
+  position: fixed;
   height: 100vh;
   width: 100vw;
-  z-index: 1;
+  z-index: 0;
 }

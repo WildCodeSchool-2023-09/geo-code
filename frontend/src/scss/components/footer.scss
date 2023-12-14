@@ -4,10 +4,12 @@
   .footermain {
     display: flex;
     flex-direction: column;
+    z-index: 50;
   }
 
   .footer-wave {
     width: 100%;
+    z-index: 50;
   }
   .footer {
     display: flex;
