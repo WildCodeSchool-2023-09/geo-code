@@ -1,0 +1,98 @@
+@import "../../color-config.scss";
+
+.set-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 120%;
+  gap: 4rem;
+
+  font-family: $font;
+  text-align: left;
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    .section-title {
+      font-size: 1rem;
+      color: $color-light;
+    }
+    .separator {
+      width: 100%;
+      border-bottom: solid 1px $color-light;
+      opacity: 0.2;
+      margin-bottom: 1rem;
+    }
+    .section-text {
+      max-width: 26ch;
+      font-size: 1rem;
+      color: $color-light;
+    }
+    .section-list {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+
+      gap: 1rem;
+      list-style: none;
+
+      .section-item,
+      a {
+        width: fit-content;
+        font-family: $font;
+        font-size: 1rem;
+        color: $color-light;
+        transition: all 0.15s ease-in-out;
+
+        .underline-animation {
+          display: inline-block;
+          position: relative;
+          color: $color-light;
+        }
+
+        .underline-animation::after {
+          content: "";
+          position: absolute;
+          width: 100%;
+          transform: scaleX(0);
+          height: 2px;
+          bottom: -4px;
+          left: 0;
+          background-color: $color-light;
+          transform-origin: bottom right;
+          transition: transform 0.25s ease-out;
+        }
+
+        .underline-animation:hover::after {
+          transform: scaleX(1);
+          transform-origin: bottom left;
+        }
+      }
+    }
+  }
+
+  .set-logo {
+    background-image: url(./assets/svg/logo.svg);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+    width: 80px;
+    height: 80px;
+    transition: all 0.15s ease-in-out;
+
+    &:hover {
+      transform: scale(0.9);
+    }
+  }
+
+  .copyright {
+    font-family: $font;
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: $color-light;
+    text-align: center;
+  }
+}

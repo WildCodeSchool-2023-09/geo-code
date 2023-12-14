@@ -1,12 +1,23 @@
-import Register from "./components/register";
+import { Outlet } from "react-router-dom";
+import Navbar from "./components/navbar";
+import NavMobile from "./components/navmobile";
+import Footer from "./components/footer";
 
-import "./App.css";
+import "./scss/root.scss";
+import "./scss/components/footer.scss";
+
+import navData from "./data/NavBarData.json";
 
 function App() {
   return (
-    <div>
-      <Register />
-    </div>
+    <>
+      <Navbar navData={navData} />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
+      <NavMobile />
+    </>
   );
 }
 
