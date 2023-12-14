@@ -1,0 +1,11 @@
+@import "./color-config.scss";
+
+.borneListPage {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+.bornesContainer {
+  display: flex;
+  flex-direction: column;
+}

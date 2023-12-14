@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { useMemo, useState } from "react";
 import FilterResearch from "./Context/ResearchContext";
+import LocationContext from "./Context/locationContext";
 import Navbar from "./components/navbar";
 import NavMobile from "./components/navmobile";
 import Footer from "./components/footer";
@@ -26,13 +27,21 @@ function App() {
     [research, setResearch]
   );
 
+  const [position, setPosition] = useState({ lat: 0, lng: 0 });
+  const positionValue = useMemo(
+    () => ({ position, setPosition }),
+    [position, setPosition]
+  );
+  console.info(position);
   return (
     <>
       <Navbar navData={navData} />
       <main>
-        <FilterResearch.Provider value={value}>
-          <Outlet />
-        </FilterResearch.Provider>
+        <LocationContext.Provider value={positionValue}>
+          <FilterResearch.Provider value={value}>
+            <Outlet />
+          </FilterResearch.Provider>
+        </LocationContext.Provider>
       </main>
       <Footer />
       <NavMobile />

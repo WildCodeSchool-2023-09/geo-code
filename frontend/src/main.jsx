@@ -12,6 +12,7 @@ import AdminAddBornes from "./pages/AdminAddBornes";
 import Map from "./pages/Map";
 import Filtre from "./pages/Filtre";
 import Profil from "./pages/Profil";
+import BornesListe from "./pages/BornesListe";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: "/filter",
         element: <Filtre />,
+      },
+      {
+        path: "/bornesListe",
+        element: <BornesListe />,
       },
     ],
   },

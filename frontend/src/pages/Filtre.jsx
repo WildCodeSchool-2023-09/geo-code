@@ -4,7 +4,6 @@ import FilterContext from "../Context/ResearchContext";
 
 function Filtre() {
   const { research, setResearch } = useContext(FilterContext);
-  console.info(research);
   const handleChange = (e) => {
     setResearch({ ...research, [e.target.name]: e.target.value });
   };
