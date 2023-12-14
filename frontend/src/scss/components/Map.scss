@@ -1,0 +1,185 @@
+@import "../color-config.scss";
+
+main {
+  margin-top: 80px;
+}
+.header-main {
+  @media screen and (max-width: 390px) {
+    display: flex;
+  }
+}
+.TAB {
+  @media screen and (max-width: 390px) {
+    display: flex;
+  }
+}
+.allMap {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0 auto;
+  width: 100vw;
+  min-height: 100vh;
+  padding: 1rem;
+  @media screen and (max-width: 390px) {
+    padding: 0;
+  }
+
+  .buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin: 1rem;
+    @media screen and (max-width: 390px) {
+      display: none;
+    }
+  }
+  .mapContainer {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    gap: 2rem;
+
+    @media screen and (max-width: 980px) {
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      gap: 1rem;
+      align-items: center;
+    }
+    @media screen and (max-width: 390px) {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .mapButton {
+      background-color: $color-grey;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0.5rem;
+      padding: 1rem;
+      width: 2rem;
+    }
+    .filters {
+      background-color: $color-primary-light;
+      display: flex;
+      flex-direction: column;
+      height: fit-content;
+      width: 50%;
+      max-width: 450px;
+      border-radius: 20px;
+      @media screen and (max-width: 980px) {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 50%;
+        max-height: 400px;
+        max-width: 93%;
+      }
+      @media screen and (max-width: 390px) {
+        display: none;
+      }
+      button {
+        padding: 0.5rem;
+        width: 100%;
+        border-radius: 5px;
+        margin: 0.7rem;
+        border: none;
+        box-shadow: $navbar-color 2px 3px 10px 3px;
+        @media screen and (max-width: 980px) {
+          width: 100%;
+          padding: 0.6rem;
+        }
+      }
+      .priseButton {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        justify-content: center;
+        @media screen and (max-width: 980px) {
+          flex-wrap: nowrap;
+        }
+        button {
+          width: 29%;
+          @media screen and (max-width: 980px) {
+            width: 100%;
+            padding: 0.6rem;
+          }
+        }
+      }
+      input {
+        width: 90%;
+        border-radius: 10px;
+        margin: 0 auto;
+        border: none;
+        padding: 0.5rem;
+        @media screen and (max-width: 980px) {
+          width: 100%;
+          margin: 0;
+          margin-left: 0.5rem;
+        }
+      }
+      label {
+        padding: 0.5rem;
+        padding-left: 0.5rem;
+      }
+
+      .Price,
+      .Dispo {
+        display: flex;
+        justify-content: center;
+      }
+      .submitResearch {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 2rem auto;
+        width: 50%;
+        @media screen and (max-width: 980px) {
+          display: flex;
+          width: 90%;
+          margin: 0.5rem;
+        }
+      }
+      select {
+        width: 90%;
+        margin: 0 auto;
+        border-radius: 10px;
+        border: none;
+        padding: 0.5rem;
+        @media screen and (max-width: 980px) {
+          width: 100%;
+          padding: 0.5rem;
+          margin: 0;
+          margin-left: 0.5rem;
+        }
+      }
+    }
+    .leaflet-container {
+      height: 100%;
+      width: 70vw;
+      z-index: 0;
+      border-radius: 20px;
+      @media screen and (max-width: 980px) {
+        display: flex;
+        width: 90vw;
+        height: 50vh;
+      }
+      @media screen and (max-width: 390px) {
+        width: 100vw;
+        height: 100vh;
+      }
+    }
+  }
+}
+
+h2 {
+  padding: 0.2rem;
+  width: 100%;
+  text-align: center;
+}
