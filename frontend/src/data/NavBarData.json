@@ -22,6 +22,18 @@
     "linkname": "Réservations",
     "linkurl": "/reservations",
     "btn": false
+  },
+  {
+    "id": "5",
+    "linkname": "Profil",
+    "linkurl": "/Profil",
+    "btn": false
+  },
+  {
+    "id": "6",
+    "linkname": "Administrateur",
+    "linkurl": "/admin",
+    "btn": false
   }
  
 ]
