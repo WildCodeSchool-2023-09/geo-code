@@ -1,5 +1,5 @@
 import "../scss/admin-utilisateur.scss";
-
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import UserCard from "../components/UserCard";
 
@@ -14,6 +14,7 @@ export default function AdminUtilisateur() {
 
   return (
     <main className="admin-utilisateur">
+      <Link to="/admin">Retour</Link>
       <h1>Liste des Utilisateurs</h1>
       <div className="userSearch">
         <form onSubmit={updateForm}>

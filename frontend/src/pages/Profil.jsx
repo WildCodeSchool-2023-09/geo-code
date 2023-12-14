@@ -46,7 +46,7 @@ export default function Profil() {
               </form>
             </div>
             <div className="buttons">
-              <Link to="/reservation" className="button grey-button">
+              <Link to="/reservations" className="button grey-button">
                 Voir les réservations
               </Link>
               <Link to="/profil-vehicule" className="button grey-button">

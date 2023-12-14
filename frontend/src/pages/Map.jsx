@@ -12,6 +12,7 @@ function Map() {
         <button type="button" className="mapButton">
           Map
         </button>
+
         <button type="button" className="mapButton">
           Liste
         </button>
