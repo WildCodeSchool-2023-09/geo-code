@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import "../scss/components/Filtermobil.scss";
 import FilterContext from "../Context/ResearchContext";
+import "../scss/components/Filtermobil.scss";
 
 function Filtre() {
   const { research, setResearch } = useContext(FilterContext);
@@ -59,14 +59,6 @@ function Filtre() {
           <div className="Price">
             <button type="button">Payant</button>
             <button type="button">Gratuit</button>
-            <button type="button">Toutes</button>
-          </div>
-        </div>
-        <div className="separates">
-          <label htmlFor="disponibilite">Disponibilité</label>
-          <div className="Dispo">
-            <button type="button">Semaine</button>
-            <button type="button">24/24-7/7</button>
             <button type="button">Toutes</button>
           </div>
         </div>
