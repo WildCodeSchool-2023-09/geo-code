@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import FilterContext from "../Context/ResearchContext";
 import BorneCardUser from "../components/BorneCardUser";
 import Filtre from "./Filtre";
 import "../scss/bornesList.scss";
@@ -9,12 +11,12 @@ function BornesListe() {
       names: "Paris",
       lat: 48.852969,
       lng: 2.349903,
-      code: 75000,
+      code: "75000",
+      enseigne: "Une",
       puissance: 1250,
       prise: "Type 2",
-      disponibilite: "24/24-7/7",
       tarification: "payant",
-      isBooked: "false",
+      disponible: "false",
       pdc: 1,
     },
     {
@@ -23,10 +25,10 @@ function BornesListe() {
       lng: -4.5,
       code: "27000",
       puissance: "1200",
+      enseigne: "Toutes",
       prise: "Type 2",
-      disponibilite: "24/24-7/7",
       tarification: "payant",
-      isBooked: "false",
+      disponible: "false",
       pdc: 1,
     },
     {
@@ -35,10 +37,10 @@ function BornesListe() {
       lng: -4.1,
       code: "22000",
       puissance: "1050",
+      enseigne: "Une",
       prise: "Type 2",
-      disponibilite: "24/24-7/7",
       tarification: "payant",
-      isBooked: "false",
+      disponible: "false",
       pdc: 1,
     },
     {
@@ -47,13 +49,15 @@ function BornesListe() {
       lng: -1.467,
       code: "44000",
       puissance: "1220",
+      enseigne: "Toutes",
       prise: "Type 1",
-      disponibilite: "24/24-7/7",
       tarification: "gratuit",
-      isBooked: "true",
+      disponible: "true",
       pdc: 12,
     },
   ];
+  const { research } = useContext(FilterContext);
+
   return (
     <div className="borneListPage">
       <div className="buttonContainer">
@@ -71,21 +75,23 @@ function BornesListe() {
       <div className="filterBorne">
         <Filtre />
         <div className="bornesContainer">
-          {bornes.map((borne) => (
-            <div key={borne.index} className="bornecard">
-              <BorneCardUser
-                name={borne.names}
-                lat={borne.lat}
-                lng={borne.lng}
-                code={borne.code}
-                tarification={borne.tarification}
-                disponibilite={borne.disponibilite}
-                puissance={borne.puissance}
-                isBooked={borne.isBooked}
-                pdc={borne.pdc}
-              />
-            </div>
-          ))}
+          {bornes
+            .filter((borne) => borne.code.includes(research.code))
+            .map((borne) => (
+              <div key={borne.index} className="bornecard">
+                <BorneCardUser
+                  name={borne.names}
+                  lat={borne.lat}
+                  lng={borne.lng}
+                  code={borne.code}
+                  enseigne={borne.enseigne}
+                  tarification={borne.tarification}
+                  puissance={borne.puissance}
+                  disponible={borne.disponible}
+                  pdc={borne.pdc}
+                />
+              </div>
+            ))}
         </div>
       </div>
     </div>

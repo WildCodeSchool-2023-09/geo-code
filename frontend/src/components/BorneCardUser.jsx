@@ -9,10 +9,10 @@ export default function BorneCard({
   lat,
   lng,
   code,
+  enseigne,
   puissance,
   tarification,
-  disponibilite,
-  isBooked,
+  disponible,
 }) {
   const { position } = useContext(LocationContext);
 
@@ -36,21 +36,20 @@ export default function BorneCard({
       );
     return distance.toFixed(1);
   }
-  console.info(isBooked);
   return (
     <div className="userCardBorne">
       <div className="isdisponible">
         <p>{convertToDistance(lat, lng)} km</p>
 
-        <div className={isBooked} />
+        <div className={disponible} />
       </div>
 
       <h2>{name}</h2>
-      <h3>Adresse : {code}</h3>
+      <h3>Code Postal : {code}</h3>
+      <h3>Enseigne : {enseigne}</h3>
       <h3>Nombre de prise : {pdc}</h3>
       <h3>Puissance : {puissance}</h3>
       <h3>Tarification : {tarification}</h3>
-      <h3>Disponibilité : {disponibilite}</h3>
       <button type="button" className="blue-button">
         Réservation
       </button>
@@ -60,12 +59,12 @@ export default function BorneCard({
 
 BorneCard.propTypes = {
   name: PropTypes.string.isRequired,
-  lat: PropTypes.number.isRequired,
-  lng: PropTypes.number.isRequired,
-  pdc: PropTypes.number.isRequired,
+  lat: PropTypes.string.isRequired,
+  lng: PropTypes.string.isRequired,
+  enseigne: PropTypes.string.isRequired,
+  pdc: PropTypes.string.isRequired,
   code: PropTypes.string.isRequired,
   puissance: PropTypes.string.isRequired,
   tarification: PropTypes.string.isRequired,
-  disponibilite: PropTypes.string.isRequired,
-  isBooked: PropTypes.bool.isRequired,
+  disponible: PropTypes.string.isRequired,
 };
