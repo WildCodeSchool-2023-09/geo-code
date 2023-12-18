@@ -39,6 +39,7 @@ function Filtre() {
             >
               <option value="Toutes">Toutes</option>
               <option value="Une">Une</option>
+              <option value="Deux">Deux</option>
             </select>{" "}
           </div>
           <div className="separate">
@@ -55,7 +56,7 @@ function Filtre() {
             <label htmlFor="puissance">Puissance</label>
             <input
               value={research.puissance}
-              type="number"
+              type="string"
               name="puissance"
               id="puissance"
               onChange={handleChange}

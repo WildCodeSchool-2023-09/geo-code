@@ -13,6 +13,7 @@ export default function BorneCard({
   puissance,
   tarification,
   disponible,
+  prise,
 }) {
   const { position } = useContext(LocationContext);
 
@@ -45,11 +46,12 @@ export default function BorneCard({
       </div>
 
       <h2>{name}</h2>
-      <h3>Code Postal : {code}</h3>
+      <h3>Code postal : {code}</h3>
       <h3>Enseigne : {enseigne}</h3>
       <h3>Nombre de prise : {pdc}</h3>
       <h3>Puissance : {puissance}</h3>
       <h3>Tarification : {tarification}</h3>
+      {prise}
       <button type="button" className="blue-button">
         Réservation
       </button>
@@ -67,4 +69,5 @@ BorneCard.propTypes = {
   puissance: PropTypes.string.isRequired,
   tarification: PropTypes.string.isRequired,
   disponible: PropTypes.string.isRequired,
+  prise: PropTypes.string.isRequired,
 };

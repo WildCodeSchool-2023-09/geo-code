@@ -13,7 +13,7 @@ function BornesListe() {
       lng: 2.349903,
       code: "75000",
       enseigne: "Une",
-      puissance: 1250,
+      puissance: "1250",
       prise: "Type 2",
       tarification: "payant",
       disponible: "false",
@@ -25,7 +25,7 @@ function BornesListe() {
       lng: -4.5,
       code: "27000",
       puissance: "1200",
-      enseigne: "Toutes",
+      enseigne: "Deux",
       prise: "Type 2",
       tarification: "payant",
       disponible: "false",
@@ -49,7 +49,7 @@ function BornesListe() {
       lng: -1.467,
       code: "44000",
       puissance: "1220",
-      enseigne: "Toutes",
+      enseigne: "Deux",
       prise: "Type 1",
       tarification: "gratuit",
       disponible: "true",
@@ -76,7 +76,14 @@ function BornesListe() {
         <Filtre />
         <div className="bornesContainer">
           {bornes
-            .filter((borne) => borne.code.includes(research.code))
+            .filter(
+              (borne) =>
+                borne.code.includes(research.code) &&
+                borne.enseigne.includes(research.enseigne) &&
+                borne.tarification.includes(research.tarification) &&
+                borne.puissance.includes(research.puissance) &&
+                borne.prise.includes(research.prise)
+            )
             .map((borne) => (
               <div key={borne.index} className="bornecard">
                 <BorneCardUser
@@ -89,6 +96,7 @@ function BornesListe() {
                   puissance={borne.puissance}
                   disponible={borne.disponible}
                   pdc={borne.pdc}
+                  prise={borne.prise}
                 />
               </div>
             ))}
