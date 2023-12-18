@@ -51,7 +51,7 @@ export default function BorneCard({
       <h3>Nombre de prise : {pdc}</h3>
       <h3>Puissance : {puissance}</h3>
       <h3>Tarification : {tarification}</h3>
-      {prise}
+      <h3>Type de prise : {prise}</h3>
       <button type="button" className="blue-button">
         Réservation
       </button>
