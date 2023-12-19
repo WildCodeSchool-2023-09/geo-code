@@ -65,7 +65,6 @@ create table users
         primary key,
     firstname   varchar(255) not null,
     lastname    varchar(255) not null,
-    sexe        varchar(255) not null,
     code_postal int          not null,
     ville       varchar(255) not null,
     email       varchar(255) not null,
