@@ -1,21 +1,21 @@
 import "../scss/pages.scss";
 import Lottie from "react-lottie-player";
-import animation404 from "../data/404-animation.json";
+import mailSent from "../data/MailSend.json";
 import PrimaryButton from "../components/buttons/PrimaryButton";
 
-export default function NotFound() {
+export default function EmailSent() {
   return (
     <section>
       <div className="containererror">
         <Lottie
           loop
-          animationData={animation404}
+          animationData={mailSent}
           play
-          style={{ width: 260, height: 150 }}
+          style={{ width: 120, height: 120 }}
         />
-        <h1>Oops! Il semble que la page n'existe pas.</h1>
+        <h1>Votre message à bien été transmit</h1>
         <p className="message">
-          Nous vous conseillons de retourner à la page d'accueil.
+          Nous vous recontacterons dans les plus brefs délais.
         </p>
         <PrimaryButton btnText="retourner à la page d'accueil" btnLink="/" />
       </div>

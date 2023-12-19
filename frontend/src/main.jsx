@@ -10,6 +10,9 @@ import AdminBorne from "./pages/AdminBorne";
 import Reservation from "./pages/Reservation";
 import AdminAddBornes from "./pages/AdminAddBornes";
 import Map from "./pages/Map";
+import Contact from "./pages/Contact";
+import EmailSent from "./pages/EmailSent";
+import EmailError from "./pages/EmailError";
 import Filtre from "./pages/Filtre";
 import Profil from "./pages/Profil";
 import BornesListe from "./pages/BornesListe";
@@ -54,6 +57,18 @@ const router = createBrowserRouter([
       {
         path: "/map",
         element: <Map />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/email-sent",
+        element: <EmailSent />,
+      },
+      {
+        path: "/email-error",
+        element: <EmailError />,
       },
       {
         path: "/filter",

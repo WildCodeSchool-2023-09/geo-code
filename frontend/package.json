@@ -5,6 +5,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emailjs/browser": "^3.11.0",
+    "dotenv": "^16.3.1",
     "leaflet": "^1.9.4",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
@@ -13,7 +15,8 @@
     "react-leaflet": "^4.2.1",
     "react-lottie-player": "^1.5.5",
     "react-markdown": "^9.0.1",
-    "react-router-dom": "^6.14.2"
+    "react-router-dom": "^6.14.2",
+    "resend": "^2.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.0.3",
