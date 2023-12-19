@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import FilterContext from "../Context/ResearchContext";
 import BorneCardUser from "../components/BorneCardUser";
-import Filtre from "./Filtre";
+import SecondaryButton from "../components/buttons/SecondaryButton";
+import Filtre from "../components/Filtre";
 import "../scss/bornesList.scss";
 import bornes from "../data/BorneUser";
 
@@ -16,18 +17,15 @@ function BornesListe() {
     <div className="borneListPage">
       <div className="buttonContainer">
         <Link to="/map">
-          <button type="button" className="mapButton">
-            Map
-          </button>
-        </Link>
-        <Link to="/bornesListe">
-          <button type="button" className="mapButton">
-            Liste
-          </button>
+          <div className="buttonContainer">
+            <SecondaryButton btnText="Carte" btnLink="/Map" />
+          </div>
         </Link>
       </div>
       <div className="filterBorne">
-        <Filtre />
+        <div className="filterBorne_Filter">
+          <Filtre />
+        </div>
         <div className="bornesContainer">
           {bornes
             .filter(

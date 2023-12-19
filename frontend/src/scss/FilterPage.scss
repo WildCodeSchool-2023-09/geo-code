@@ -1,0 +1,7 @@
+.filters_container {
+  border-radius: 1rem;
+  @media screen and (max-width: 559px) {
+    height: 100vh;
+    border-radius: 0rem;
+  }
+}

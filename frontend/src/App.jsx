@@ -31,7 +31,13 @@ function App() {
     () => ({ position, setPosition }),
     [position, setPosition]
   );
-  console.info(position);
+
+  if (window.location.pathname === "/map" && window.innerWidth < 560) {
+    document.body.classList.add("no-scroll");
+  } else {
+    document.body.classList.remove("no-scroll");
+  }
+
   return (
     <>
       <Navbar navData={navData} />
@@ -42,7 +48,7 @@ function App() {
           </FilterResearch.Provider>
         </LocationContext.Provider>
       </main>
-      <Footer />
+      <Footer className="FooterParams" />
       <NavMobile />
     </>
   );

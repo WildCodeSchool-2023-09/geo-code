@@ -1,0 +1,98 @@
+@import "../color-config.scss";
+
+.userCardBorne {
+  display: flex;
+  flex-direction: column;
+  width: 380px;
+  height: fit-content;
+  background-color: $color-grey;
+  border-radius: 1rem;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+  @media screen and (max-width: 559px) {
+    min-width: 280px;
+    width: auto;
+    max-width: 480px;
+  }
+
+  &_info {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+
+    &_km {
+      color: $color-light-hover;
+      font-weight: 400;
+      font-size: 1.1rem;
+    }
+  }
+
+  &_name {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: $color-light;
+  }
+
+  &_data {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+
+    @media screen and (max-width: 390px) {
+      flex-direction: column;
+    }
+
+    &_array {
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+      gap: 0.6rem;
+      border-left: solid 1px rgba($color-light, 0.2);
+      padding: 0 0.6rem;
+
+      &_value {
+        color: $color-light;
+        font-weight: 300;
+        font-size: 1rem;
+      }
+    }
+  }
+
+  &_button {
+    font-size: 1rem;
+    font-weight: 500;
+    color: $color-white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.6rem;
+    border: none;
+    background-color: $color-primary-light;
+
+    &:hover {
+      background-color: $color-primary;
+    }
+  }
+}
+.isdisponible {
+  width: 100%;
+  height: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+.false {
+  width: 20px;
+  height: 20px;
+  margin: 1rem;
+  background-color: rgb(103, 196, 11);
+  border-radius: 20px;
+}
+.true {
+  width: 20px;
+  height: 20px;
+  margin: 1rem;
+  background-color: rgb(203, 36, 36);
+  border-radius: 20px;
+}
