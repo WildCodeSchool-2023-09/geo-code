@@ -1,0 +1,107 @@
+@import "./color-config.scss";
+
+.borneListPage {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  margin: 1rem;
+
+  .buttonContainer {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+  }
+  .filterBorne {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    @media screen and (max-width: 980px) {
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+  }
+  .bornesContainer {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4rem;
+
+    .bornecard {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 400px;
+      max-height: 400px;
+      min-width: 300px;
+      min-height: 300px;
+      width: 40%;
+      height: 42%;
+
+      .userCardBorne {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        background-color: $color-grey;
+        border-radius: 20px;
+        h2 {
+          color: $color-light;
+        }
+        h3,
+        p {
+          color: $color-light;
+          padding: 1rem;
+          @media screen and (max-width: 980px) {
+            padding: 0.5rem;
+            font-size: medium;
+          }
+        }
+
+        button {
+          height: 15%;
+          width: 70%;
+          background-color: $color-primary-light;
+          color: $color-light;
+          border-radius: 20px;
+          border: none;
+        }
+        .distance {
+          display: flex;
+          justify-content: flex-end;
+          width: 100%;
+          font-size: small;
+        }
+      }
+    }
+  }
+  .filters {
+    @media screen and (max-width: 390px) {
+      display: none;
+    }
+  }
+}
+.isdisponible {
+  width: 100%;
+  height: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+.false {
+  width: 20px;
+  height: 20px;
+  margin: 1rem;
+  background-color: rgb(103, 196, 11);
+  border-radius: 20px;
+}
+.true {
+  width: 20px;
+  height: 20px;
+  margin: 1rem;
+  background-color: rgb(203, 36, 36);
+  border-radius: 20px;
+}
+@media screen and (max-width: 390px) {
+  .bornesContainer {
+    height: 100%;
+  }
+}

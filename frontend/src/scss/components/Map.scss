@@ -31,7 +31,7 @@ main {
     justify-content: flex-end;
     margin: 1rem;
     @media screen and (max-width: 390px) {
-      display: none;
+      height: 2%;
     }
   }
   .mapContainer {
@@ -172,7 +172,7 @@ main {
       }
       @media screen and (max-width: 390px) {
         width: 100vw;
-        height: 100vh;
+        height: 98vh;
       }
     }
   }

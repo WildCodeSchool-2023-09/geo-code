@@ -1,4 +1,5 @@
 import { MapContainer, TileLayer } from "react-leaflet";
+import { Link } from "react-router-dom";
 import Filtre from "./Filtre";
 import LocationMarker from "../components/LocationMarker";
 import BornesMarker from "../components/BornesMarker";
@@ -12,10 +13,11 @@ function Map() {
         <button type="button" className="mapButton">
           Map
         </button>
-
-        <button type="button" className="mapButton">
-          Liste
-        </button>
+        <Link to="/bornesListe">
+          <button type="button" className="mapButton">
+            Liste
+          </button>
+        </Link>
       </div>
       <div className="mapContainer">
         <Filtre />
