@@ -16,6 +16,7 @@ describe("GET /api/users", () => {
       logged_in: false,
       nb_vehicule: 1,
       isAdmin: true,
+      birthday: "2023-12-19",
     };
 
     // Create a sample item in the database
@@ -44,7 +45,6 @@ describe("GET /api/users/:id", () => {
     const testUser = {
       firstname: "Prenom",
       lastname: "Nom",
-      sexe: "Homme",
       code_postal: 75000,
       ville: "Paris",
       email: "nom.prenom@wcs.com",
@@ -52,6 +52,7 @@ describe("GET /api/users/:id", () => {
       logged_in: false,
       nb_vehicule: 1,
       isAdmin: true,
+      birthday: "2023-12-19",
     };
 
     // Create a sample item in the database
@@ -86,7 +87,6 @@ describe("POST /api/users", () => {
     const testUser = {
       firstname: "Prenom",
       lastname: "Nom",
-      sexe: "Homme",
       code_postal: 75000,
       ville: "Paris",
       email: "nom.prenom@wcs.com",
@@ -94,6 +94,7 @@ describe("POST /api/users", () => {
       logged_in: false,
       nb_vehicule: 1,
       isAdmin: true,
+      birthday: "2023-12-19",
     };
 
     // Send a POST request to the /api/users endpoint with a test item

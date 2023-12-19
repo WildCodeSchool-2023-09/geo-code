@@ -9,13 +9,12 @@ class UserManager extends AbstractManager {
 
   async create(user) {
     const [result] = await this.database.query(
-      `insert into ${this.table} (firstname, lastname, sexe, code_postal, ville, email, password, logged_in,
-                                        nb_vehicule, isAdmin)
+      `insert into ${this.table} (firstname, lastname, code_postal, ville, email, password, logged_in,
+                                        nb_vehicule, isAdmin, birthday)
              values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         user.firstname,
         user.lastname,
-        user.sexe,
         user.code_postal,
         user.ville,
         user.email,
@@ -23,6 +22,7 @@ class UserManager extends AbstractManager {
         user.logged_in,
         user.nb_vehicule,
         user.isAdmin,
+        user.birthday,
       ]
     );
 

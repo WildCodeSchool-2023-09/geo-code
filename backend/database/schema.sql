@@ -63,16 +63,16 @@ create table users
 (
     id          int auto_increment
         primary key,
-    firstname   varchar(255) not null,
-    lastname    varchar(255) not null,
-    sexe        varchar(255) not null,
-    code_postal int          not null,
-    ville       varchar(255) not null,
-    email       varchar(255) not null,
-    password    varchar(255) not null,
-    logged_in   tinyint(1)   not null,
-    nb_vehicule int          not null,
-    isAdmin     tinyint(1)   not null
+    firstname   varchar(255)         not null,
+    lastname    varchar(255)         not null,
+    code_postal int                  not null,
+    ville       varchar(255)         not null,
+    email       varchar(255)         not null,
+    password    varchar(255)         not null,
+    logged_in   tinyint(1) default 0 not null,
+    nb_vehicule int                  not null,
+    isAdmin     tinyint(1) default 0 not null,
+    birthday    date                 not null
 );
 
 create table vehicule
