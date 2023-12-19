@@ -3,17 +3,11 @@ import PropTypes from "prop-types";
 
 export default function BorneCard({ name, adresse }) {
   return (
-    <div className="card">
+    <div className="card-borne">
       <h2>{name}</h2>
       <h3>{adresse}</h3>
-      <button type="button" className="white-button">
+      <button type="button" className="blue-button">
         Plus d’informations
-      </button>
-      <button type="button" className=" blue-button">
-        Editer ce profil
-      </button>
-      <button type="button" className=" dark-blue-button">
-        Supprimer ce profil
       </button>
     </div>
   );

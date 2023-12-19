@@ -1,0 +1,190 @@
+@import "../color-config.scss";
+
+.header-main {
+  @media screen and (max-width: 390px) {
+    display: none;
+  }
+}
+.TAB {
+  @media screen and (max-width: 390px) {
+    display: none;
+  }
+}
+main {
+  margin-bottom: 0;
+}
+.filters {
+  background-color: $color-primary-light;
+  border-radius: 20px;
+
+  @media screen and (max-width: 390px) {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    width: 100%;
+    max-width: 450px;
+    border-radius: 20px;
+    @media screen and (max-width: 980px) {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      align-items: flex-end;
+      width: 100%;
+      height: 50%;
+      max-height: 400px;
+      max-width: 93%;
+    }
+    @media screen and (max-width: 390px) {
+      display: flex;
+      flex-wrap: wrap;
+      height: 100vh;
+      max-height: 100vh;
+      max-width: 100vw;
+      border-radius: 0;
+      align-content: flex-start;
+      align-items: flex-end;
+      margin-bottom: 80px;
+    }
+  }
+  button {
+    padding: 0.5rem;
+    width: 100%;
+    border-radius: 5px;
+    margin: 0.7rem;
+    border: none;
+    box-shadow: $navbar-color 2px 3px 10px 3px;
+    @media screen and (max-width: 980px) {
+      width: 100%;
+      padding: 0.6rem;
+    }
+    @media screen and (max-width: 390px) {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.5rem;
+      border: none;
+    }
+  }
+  .priseButton {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    @media screen and (max-width: 980px) {
+      flex-wrap: nowrap;
+    }
+    button {
+      width: 29%;
+      @media screen and (max-width: 980px) {
+        width: 100%;
+        padding: 0.6rem;
+      }
+    }
+    @media screen and (max-width: 390px) {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      button {
+        width: 29%;
+        padding: 0.8rem;
+      }
+    }
+  }
+  input {
+    width: 90%;
+    border-radius: 10px;
+    margin: 0 auto;
+    border: none;
+    padding: 0.5rem;
+    @media screen and (max-width: 980px) {
+      width: 100%;
+      margin: 0;
+      margin-left: 0.5rem;
+    }
+    @media screen and (max-width: 390px) {
+      width: 100%;
+      padding: 0.6rem;
+      margin: 0 auto;
+      border-radius: 10px;
+      border: none;
+    }
+  }
+  label {
+    padding: 0.5rem;
+    padding-left: 0.5rem;
+    @media screen and (max-width: 390px) {
+      padding: 0.8rem;
+    }
+  }
+
+  .Price {
+    display: flex;
+    justify-content: center;
+  }
+  .submitResearch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem auto;
+    width: 50%;
+    @media screen and (max-width: 980px) {
+      display: flex;
+      width: 90%;
+      margin: 0.5rem;
+    }
+    @media screen and (max-width: 390px) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 2rem auto;
+      width: 90%;
+      border-radius: 10px;
+    }
+  }
+  select {
+    width: 90%;
+    margin: 0 auto;
+    border-radius: 10px;
+    border: none;
+    padding: 0.5rem;
+    @media screen and (max-width: 980px) {
+      width: 100%;
+      padding: 0.5rem;
+      margin: 0;
+      margin-left: 0.5rem;
+    }
+    @media screen and (max-width: 390px) {
+      width: 100%;
+      padding: 0.6rem;
+      margin: 0 auto;
+      border-radius: 10px;
+      border: none;
+    }
+  }
+}
+
+h2 {
+  padding: 0.2rem;
+  width: 100%;
+  text-align: center;
+}
+.separate {
+  display: flex;
+  flex-direction: column;
+  @media screen and (max-width: 980px) {
+    width: 18%;
+    padding: 0.7rem;
+    margin: 0rem 0.4rem 0rem 0.2rem;
+  }
+  @media screen and (max-width: 390px) {
+    width: 30%;
+    padding: 0.6rem;
+    margin: 0rem 0.4rem 0rem 0.2rem;
+  }
+}

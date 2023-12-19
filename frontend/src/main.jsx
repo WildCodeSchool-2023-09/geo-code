@@ -13,6 +13,9 @@ import Map from "./pages/Map";
 import Contact from "./pages/Contact";
 import EmailSent from "./pages/EmailSent";
 import EmailError from "./pages/EmailError";
+import Filtre from "./pages/Filtre";
+import Profil from "./pages/Profil";
+import BornesListe from "./pages/BornesListe";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "/liste-bornes",
         element: <AdminBorne />,
+      },
+      {
+        path: "/profil",
+        element: <Profil />,
       },
       {
         path: "/reservations",
@@ -62,6 +69,14 @@ const router = createBrowserRouter([
       {
         path: "/email-error",
         element: <EmailError />,
+      },
+      {
+        path: "/filter",
+        element: <Filtre />,
+      },
+      {
+        path: "/bornesListe",
+        element: <BornesListe />,
       },
     ],
   },

@@ -1,4 +1,5 @@
 import "../scss/components/mobilenav.scss";
+import { NavLink as Link } from "react-router-dom";
 import "../scss/root.scss";
 import data from "../data/TabData.json";
 
@@ -26,14 +27,16 @@ export default function navmobile() {
 
       <div className="TAB__container">
         {data.map((dataIndex) => (
-          <div key={dataIndex.id} className="TAB__container__item">
-            <div className="TAB__container__item__icon">
-              <img src={dataIndex.icon} alt={dataIndex.name} />
+          <Link key={dataIndex.id} to={dataIndex.linkurl}>
+            <div className="TAB__container__item">
+              <div className="TAB__container__item__icon">
+                <img src={dataIndex.icon} alt={dataIndex.name} />
+              </div>
+              <div className="TAB__container__item__text">
+                <p>{dataIndex.name}</p>
+              </div>
             </div>
-            <div className="TAB__container__item__text">
-              <p>{dataIndex.name}</p>
-            </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

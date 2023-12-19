@@ -3,10 +3,26 @@
 /* ************************************************************************* */
 
 // Import the manager modules responsible for handling data operations on the tables
-const ItemManager = require("./models/ItemManager");
+const UserManager = require("./models/UserManager");
+const ReservationManager = require("./models/ReservationManager");
+const MarqueManager = require("./models/MarqueManager");
+const ModeleManager = require("./models/ModeleManager");
+const VehiculeManager = require("./models/VehiculeManager");
+const TarificationManager = require("./models/TarificationManager");
+const AccessibiliteManager = require("./models/AccessibiliteManager");
+const EnseigneManager = require("./models/EnseigneManager");
+const BorneManager = require("./models/BorneManager");
 
 const managers = [
-  ItemManager,
+  UserManager,
+  ReservationManager,
+  MarqueManager,
+  ModeleManager,
+  VehiculeManager,
+  TarificationManager,
+  AccessibiliteManager,
+  EnseigneManager,
+  BorneManager,
   // Add other managers here
 ];
 
