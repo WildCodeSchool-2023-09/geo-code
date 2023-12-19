@@ -1,18 +1,32 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import FilterContext from "../Context/ResearchContext";
 import "../scss/components/Filtermobil.scss";
 
 function Filtre() {
   const { research, setResearch } = useContext(FilterContext);
+
+  const [valueDefault, setValueDefault] = useState({
+    code: "",
+    enseigne: "",
+    rayon: "",
+    puissance: "",
+    disponible: "",
+    tarification: "",
+    prise: "",
+  });
   const handleChange = (e) => {
-    setResearch({ ...research, [e.target.name]: e.target.value });
+    setValueDefault({ ...valueDefault, [e.target.name]: e.target.value });
   };
 
   const selectValue = (e) => {
-    setResearch({ ...research, [e.target.name]: e.target.value });
+    setValueDefault({ ...valueDefault, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setResearch(valueDefault);
+    console.info(valueDefault);
+    console.info("toto");
     console.info(research);
   };
   return (
@@ -23,7 +37,7 @@ function Filtre() {
           <div className="separate">
             <label htmlFor="code postal">Code Postal</label>
             <input
-              value={research.code}
+              value={valueDefault.code}
               type="text"
               name="code"
               id="code"
@@ -33,7 +47,7 @@ function Filtre() {
           <div className="separate">
             <label htmlFor="enseigne">Enseigne</label>
             <select
-              value={research.enseigne}
+              value={valueDefault.enseigne}
               onChange={handleChange}
               name="enseigne"
             >
@@ -45,7 +59,7 @@ function Filtre() {
           <div className="separate">
             <label htmlFor="rayon">Rayon</label>
             <input
-              value={research.rayon}
+              value={valueDefault.rayon}
               type="number"
               name="rayon"
               id="rayon"
@@ -55,7 +69,7 @@ function Filtre() {
           <div className="separate">
             <label htmlFor="puissance">Puissance</label>
             <input
-              value={research.puissance}
+              value={valueDefault.puissance}
               type="string"
               name="puissance"
               id="puissance"
@@ -65,7 +79,7 @@ function Filtre() {
           <div className="separate">
             <label htmlFor="disponible">Disponible</label>
             <select
-              value={research.disponible}
+              value={valueDefault.disponible}
               onChange={handleChange}
               name="disponible"
             >
