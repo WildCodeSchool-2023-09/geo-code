@@ -11,6 +11,8 @@ import Reservation from "./pages/Reservation";
 import AdminAddBornes from "./pages/AdminAddBornes";
 import Map from "./pages/Map";
 import Contact from "./pages/Contact";
+import EmailSent from "./pages/EmailSent";
+import EmailError from "./pages/EmailError";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +54,14 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        path: "/email-sent",
+        element: <EmailSent />,
+      },
+      {
+        path: "/email-error",
+        element: <EmailError />,
       },
     ],
   },

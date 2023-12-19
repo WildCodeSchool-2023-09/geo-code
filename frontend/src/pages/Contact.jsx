@@ -13,9 +13,93 @@ export default function Contact() {
     message: "",
   });
 
+  const isEmailValid = (value) => {
+    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,4}$/;
+    return emailPattern.test(value);
+  };
+  const isFirstnameValid = (value) => {
+    const firstnamePattern = /^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$/;
+    return firstnamePattern.test(value);
+  };
+  const isLastnameValid = (value) => {
+    const lastnamePattern = /^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$/;
+    return lastnamePattern.test(value);
+  };
+  const isSubjectValid = (value) => {
+    const subjectPattern = /^[A-Za-zÀ-ÖØ-öø-ÿ\d\s'-._]+$/;
+    return subjectPattern.test(value);
+  };
+  const isMessageValid = (value) => {
+    const messagePattern = /^[A-Za-zÀ-ÖØ-öø-ÿ\d\s'-._]+$/;
+    return messagePattern.test(value);
+  };
+  const isCategoryValid = (value) => {
+    const categoryPattern = /^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$/;
+    return categoryPattern.test(value);
+  };
+
   const handleDetailsChange = (event) => {
     const { name, value } = event.target;
 
+    if (!isEmailValid(details.email)) {
+      document.getElementById("errorEmail").innerText =
+        "Votre Email n'est pas valide";
+      document.getElementById("email").classList.add("errorOnPlaceholder");
+    } else {
+      document.getElementById("errorEmail").innerText = "";
+      document.getElementById("email").classList.remove("errorOnPlaceholder");
+    }
+
+    if (!isFirstnameValid(details.firstname)) {
+      document.getElementById("errorFname").innerText =
+        "Votre Prénom est requis";
+      document.getElementById("firstname").classList.add("errorOnPlaceholder");
+    } else {
+      document.getElementById("errorFname").innerText = "";
+      document
+        .getElementById("firstname")
+        .classList.remove("errorOnPlaceholder");
+    }
+
+    if (!isLastnameValid(details.lastname)) {
+      document.getElementById("errorLname").innerText = "Votre Nom est requis";
+      document.getElementById("lastname").classList.add("errorOnPlaceholder");
+    } else {
+      document.getElementById("errorLname").innerText = "";
+      document
+        .getElementById("lastname")
+        .classList.remove("errorOnPlaceholder");
+    }
+
+    if (!isSubjectValid(details.subject)) {
+      document.getElementById("errorSubject").innerText = "Un Sujet est requis";
+      document.getElementById("subject").classList.add("errorOnPlaceholder");
+    } else {
+      document.getElementById("errorSubject").innerText = "";
+      document.getElementById("subject").classList.remove("errorOnPlaceholder");
+    }
+
+    if (!isMessageValid(details.message)) {
+      document.getElementById("errorMessage").innerText =
+        "Un Message est requis";
+      document.getElementById("message").classList.add("errorOnPlaceholder");
+    } else {
+      document.getElementById("errorMessage").innerText = "";
+      document.getElementById("message").classList.remove("errorOnPlaceholder");
+    }
+
+    if (!isCategoryValid(details.category)) {
+      document.getElementById("errorCategory").innerText =
+        "Une category est requise";
+      document
+        .getElementById("category-selector")
+        .classList.add("errorOnPlaceholder");
+    } else {
+      document.getElementById("errorCategory").innerText = "";
+      document
+        .getElementById("category-selector")
+        .classList.remove("errorOnPlaceholder");
+    }
     setDetails((prevDetails) => {
       return {
         ...prevDetails,
@@ -24,6 +108,25 @@ export default function Contact() {
     });
   };
 
+  function escapeHtml(unsafe) {
+    return unsafe.replace(/[&<"'>]/g, function toMatch(match) {
+      switch (match) {
+        case "&":
+          return "&amp;";
+        case "<":
+          return "&lt;";
+        case ">":
+          return "&gt;";
+        case '"':
+          return "&quot;";
+        case "'":
+          return "&#39;";
+        default:
+          return match;
+      }
+    });
+  }
+
   const handleSendEmail = () => {
     emailjs.init(import.meta.env.VITE_EMAIL_USER_ID);
     emailjs
@@ -31,19 +134,21 @@ export default function Contact() {
         import.meta.env.VITE_EMAIL_SERVICE_ID,
         import.meta.env.VITE_EMAIL_TEMPLATE_ID,
         {
-          firstname: details.firstname,
-          lastname: details.lastname,
-          category: details.category,
-          email: details.email,
-          subject: details.subject,
-          message: details.message,
+          firstname: escapeHtml(details.firstname),
+          lastname: escapeHtml(details.lastname),
+          category: escapeHtml(details.category),
+          email: escapeHtml(details.email),
+          subject: escapeHtml(details.subject),
+          message: escapeHtml(details.message),
         }
       )
       .then((response) => {
         console.info(response);
+        window.location = "/email-sent";
       })
       .catch((error) => {
         console.error(error);
+        window.location = "/email-error";
       });
   };
 
@@ -55,10 +160,12 @@ export default function Contact() {
           <input
             className="form_placeholder_input"
             name="lastname"
+            id="lastname"
             value={details.lastname}
             onChange={handleDetailsChange}
             type="text"
             placeholder="Doe"
+            pattern="[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+,"
             required
           />
         </div>
@@ -67,10 +174,12 @@ export default function Contact() {
           <input
             className="form_placeholder_input"
             name="firstname"
+            id="firstname"
             value={details.firstname}
             onChange={handleDetailsChange}
             type="text"
             placeholder="John"
+            pattern="[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+,"
             required
           />
         </div>
@@ -79,10 +188,12 @@ export default function Contact() {
           <input
             className="form_placeholder_input"
             name="email"
+            id="email"
             value={details.email}
             onChange={handleDetailsChange}
             type="email"
             placeholder="john_doe@exemple.com"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,4}$"
             required
           />
         </div>
@@ -109,10 +220,12 @@ export default function Contact() {
           <input
             className="form_placeholder_input"
             name="subject"
+            id="subject"
             value={details.subject}
             onChange={handleDetailsChange}
             type="text"
             placeholder="Demande de ..."
+            pattern="[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+,"
             required
           />
         </div>
@@ -121,6 +234,7 @@ export default function Contact() {
           <textarea
             className="form_placeholder_input form_placeholder_textarea"
             name="message"
+            id="message"
             value={details.message}
             onChange={handleDetailsChange}
             type="text"
@@ -139,9 +253,16 @@ export default function Contact() {
             !details.message
           }
           onClick={handleSendEmail}
+          className="form_placeholder_button"
         >
           <span>Envoyer le Message</span>
         </button>
+        <p className="error_container" id="errorLname" />
+        <p className="error_container" id="errorFname" />
+        <p className="error_container" id="errorCategory" />
+        <p className="error_container" id="errorEmail" />
+        <p className="error_container" id="errorSubject" />
+        <p className="error_container" id="errorMessage" />
       </div>
     </main>
   );

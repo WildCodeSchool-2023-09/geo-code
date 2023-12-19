@@ -1,3 +1,5 @@
+@import "./color-config.scss";
+
 section {
   display: flex;
   flex-direction: column;
@@ -14,38 +16,22 @@ section {
     gap: 2rem;
 
     h1 {
-      font-family: var(--font);
-      color: var(--color-black);
+      font-family: $font;
+      color: $color-black;
       font-size: 2rem;
       text-align: center;
       width: fit-content;
     }
     .message {
-      font-family: var(--font);
-      color: var(--color-grey);
+      font-family: $font;
+      color: $color-black;
       font-size: 1rem;
       font-weight: 300;
       text-align: center;
-    }
 
-    .btn-return {
-      display: flex;
-      justify-content: center;
-      width: fit-content;
-      margin: auto;
-      padding: 0.5rem 1rem;
-      background-color: var(--color-black);
-      border: none;
-      border-radius: 0.6rem;
-      font-family: var(--font);
-      color: var(--color-white);
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-
-      &:hover {
-        background-color: var(--color-grey);
-        transform: scale(0.9);
+      a {
+        color: $color-primary;
+        font-weight: 500;
       }
     }
   }
