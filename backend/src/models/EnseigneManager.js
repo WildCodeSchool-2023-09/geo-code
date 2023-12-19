@@ -1,19 +1,20 @@
 const AbstractManager = require("./AbstractManager");
 
-class ItemManager extends AbstractManager {
+class EnseigneManager extends AbstractManager {
   constructor() {
     // Call the constructor of the parent class (AbstractManager)
     // and pass the table name "item" as configuration
-    super({ table: "item" });
+    super({ table: "enseigne" });
   }
 
   // The C of CRUD - Create operation
 
-  async create(item) {
+  async create(enseigne) {
     // Execute the SQL INSERT query to add a new item to the "item" table
     const [result] = await this.database.query(
-      `insert into ${this.table} (title) values (?)`,
-      [item.title]
+      `insert into ${this.table} (name)
+             values (?)`,
+      [enseigne.name]
     );
 
     // Return the ID of the newly inserted item
@@ -25,7 +26,9 @@ class ItemManager extends AbstractManager {
   async read(id) {
     // Execute the SQL SELECT query to retrieve a specific item by its ID
     const [rows] = await this.database.query(
-      `select * from ${this.table} where id = ?`,
+      `select *
+             from ${this.table}
+             where id = ?`,
       [id]
     );
 
@@ -35,7 +38,8 @@ class ItemManager extends AbstractManager {
 
   async readAll() {
     // Execute the SQL SELECT query to retrieve all items from the "item" table
-    const [rows] = await this.database.query(`select * from ${this.table}`);
+    const [rows] = await this.database.query(`select *
+                                                  from ${this.table}`);
 
     // Return the array of items
     return rows;
@@ -56,4 +60,4 @@ class ItemManager extends AbstractManager {
   // }
 }
 
-module.exports = ItemManager;
+module.exports = EnseigneManager;
