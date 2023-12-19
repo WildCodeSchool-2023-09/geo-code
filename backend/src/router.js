@@ -26,6 +26,9 @@ router.get("/users/:id", userControllers.read);
 // Route to add a new users
 router.post("/users", userControllers.add);
 
+// Route to edit a user
+router.post("/users/:id", userControllers.edit);
+
 // Route to get a list of reservations
 router.get("/reservations", reservationControllers.browse);
 
