@@ -18,7 +18,7 @@ export default function Contact() {
     return emailPattern.test(value);
   };
   const isFirstnameValid = (value) => {
-    const firstnamePattern = /^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$/;
+    const firstnamePattern = /^[A-Za-zÀ-ÖØ-öø-ÿ\d\s'-]+$/;
     return firstnamePattern.test(value);
   };
   const isLastnameValid = (value) => {
@@ -90,7 +90,7 @@ export default function Contact() {
 
     if (!isCategoryValid(details.category)) {
       document.getElementById("errorCategory").innerText =
-        "Une category est requise";
+        "Une categorie est requise";
       document
         .getElementById("category-selector")
         .classList.add("errorOnPlaceholder");
@@ -154,6 +154,14 @@ export default function Contact() {
 
   return (
     <main className="backgroundImageMain">
+      <div className="contact_title">
+        <h1>Contactez Nous</h1>
+        <p className="contact_description">
+          Vous avez une question, une suggestion ou une demande de partenariat ?
+          <br />
+          N'hésitez pas à nous contacter via le formulaire ci-dessous.
+        </p>
+      </div>
       <div className="from_contact_container">
         <div className="form_placeholder">
           <p className="form_placeholder_title">Nom</p>
