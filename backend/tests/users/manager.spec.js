@@ -8,7 +8,6 @@ describe("Create user", () => {
     const testUser = {
       firstname: "Prenom",
       lastname: "Nom",
-      sexe: "Homme",
       code_postal: 75000,
       ville: "Paris",
       email: "nom.prenom@wcs.com",
@@ -16,6 +15,7 @@ describe("Create user", () => {
       logged_in: false,
       nb_vehicule: 1,
       isAdmin: true,
+      birthday: "2023-12-19",
     };
 
     // Send a create request to the item table with a test item
@@ -41,6 +41,7 @@ describe("Create user", () => {
     expect(foundItem).toHaveProperty("logged_in");
     expect(foundItem).toHaveProperty("nb_vehicule");
     expect(foundItem).toHaveProperty("isAdmin");
+    expect(foundItem).toHaveProperty("birthday");
     expect(typeof foundItem.id).toEqual("number");
     expect(typeof foundItem.firstname).toEqual("string");
     expect(typeof foundItem.lastname).toEqual("string");
@@ -51,6 +52,7 @@ describe("Create user", () => {
     expect(typeof foundItem.logged_in).toEqual("number");
     expect(typeof foundItem.nb_vehicule).toEqual("number");
     expect(typeof foundItem.isAdmin).toEqual("number");
+    expect(typeof foundItem.birthday).toEqual("object");
     expect(foundItem.firstname).toBe(testUser.firstname);
     expect(foundItem.lastname).toBe(testUser.lastname);
     expect(foundItem.code_postal).toBe(testUser.code_postal);
@@ -60,6 +62,7 @@ describe("Create user", () => {
     expect(foundItem.logged_in).toBe(testUser.logged_in === true ? 1 : 0);
     expect(foundItem.nb_vehicule).toBe(testUser.nb_vehicule);
     expect(foundItem.isAdmin).toBe(testUser.isAdmin === true ? 1 : 0);
+    // expect(foundItem.birthday).toBe(testUser.birthday);
   });
 
   it("should throw when passing invalid object", async () => {
