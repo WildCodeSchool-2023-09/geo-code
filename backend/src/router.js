@@ -21,7 +21,7 @@ const borneControllers = require("./controllers/borneControllers");
 router.get("/users", userControllers.browse);
 
 // Route to get a list of reservations by ID
-router.get("/users/:id", userControllers.browse);
+router.get("/users/:id", userControllers.read);
 
 // Route to add a new users
 router.post("/users", userControllers.add);
