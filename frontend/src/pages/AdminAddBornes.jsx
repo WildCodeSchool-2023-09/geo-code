@@ -1,6 +1,7 @@
 import "../scss/admin-add-bornes.scss";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
+import ScrollToTop from "./ResetScrollOnPage";
 
 export default function AdminAddBornes() {
   const inputRef = useRef(null);
@@ -29,6 +30,7 @@ export default function AdminAddBornes() {
 
   return (
     <main className="add-bornes-main backgroundImageMain">
+      <ScrollToTop />
       <Link to="/admin">Retour</Link>
       <div className="upload-card">
         <h1>Ajouter des Bornes</h1>

@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-
-import "../scss/profil.scss";
 import { useState } from "react";
+import ScrollToTop from "./ResetScrollOnPage";
+import "../scss/profil.scss";
+
 import data from "../data/UserDataTest.json";
 
 export default function Profil() {
@@ -17,6 +18,7 @@ export default function Profil() {
 
   return (
     <main className="profil-main">
+      <ScrollToTop />
       <div className="profil-container">
         <Link to="/" className="back">
           Retour

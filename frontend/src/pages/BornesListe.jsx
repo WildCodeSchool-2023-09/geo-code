@@ -7,6 +7,7 @@ import SecondaryButton from "../components/buttons/SecondaryButton";
 import Filtre from "../components/Filtre";
 import "../scss/bornesList.scss";
 import bornes from "../data/BorneUser";
+import ScrollToTop from "./ResetScrollOnPage";
 
 function BornesListe() {
   const { research } = useContext(FilterContext);
@@ -18,6 +19,7 @@ function BornesListe() {
 
   return (
     <div className="borneListPage">
+      <ScrollToTop />
       <div className="buttonContainer">
         <div className="buttonContainer">
           <SecondaryButton btnText="Carte" btnLink="/Map" />

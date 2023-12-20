@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import emailjs from "@emailjs/browser";
+import ScrollToTop from "./ResetScrollOnPage";
 
 import "../scss/contact.scss";
 
@@ -154,6 +155,7 @@ export default function Contact() {
 
   return (
     <main className="backgroundImageMain Contact_Container">
+      <ScrollToTop />
       <div className="contact_title">
         <h1>Contactez Nous</h1>
         <p className="contact_description">
