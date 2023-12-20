@@ -34,12 +34,18 @@ function App() {
     [position, setPosition]
   );
 
-  if (window.location.pathname === "/map" && window.innerWidth < 560) {
-    document.body.classList.add("no-scroll");
-  } else {
-    document.body.classList.remove("no-scroll");
-  }
+  const resizeObserver = new ResizeObserver(() => {
+    if (window.innerWidth < 720) {
+      if (window.location.pathname === "/map") {
+        document.body.classList.add("no-scroll");
+        document.documentElement.scrollTop = 0;
+      }
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+  });
 
+  resizeObserver.observe(document.body);
   return (
     <>
       <Navbar navData={navData} />

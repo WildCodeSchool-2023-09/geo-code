@@ -17,7 +17,7 @@ export default function NotFound() {
         <p className="message">
           Nous vous conseillons de retourner à la page d'accueil.
         </p>
-        <PrimaryButton btnText="retourner à la page d'accueil" btnLink="/" />
+        <PrimaryButton btnText="Retourner à la page d'accueil" btnLink="/" />
       </div>
     </section>
   );
