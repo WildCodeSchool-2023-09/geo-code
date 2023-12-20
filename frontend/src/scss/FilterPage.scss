@@ -1,6 +1,7 @@
 .filters_container {
   border-radius: 0rem;
   height: 100vh;
+  min-height: 720px;
 
   @media screen and (max-width: 980px) {
     height: 100%;
