@@ -15,7 +15,7 @@ export default function AdminBorne() {
   }
 
   return (
-    <main className="admin-borne">
+    <main className="admin-borne backgroundImageMain">
       <Link to="/admin">Retour</Link>
       <h1>Liste des Bornes</h1>
       <div className="borneSearch">
