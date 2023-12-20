@@ -23,10 +23,6 @@ main {
   min-height: 100vh;
   margin-top: 80px;
   font-family: $font;
-  @media screen and (max-width: 549px) {
-    margin-bottom: 120px;
-    font-family: $font;
-  }
 }
 
 .backgroundImageMain {
