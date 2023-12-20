@@ -134,3 +134,27 @@
     }
   }
 }
+.locateMe {
+  display: flex;
+  justify-content: flex-end;
+  z-index: 999;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  button {
+    display: flex;
+    padding: 0.6rem 1.2rem;
+    background-color: $color-grey;
+    border-radius: 0.6rem;
+    justify-content: center;
+    width: fit-content;
+    height: fit-content;
+    text-decoration: none;
+    font-family: $font;
+    color: $color-light;
+    text-align: center;
+    font-size: 1rem;
+    transition: transform 0.1s ease-in-out;
+    border: none;
+    margin: 1rem, 1rem, 1rem, 1rem;
+  }
+}
