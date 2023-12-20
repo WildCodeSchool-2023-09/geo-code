@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import "../scss/components/borne-card.scss";
+import "../scss/components/borneCardUser.scss";
 import PropTypes from "prop-types";
 import LocationContext from "../Context/locationContext";
 
@@ -39,20 +39,35 @@ export default function BorneCard({
   }
   return (
     <div className="userCardBorne">
-      <div className="isdisponible">
-        <p>{convertToDistance(lat, lng)} km</p>
-
+      <div className="userCardBorne_info">
+        <p className="userCardBorne_info_km">
+          {convertToDistance(lat, lng)} km
+        </p>
         <div className={disponible} />
       </div>
 
-      <h2>{name}</h2>
-      <h3>Code postal : {code}</h3>
-      <h3>Enseigne : {enseigne}</h3>
-      <h3>Nombre de prise : {pdc}</h3>
-      <h3>Puissance : {puissance}</h3>
-      <h3>Tarification : {tarification}</h3>
-      <h3>Type de prise : {prise}</h3>
-      <button type="button" className="blue-button">
+      <p className="userCardBorne_name">{name}</p>
+      <div className="userCardBorne_data">
+        <div className="userCardBorne_data_array">
+          <p className="userCardBorne_data_array_value">Code postal : {code}</p>
+          <p className="userCardBorne_data_array_value">
+            Enseigne : {enseigne}
+          </p>
+          <p className="userCardBorne_data_array_value">
+            Nombre de prise : {pdc}
+          </p>
+        </div>
+        <div className="userCardBorne_data_array">
+          <p className="userCardBorne_data_array_value">
+            Puissance : {puissance}
+          </p>
+          <p className="userCardBorne_data_array_value">
+            Tarification : {tarification}
+          </p>
+          <p className="userCardBorne_data_array_value">Prise : {prise}</p>
+        </div>
+      </div>
+      <button type="button" className="userCardBorne_button">
         Réservation
       </button>
     </div>

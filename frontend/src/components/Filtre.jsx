@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
 import FilterContext from "../Context/ResearchContext";
-import "../scss/components/Filtermobil.scss";
+import "../scss/components/Filter.scss";
 
 function Filtre() {
-  const { research, setResearch } = useContext(FilterContext);
+  const { setResearch } = useContext(FilterContext);
 
   const [valueDefault, setValueDefault] = useState({
     code: "",
@@ -25,15 +25,12 @@ function Filtre() {
   const handleSubmit = (event) => {
     event.preventDefault();
     setResearch(valueDefault);
-    console.info(valueDefault);
-    console.info("toto");
-    console.info(research);
   };
   return (
-    <>
-      <div className="filters">
+    <div>
+      <div className="filters_container">
         <h2>Filtres de recherche</h2>
-        <form onSubmit={handleSubmit}>
+        <form className="filters_container_form" onSubmit={handleSubmit}>
           <div className="separate">
             <label htmlFor="code postal">Code Postal</label>
             <input
@@ -165,8 +162,8 @@ function Filtre() {
             Recherche
           </button>
         </form>
-      </div>{" "}
-    </>
+      </div>
+    </div>
   );
 }
 

@@ -13,7 +13,7 @@ import Map from "./pages/Map";
 import Contact from "./pages/Contact";
 import EmailSent from "./pages/EmailSent";
 import EmailError from "./pages/EmailError";
-import Filtre from "./pages/Filtre";
+import FiltrePage from "./pages/FilterPages";
 import Profil from "./pages/Profil";
 import BornesListe from "./pages/BornesListe";
 
@@ -72,7 +72,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/filter",
-        element: <Filtre />,
+        element: <FiltrePage />,
       },
       {
         path: "/bornesListe",

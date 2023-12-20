@@ -1,27 +1,19 @@
 import { MapContainer, TileLayer } from "react-leaflet";
-import { Link } from "react-router-dom";
-import Filtre from "./Filtre";
+import Filtre from "../components/Filtre";
 import LocationMarker from "../components/LocationMarker";
 import BornesMarker from "../components/BornesMarker";
+import SecondaryButton from "../components/buttons/SecondaryButton";
 import "../scss/root.scss";
 import "../scss/components/Map.scss";
 
 function Map() {
   return (
     <div className="allMap">
-      <div className="buttonContainer">
-        <button type="button" className="mapButton">
-          Map
-        </button>
-        <Link to="/bornesListe">
-          <button type="button" className="mapButton">
-            Liste
-          </button>
-        </Link>
-      </div>
-      <div className="mapContainer">
-        <Filtre />
-        <div>
+      <div className="Container">
+        <div className="Container_Filter">
+          <Filtre />
+        </div>
+        <div className="Leaflet_Map">
           <MapContainer
             className="Map"
             center={{ lat: 46.67470283734314, lng: 2.425212152134166 }}
@@ -34,6 +26,9 @@ function Map() {
             />
             <LocationMarker />
             <BornesMarker />
+            <div className="buttonContainer">
+              <SecondaryButton btnText="Liste" btnLink="/bornesListe" />
+            </div>
           </MapContainer>
         </div>
       </div>
