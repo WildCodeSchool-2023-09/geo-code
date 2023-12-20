@@ -28,7 +28,7 @@ export default function AdminAddBornes() {
   }
 
   return (
-    <main className="add-bornes-main">
+    <main className="add-bornes-main backgroundImageMain">
       <Link to="/admin">Retour</Link>
       <div className="upload-card">
         <h1>Ajouter des Bornes</h1>

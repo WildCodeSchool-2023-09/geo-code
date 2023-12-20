@@ -66,15 +66,6 @@ export default function Footer() {
                   Cookies
                 </Link>
               </li>
-              <li className="section-item">
-                <Link
-                  className="underline-animation"
-                  to="/contact"
-                  title="Aller à la page Contact"
-                >
-                  Contact
-                </Link>
-              </li>
             </ul>
           </div>
           <div className="section">
@@ -126,8 +117,8 @@ export default function Footer() {
               <li className="section-item">
                 <Link
                   className="underline-animation"
-                  to="/#"
-                  title="Aller à la page Mentions Légales"
+                  to="/contact"
+                  title="Aller à la page Contact"
                 >
                   Nous Contacter
                 </Link>
@@ -135,8 +126,8 @@ export default function Footer() {
               <li className="section-item">
                 <Link
                   className="underline-animation"
-                  to="/#"
-                  title="Aller à la page Cookies"
+                  to="/partenaires"
+                  title="Aller à la page Partenaires"
                 >
                   Devenir Partenaire
                 </Link>
