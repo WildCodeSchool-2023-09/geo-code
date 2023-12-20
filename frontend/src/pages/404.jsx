@@ -2,10 +2,12 @@ import "../scss/pages.scss";
 import Lottie from "react-lottie-player";
 import animation404 from "../data/404-animation.json";
 import PrimaryButton from "../components/buttons/PrimaryButton";
+import ScrollToTop from "./ResetScrollOnPage";
 
 export default function NotFound() {
   return (
     <section>
+      <ScrollToTop />
       <div className="containererror">
         <Lottie
           loop

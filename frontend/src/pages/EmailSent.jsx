@@ -2,10 +2,12 @@ import "../scss/pages.scss";
 import Lottie from "react-lottie-player";
 import mailSent from "../data/MailSend.json";
 import PrimaryButton from "../components/buttons/PrimaryButton";
+import ScrollToTop from "./ResetScrollOnPage";
 
 export default function EmailSent() {
   return (
     <section>
+      <ScrollToTop />
       <div className="containererror">
         <Lottie
           loop

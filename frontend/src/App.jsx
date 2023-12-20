@@ -33,26 +33,26 @@ function App() {
     () => ({ position, setPosition }),
     [position, setPosition]
   );
-
-  const resizeObserver = new ResizeObserver(() => {
-    if (window.innerWidth < 720) {
-      if (window.location.pathname === "/map") {
-        document.body.classList.add("no-scroll");
-        document.documentElement.scrollTop = 0;
+  function FixScrollOnPage() {
+    const resizeObserver = new ResizeObserver(() => {
+      if (window.innerWidth < 720) {
+        if (window.location.pathname === "/map") {
+          document.body.classList.add("no-scroll");
+          document.documentElement.scrollTop = 0;
+        }
       }
-    } else {
       document.body.classList.remove("no-scroll");
-    }
-  });
+    });
+    resizeObserver.observe(document.body);
+  }
 
-  resizeObserver.observe(document.body);
   return (
     <>
       <Navbar navData={navData} />
       <main>
         <LocationContext.Provider value={positionValue}>
           <FilterResearch.Provider value={value}>
-            <Outlet />
+            <Outlet onChange={() => FixScrollOnPage()} />
           </FilterResearch.Provider>
         </LocationContext.Provider>
       </main>
