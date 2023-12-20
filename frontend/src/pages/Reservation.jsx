@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 import data from "../data/UserDataTest.json";
 import "../scss/reservation.scss";
+import PrimaryButton from "../components/buttons/PrimaryButton";
 
 export default function Reservation() {
   return (
@@ -30,22 +31,22 @@ export default function Reservation() {
           <div className="past-reservation">
             <p>Borne Paris 2</p>
             <p>30/12/2023</p>
-            <button type="button">Réserver à nouveau</button>
+            <PrimaryButton btnLink="#" btnText="Réserver à nouveau" />
           </div>
           <div className="past-reservation">
             <p>Borne Paris 2</p>
             <p>30/12/2023</p>
-            <button type="button">Réserver à nouveau</button>
+            <PrimaryButton btnLink="#" btnText="Réserver à nouveau" />
           </div>
           <div className="past-reservation">
             <p>Borne Paris 2</p>
             <p>30/12/2023</p>
-            <button type="button">Réserver à nouveau</button>
+            <PrimaryButton btnLink="#" btnText="Réserver à nouveau" />
           </div>
           <div className="past-reservation">
             <p>Borne Paris 2</p>
             <p>30/12/2023</p>
-            <button type="button">Réserver à nouveau</button>
+            <PrimaryButton btnLink="#" btnText="Réserver à nouveau" />
           </div>
         </div>
       </div>

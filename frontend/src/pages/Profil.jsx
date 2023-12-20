@@ -1,9 +1,20 @@
 import { Link } from "react-router-dom";
 
 import "../scss/profil.scss";
+import { useState } from "react";
 import data from "../data/UserDataTest.json";
 
 export default function Profil() {
+  const [lastname, setLastname] = useState(data[0].lastname);
+  const [firstname, setFirstname] = useState(data[0].firstname);
+  const [birthday, setBirthday] = useState(data[0].date_naissance);
+  const [email, setEmail] = useState(data[0].email);
+  const [phone, setPhone] = useState(data[0].phone);
+  const [adresse, setAdresse] = useState(data[0].adresse);
+  const [codePostal, setCodePostal] = useState(data[0].code_postal);
+  const [ville, setVille] = useState(data[0].ville);
+  const [pays, setPays] = useState(data[0].pays);
+
   return (
     <main className="profil-main">
       <div className="profil-container">
@@ -29,20 +40,48 @@ export default function Profil() {
             <div className="info-principales">
               <h2>Informations principales</h2>
               <form>
-                <input value={data[0].lastname} />
-                <input value={data[0].firstname} />
-                <input value={data[0].date_naissance} />
-                <input value={data[0].email} />
-                <input value={data[0].phone} />
+                <input
+                  value={lastname}
+                  onChange={(e) => setLastname(e.target.value)}
+                />
+                <input
+                  value={firstname}
+                  onChange={(e) => setFirstname(e.target.value)}
+                />
+                <input
+                  type="date"
+                  value={birthday}
+                  onChange={(e) => setBirthday(e.target.value)}
+                />
+                <input
+                  value={email}
+                  type="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                  value={phone}
+                  type="number"
+                  onChange={(e) => setPhone(e.target.value)}
+                />
               </form>
             </div>
             <div className="info-localisation">
               <h2>Informations de localisation</h2>
               <form>
-                <input value={data[0].adresse} />
-                <input value={data[0].code_postal} />
-                <input value={data[0].ville} />
-                <input value={data[0].pays} />
+                <input
+                  value={adresse}
+                  onChange={(e) => setAdresse(e.target.value)}
+                />
+                <input
+                  value={codePostal}
+                  type="number"
+                  onChange={(e) => setCodePostal(e.target.value)}
+                />
+                <input
+                  value={ville}
+                  onChange={(e) => setVille(e.target.value)}
+                />
+                <input value={pays} onChange={(e) => setPays(e.target.value)} />
               </form>
             </div>
             <div className="buttons">
