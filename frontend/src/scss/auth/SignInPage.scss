@@ -77,18 +77,29 @@
         height: 200px;
         resize: none;
       }
+    }
 
-      &_button {
-        margin-top: 1.2rem;
+    .form_buttons {
+      display: flex;
+      align-items: center;
+      margin-top: 1.2rem;
+      gap: 1rem;
+
+      .signIn {
         display: flex;
         padding: 0.6rem 1.2rem;
-        border: none;
-        border-radius: 0.5rem;
-        color: $color-light;
         background-color: $color-primary;
+        border-radius: 0.6rem;
+        justify-content: center;
+        width: fit-content;
+        height: fit-content;
+        text-decoration: none;
+        font-family: $font;
+        color: $color-light;
+        text-align: center;
         font-size: 1rem;
-        font-weight: 300;
-        cursor: pointer;
+        transition: transform 0.1s ease-in-out;
+        border: none;
 
         &:hover {
           background-color: $color-primary-light;
@@ -97,6 +108,27 @@
       }
     }
 
+    .forgotPassword {
+      display: flex;
+      padding: 0.6rem 1.2rem;
+      background: none;
+
+      border-radius: 0.6rem;
+      justify-content: center;
+      width: fit-content;
+      height: fit-content;
+      text-decoration: none;
+      font-family: $font;
+      color: $color-black;
+      text-align: center;
+      font-size: 0.9rem;
+      transition: transform 0.1s ease-in-out;
+      border: none;
+
+      &:hover {
+        transform: scale(0.96);
+      }
+    }
     .error_container {
       display: flex;
       width: 100%;

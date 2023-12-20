@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "../../scss/auth/SignInPage.scss";
 
+import SecondaryButton from "../../components/buttons/SecondaryButton";
+
 export default function SignIn() {
   const [details, setDetails] = useState({
     email: "",
@@ -12,7 +14,7 @@ export default function SignIn() {
   };
   const isPasswordValid = (value) => {
     const messagePattern =
-      /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"/;
+      /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
     return messagePattern.test(value);
   };
 
@@ -29,7 +31,7 @@ export default function SignIn() {
     }
     if (!isPasswordValid(details.password)) {
       document.getElementById("errorPassword").innerText =
-        "Votre mot de passe n'est pas valide";
+        "Votre mot de passe n'est pas valide !";
       document.getElementById("password").classList.add("errorOnPlaceholder");
     } else {
       document.getElementById("errorPassword").innerText = "";
@@ -82,13 +84,23 @@ export default function SignIn() {
               required
             />
           </div>
-          <button
-            type="button"
-            disabled={!details.email || !details.password}
-            onClick=""
-            className="form_placeholder_button"
-          >
-            <span>Se Connecter</span>
+          <div className="form_buttons">
+            <SecondaryButton
+              className="signUp"
+              btnText="Créer un compte"
+              btnLink="/sign-up"
+            />
+            <button
+              type="button"
+              disabled={!details.email || !details.password}
+              onClick=""
+              className="signIn"
+            >
+              Se Connecter
+            </button>
+          </div>
+          <button type="button" className="forgotPassword">
+            Mot de passe oublier
           </button>
           <p className="error_container" id="errorEmail" />
           <p className="error_container" id="errorPassword" />
