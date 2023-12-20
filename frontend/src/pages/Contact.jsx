@@ -153,7 +153,7 @@ export default function Contact() {
   };
 
   return (
-    <main className="backgroundImageMain">
+    <main className="backgroundImageMain Contact_Container">
       <div className="contact_title">
         <h1>Contactez Nous</h1>
         <p className="contact_description">
