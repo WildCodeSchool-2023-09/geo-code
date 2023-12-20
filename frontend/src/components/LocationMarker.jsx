@@ -17,6 +17,7 @@ function LocationMarker() {
       map.flyTo(e.latlng, map.getZoom());
     });
   }, []);
+
   return (
     <Marker position={position}>
       <div className="locateMe">

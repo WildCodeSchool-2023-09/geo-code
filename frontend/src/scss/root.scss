@@ -25,6 +25,7 @@ main {
   font-family: $font;
   @media screen and (max-width: 549px) {
     margin-bottom: 120px;
+    font-family: $font;
   }
 }
 

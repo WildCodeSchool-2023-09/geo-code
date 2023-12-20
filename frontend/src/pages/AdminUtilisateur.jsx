@@ -13,7 +13,7 @@ export default function AdminUtilisateur() {
   }
 
   return (
-    <main className="admin-utilisateur">
+    <main className="admin-utilisateur backgroundImageMain">
       <Link to="/admin">Retour</Link>
       <h1>Liste des Utilisateurs</h1>
       <div className="userSearch">
