@@ -4,6 +4,7 @@
   display: flex;
   justify-content: center;
   padding-top: 5rem;
+  min-height: calc(100vh + 80px);
 
   Link {
     background: none;
