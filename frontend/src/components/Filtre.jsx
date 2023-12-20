@@ -38,8 +38,9 @@ function Filtre() {
               type="text"
               name="code"
               id="code"
+              placeholder="93000"
               onChange={handleChange}
-            />{" "}
+            />
           </div>
           <div className="separate">
             <label htmlFor="enseigne">Enseigne</label>
@@ -51,27 +52,29 @@ function Filtre() {
               <option value="Toutes">Toutes</option>
               <option value="Une">Une</option>
               <option value="Deux">Deux</option>
-            </select>{" "}
+            </select>
           </div>
           <div className="separate">
-            <label htmlFor="rayon">Rayon</label>
+            <label htmlFor="rayon">Rayon (Km)</label>
             <input
               value={valueDefault.rayon}
               type="number"
               name="rayon"
               id="rayon"
+              placeholder="10"
               onChange={handleChange}
-            />{" "}
+            />
           </div>
           <div className="separate">
-            <label htmlFor="puissance">Puissance</label>
+            <label htmlFor="puissance">Puissance (Kw/h)</label>
             <input
               value={valueDefault.puissance}
               type="string"
               name="puissance"
               id="puissance"
+              placeholder="1.5"
               onChange={handleChange}
-            />{" "}
+            />
           </div>
           <div className="separate">
             <label htmlFor="disponible">Disponible</label>
@@ -82,7 +85,7 @@ function Filtre() {
             >
               <option value="Toutes">Toutes</option>
               <option value="Oui">Oui</option>
-            </select>{" "}
+            </select>
           </div>
           <div className="separates">
             <label htmlFor="tarification">Prix</label>
@@ -113,9 +116,9 @@ function Filtre() {
               </button>
             </div>
           </div>
-          <div className="separates">
+          <div className="prise_container">
             <label htmlFor="prise">Type de Prise</label>
-            <div className="priseButton">
+            <div className="prise_container_content">
               <button
                 type="button"
                 value="1"

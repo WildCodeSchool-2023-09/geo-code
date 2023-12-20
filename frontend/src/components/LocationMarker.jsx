@@ -13,6 +13,7 @@ function LocationMarker() {
       map.flyTo(e.latlng, map.getZoom());
     });
   }, []);
+
   return (
     <Marker position={position}>
       <Popup>You are here</Popup>
