@@ -16,7 +16,7 @@ function App() {
   const [research, setResearch] = useState({
     code: "",
     enseigne: "",
-    rayon: "",
+    rayon: "1085",
     puissance: "",
     disponible: "",
     tarification: "",

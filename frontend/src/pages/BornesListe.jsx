@@ -35,7 +35,7 @@ function BornesListe() {
       );
     return distance.toFixed(1);
   };
-  console.info(position);
+
   return (
     <div className="borneListPage">
       <div className="buttonContainer">
@@ -61,25 +61,28 @@ function BornesListe() {
                   borne.lng,
                   position.lat,
                   position.lng
-                ) <= research.rayon
+                ) <= parseInt(research.rayon, 10)
             )
-            .map((borne) => (
-              <div key={borne.index} className="bornecard">
-                <BorneCardUser
-                  name={borne.names}
-                  lat={borne.lat}
-                  lng={borne.lng}
-                  code={borne.code}
-                  enseigne={borne.enseigne}
-                  tarification={borne.tarification}
-                  puissance={borne.puissance}
-                  disponible={borne.disponible}
-                  pdc={borne.pdc}
-                  prise={borne.prise}
-                  convertToDistance={convertToDistance}
-                />
-              </div>
-            ))}
+            .map((borne) => {
+              console.info(borne);
+              return (
+                <div key={borne.index} className="bornecard">
+                  <BorneCardUser
+                    name={borne.names}
+                    lat={borne.lat}
+                    lng={borne.lng}
+                    code={borne.code}
+                    enseigne={borne.enseigne}
+                    tarification={borne.tarification}
+                    puissance={borne.puissance}
+                    disponible={borne.disponible}
+                    pdc={borne.pdc}
+                    prise={borne.prise}
+                    convertToDistance={convertToDistance}
+                  />
+                </div>
+              );
+            })}
         </div>
       </div>
     </div>
