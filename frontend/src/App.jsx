@@ -1,7 +1,9 @@
 import { Outlet } from "react-router-dom";
 import { useMemo, useState } from "react";
+
 import FilterResearch from "./Context/ResearchContext";
 import LocationContext from "./Context/locationContext";
+
 import Navbar from "./components/navbar";
 import NavMobile from "./components/navmobile";
 import Footer from "./components/footer";

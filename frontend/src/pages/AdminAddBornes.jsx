@@ -48,9 +48,11 @@ export default function AdminAddBornes() {
           <button type="button" onClick={handleClick} className="blue-button">
             Charger
           </button>
-          <button type="button" className="dark-blue-button">
-            Annuler
-          </button>
+          <Link to="/admin">
+            <button type="button" className="dark-blue-button">
+              Annuler
+            </button>
+          </Link>
         </div>
       </div>
     </main>
