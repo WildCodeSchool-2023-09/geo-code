@@ -33,8 +33,8 @@ function App() {
   );
 
   const resizeObserver = new ResizeObserver(() => {
-    if (window.location.pathname === "/map") {
-      if (window.innerWidth < 720) {
+    if (window.innerWidth < 720) {
+      if (window.location.pathname === "/map") {
         document.body.classList.add("no-scroll");
         document.documentElement.scrollTop = 0;
       }
