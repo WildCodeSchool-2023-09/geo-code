@@ -11,7 +11,8 @@ export default function ScrollToTop() {
     // Décocher tous les inputs de type checkbox
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     checkboxes.forEach((checkbox) => {
-      checkbox.checked(false);
+      const currentCheckbox = checkbox;
+      currentCheckbox.checked = false;
     });
   }, [pathname]);
 
