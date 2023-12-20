@@ -1,1 +1,200 @@
 @import "./color-config.scss";
+
+.register-page {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+
+  h1 {
+    display: flex;
+    justify-content: center;
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    text-align: center;
+    @media screen and (max-width: 549px) {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+  }
+  h2 {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    font-size: 1.3rem;
+    text-align: center;
+    @media screen and (max-width: 549px) {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+  }
+
+  h3 {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    font-size: 1.3rem;
+    text-align: center;
+    @media screen and (max-width: 549px) {
+      font-size: 1rem;
+      padding: 1rem;
+    }
+  }
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+}
+.content_input {
+  display: flex;
+  flex-direction: row;
+  padding: 0.6rem 0;
+  border-bottom: solid 1px rgba($color-black, 0.4);
+
+  &_label {
+    width: 100px;
+  }
+
+  &_placeholder {
+    border: none;
+  }
+
+  &_label_space {
+    width: 100px;
+    margin-top: 2rem;
+  }
+
+  &_placeholder_space {
+    border: none;
+    margin-top: 2rem;
+  }
+}
+
+.vehicule {
+  margin-top: 3rem;
+}
+
+.vehiculeInfo {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.button-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  gap: 1rem;
+}
+
+.switch_button {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch_button input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: rgb(25, 119, 109);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px rgb(25, 119, 109);
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.button_dispose {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.toggle-button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.create_button {
+  background-color: #21a89a;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px 20px;
+  text-align: center;
+  border: 0;
+  font-size: 16px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.cancel_button {
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 10px 20px;
+  text-align: center;
+  border: 0;
+  font-size: 16px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.cancel_button:hover {
+  background-color: #ccc;
+}
