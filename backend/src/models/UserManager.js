@@ -84,6 +84,14 @@ class UserManager extends AbstractManager {
     return result;
   }
 
+  async signIn(email) {
+    const [user] = await this.database.query(
+      `SELECT * FROM users WHERE email = ?`,
+      [email]
+    );
+    return user;
+  }
+
   // The D of CRUD - Delete operation
   // TODO: Implement the delete operation to remove an item by its ID
 

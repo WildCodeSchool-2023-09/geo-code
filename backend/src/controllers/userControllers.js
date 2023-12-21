@@ -79,6 +79,31 @@ const add = async (req, res, next) => {
   }
 };
 
+const login = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+  console.info(`Nouvelle requête depuis : ${ip}`);
+  try {
+    const user = await tables.users.signIn(email);
+    if (user.length === 1) {
+      next();
+    } else {
+      // Authentification failed
+      res
+        .status(401)
+        .send({ message: "Aucun compte n'a été trouver avec cette email" });
+    }
+    if (user[0].password === password) {
+      next();
+    } else {
+      // Authentification failed
+      res.status(401).send({ message: "Mot de passe incorrect" });
+    }
+  } catch (err) {
+    res.status(501).send(err);
+  }
+};
 // The D of BREAD - Destroy (Delete) operation
 // This operation is not yet implemented
 
@@ -88,5 +113,6 @@ module.exports = {
   read,
   edit,
   add,
+  login,
   // destroy,
 };
