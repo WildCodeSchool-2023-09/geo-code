@@ -58,7 +58,6 @@ function BornesListe() {
                     disponible={borne.disponible}
                     pdc={borne.pdc}
                     prise={borne.prise}
-                    convertToDistance={convertToDistance}
                   />
                 </div>
               );
