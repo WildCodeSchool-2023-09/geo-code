@@ -11,7 +11,9 @@ import bornes from "../data/BorneUser";
 function BornesListe() {
   const { research } = useContext(FilterContext);
   useEffect(() => {
-    console.info(research);
+    console.info(
+      research
+    ); /* le console.info est là pour forcer le re-render */
   }, [research]);
 
   const { position } = useContext(LocationContext);
