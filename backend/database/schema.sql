@@ -1,3 +1,5 @@
+USE p3;
+ DROP TABLE IF EXISTS 'users';
 CREATE TABLE `users` (
 	`id` int NOT NULL,
 	`firstname` varchar(80) NOT NULL,
@@ -16,7 +18,8 @@ CREATE TABLE `users` (
 	PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `Borne` (
+DROP TABLE IF EXISTS 'Bornes';
+CREATE TABLE `Bornes` (
 	`id_station` varchar(255) NOT NULL,
 	`n_station` varchar(255) NOT NULL,
 	`ad_station` varchar(255) NOT NULL,
@@ -32,18 +35,21 @@ CREATE TABLE `Borne` (
 	PRIMARY KEY (`id_station`)
 );
 
+DROP TABLE IF EXISTS 'Marque';
 CREATE TABLE `Marque` (
 	`id` int NOT NULL,
 	`name` varchar(80) NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
+DROP TABLE IF EXISTS 'Tarification';
 CREATE TABLE `Tarification` (
 	`id` int NOT NULL,
 	`valeur` INT NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
+DROP TABLE IF EXISTS 'Modele';
 CREATE TABLE `Modele` (
 	`id` int NOT NULL,
 	`name` varchar(200) NOT NULL,
@@ -52,13 +58,15 @@ CREATE TABLE `Modele` (
 	PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `vehicule` (
+DROP TABLE IF EXISTS 'Vehicule';
+CREATE TABLE `Vehicule` (
 	`id` int NOT NULL,
 	`prorpietaire_id` int NOT NULL,
 	`modele_id` int NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
+DROP TABLE IF EXISTS 'Reservation';
 CREATE TABLE `Reservation` (
 	`id` int NOT NULL,
 	`borne_id` int NOT NULL,
@@ -69,16 +77,19 @@ CREATE TABLE `Reservation` (
 	PRIMARY KEY (`id`)
 );
 
-ALTER TABLE `Borne` ADD CONSTRAINT `Borne_fk0` FOREIGN KEY (`tarification_id`) REFERENCES `Tarification`(`id`);
+ALTER TABLE `Bornes` ADD CONSTRAINT `Borne_fk0` FOREIGN KEY (`tarification_id`) REFERENCES `Tarification`(`id`);
 
 ALTER TABLE `Modele` ADD CONSTRAINT `Modele_fk0` FOREIGN KEY (`marque_id`) REFERENCES `Marque`(`id`);
 
-ALTER TABLE `vehicule` ADD CONSTRAINT `vehicule_fk0` FOREIGN KEY (`prorpietaire_id`) REFERENCES `users`(`id`);
+ALTER TABLE `Vehicule` ADD CONSTRAINT `vehicule_fk0` FOREIGN KEY (`prorpietaire_id`) REFERENCES `users`(`id`);
 
-ALTER TABLE `vehicule` ADD CONSTRAINT `vehicule_fk1` FOREIGN KEY (`modele_id`) REFERENCES `Modele`(`id`);
+ALTER TABLE `Vehicule` ADD CONSTRAINT `vehicule_fk1` FOREIGN KEY (`modele_id`) REFERENCES `Modele`(`id`);
 
 
-ALTER TABLE `Reservation` ADD CONSTRAINT `Reservation_fk0` FOREIGN KEY (`borne_id`) REFERENCES `Borne`(`id_station`);
+ALTER TABLE `Reservation` ADD CONSTRAINT `Reservation_fk0` FOREIGN KEY (`borne_id`) REFERENCES `Bornes`(`id_station`);
 
-ALTER TABLE `Reservation` ADD CONSTRAINT `Reservation_fk1` FOREIGN KEY (`vehicule_id`) REFERENCES `vehicule`(`id`);
+ALTER TABLE `Reservation` ADD CONSTRAINT `Reservation_fk1` FOREIGN KEY (`vehicule_id`) REFERENCES `Vehicule`(`id`);
 
+LOAD DATA INFILE 'bornes-irve-borne-irve.csv' INTO TABLE Borne
+FIELDS TERMINATED BY ','
+IGNORE 1 LINES;
