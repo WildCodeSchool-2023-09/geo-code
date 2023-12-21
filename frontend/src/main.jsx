@@ -4,14 +4,23 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import Home from "./pages/Home";
 import ErrorPage from "./pages/404";
+
+import Reservation from "./pages/Reservation";
+
+import Map from "./pages/Map";
+import Contact from "./pages/Contact";
+import EmailSent from "./pages/EmailSent";
+import EmailError from "./pages/EmailError";
+import FiltrePage from "./pages/FilterPages";
+import Profil from "./pages/Profil";
+import BornesListe from "./pages/BornesListe";
+
+import SignIn from "./pages/Auth/SignIn";
+
 import AdminPanel from "./pages/AdminPanel";
 import AdminUtilisateur from "./pages/AdminUtilisateur";
 import AdminBorne from "./pages/AdminBorne";
-import Reservation from "./pages/Reservation";
 import AdminAddBornes from "./pages/AdminAddBornes";
-import Map from "./pages/Map";
-import Profil from "./pages/Profil";
-import Register from "./pages/Register";
 
 const router = createBrowserRouter([
   {
@@ -55,8 +64,28 @@ const router = createBrowserRouter([
         element: <Map />,
       },
       {
-        path: "/register",
-        element: <Register />,
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/email-sent",
+        element: <EmailSent />,
+      },
+      {
+        path: "/email-error",
+        element: <EmailError />,
+      },
+      {
+        path: "/filter",
+        element: <FiltrePage />,
+      },
+      {
+        path: "/bornesListe",
+        element: <BornesListe />,
+      },
+      {
+        path: "/sign-in",
+        element: <SignIn />,
       },
     ],
   },

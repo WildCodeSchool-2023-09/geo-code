@@ -23,7 +23,14 @@ main {
   min-height: 100vh;
   margin-top: 80px;
   font-family: $font;
-  @media screen and (max-width: 549px) {
-    margin-bottom: 120px;
-  }
+}
+
+.backgroundImageMain {
+  background: url(assets/svg/main_background-geocode.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.no-scroll {
+  overflow: hidden;
 }

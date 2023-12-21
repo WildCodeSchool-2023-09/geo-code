@@ -4,10 +4,13 @@
   .footermain {
     display: flex;
     flex-direction: column;
+    z-index: 50;
+    margin-top: -60px;
   }
 
   .footer-wave {
     width: 100%;
+    z-index: 50;
   }
   .footer {
     display: flex;
@@ -124,7 +127,7 @@
   }
 }
 
-@media screen and (max-width: 559px) {
+@media screen and (max-width: 720px) {
   .footermain {
     display: none;
   }

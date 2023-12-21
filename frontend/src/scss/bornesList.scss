@@ -1,0 +1,54 @@
+@import "./color-config.scss";
+
+.borneListPage {
+  display: flex;
+  flex-wrap: wrap;
+  height: fit-content;
+  min-height: 100vh;
+  padding: 1rem;
+
+  .buttonContainer {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    margin: 0.5rem;
+  }
+  .filterBorne {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: fit-content;
+    gap: 2rem;
+
+    &_Filter {
+      @media screen and (max-width: 559px) {
+        display: none;
+      }
+    }
+
+    @media screen and (max-width: 980px) {
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+  }
+  .bornesContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    flex-wrap: wrap;
+    gap: 2rem;
+
+    .bornecard {
+      display: flex;
+      width: auto;
+    }
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .bornesContainer {
+    height: 100%;
+  }
+}

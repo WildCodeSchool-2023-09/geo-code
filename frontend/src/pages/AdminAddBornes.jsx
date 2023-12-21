@@ -1,4 +1,5 @@
 import "../scss/admin-add-bornes.scss";
+import { Link } from "react-router-dom";
 import { useRef } from "react";
 
 export default function AdminAddBornes() {
@@ -27,7 +28,8 @@ export default function AdminAddBornes() {
   }
 
   return (
-    <main className="add-bornes-main">
+    <main className="add-bornes-main backgroundImageMain">
+      <Link to="/admin">Retour</Link>
       <div className="upload-card">
         <h1>Ajouter des Bornes</h1>
         <div
@@ -46,9 +48,11 @@ export default function AdminAddBornes() {
           <button type="button" onClick={handleClick} className="blue-button">
             Charger
           </button>
-          <button type="button" className="dark-blue-button">
-            Annuler
-          </button>
+          <Link to="/admin">
+            <button type="button" className="dark-blue-button">
+              Annuler
+            </button>
+          </Link>
         </div>
       </div>
     </main>

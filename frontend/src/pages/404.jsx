@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
 import "../scss/pages.scss";
 import Lottie from "react-lottie-player";
 import animation404 from "../data/404-animation.json";
+import PrimaryButton from "../components/buttons/PrimaryButton";
 
 export default function NotFound() {
   return (
@@ -17,9 +17,7 @@ export default function NotFound() {
         <p className="message">
           Nous vous conseillons de retourner à la page d'accueil.
         </p>
-        <Link className="btn-return" to="/">
-          retourner à la page d'accueil
-        </Link>
+        <PrimaryButton btnText="Retourner à la page d'accueil" btnLink="/" />
       </div>
     </section>
   );

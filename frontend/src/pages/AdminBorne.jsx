@@ -1,4 +1,5 @@
 import "../scss/admin-borne.scss";
+import { Link } from "react-router-dom";
 
 import { useState } from "react";
 import BorneCard from "../components/BorneCard";
@@ -14,7 +15,8 @@ export default function AdminBorne() {
   }
 
   return (
-    <main className="admin-borne">
+    <main className="admin-borne backgroundImageMain">
+      <Link to="/admin">Retour</Link>
       <h1>Liste des Bornes</h1>
       <div className="borneSearch">
         <form onSubmit={updateForm}>

@@ -5,7 +5,7 @@ create table accessibilite
     valeur varchar(255) not null
 );
 
-create table enseignes
+create table enseigne
 (
     id   int auto_increment
         primary key,
@@ -42,7 +42,7 @@ create table borne
     id               int auto_increment
         primary key,
     name             varchar(255) not null,
-    adress           varchar(255) not null,
+    code_postal      int          not null,
     lng              float        not null,
     lat              float        not null,
     puissance        float        not null,
@@ -54,7 +54,7 @@ create table borne
     constraint accesibilite_id
         foreign key (accessibilite_id) references accessibilite (id),
     constraint enseigne_id
-        foreign key (enseigne_id) references enseignes (id),
+        foreign key (enseigne_id) references enseigne (id),
     constraint tarification_id
         foreign key (tarification_id) references tarification (id)
 );
@@ -63,16 +63,16 @@ create table users
 (
     id          int auto_increment
         primary key,
-    firstname   varchar(255) not null,
-    lastname    varchar(255) not null,
-    sexe        varchar(255) not null,
-    code_postal int          not null,
-    ville       varchar(255) not null,
-    email       varchar(255) not null,
-    password    varchar(255) not null,
-    logged_in   tinyint(1)   not null,
-    nb_vehicule int          not null,
-    isAdmin     tinyint(1)   not null
+    firstname   varchar(255)         not null,
+    lastname    varchar(255)         not null,
+    code_postal int                  not null,
+    ville       varchar(255)         not null,
+    email       varchar(255)         not null,
+    password    varchar(255)         not null,
+    logged_in   tinyint(1) default 0 not null,
+    nb_vehicule int                  not null,
+    isAdmin     tinyint(1) default 0 not null,
+    birthday    date                 not null
 );
 
 create table vehicule
