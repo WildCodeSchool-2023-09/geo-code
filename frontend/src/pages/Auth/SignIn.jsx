@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "../../scss/auth/SignInPage.scss";
 import ScrollToTop from "../ResetScrollOnPage";
 import SecondaryButton from "../../components/buttons/SecondaryButton";
@@ -48,6 +49,42 @@ export default function SignIn() {
     });
   };
 
+  function escapeHtml(unsafe) {
+    return unsafe.replace(/[&<"'>]/g, function toMatch(match) {
+      switch (match) {
+        case "&":
+          return "&amp;";
+        case "<":
+          return "&lt;";
+        case ">":
+          return "&gt;";
+        case '"':
+          return "&quot;";
+        case "'":
+          return "&#39;";
+        default:
+          return match;
+      }
+    });
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:3310/api/login", {
+        email: escapeHtml(details.email),
+        password: escapeHtml(details.password),
+      });
+      // Gérez ici la réponse et le stockage du token
+      // -------------------------------
+
+      // -------------------------------
+      console.info(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <main className="backgroundImageMain">
       <ScrollToTop />
@@ -94,7 +131,7 @@ export default function SignIn() {
             <button
               type="button"
               disabled={!details.email || !details.password}
-              onClick=""
+              onClick={handleSubmit}
               className="signIn"
             >
               Se Connecter

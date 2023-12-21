@@ -1,4 +1,5 @@
 const express = require("express");
+const database = require("../database/client");
 
 const router = express.Router();
 
@@ -16,6 +17,29 @@ const enseigneControllers = require("./controllers/enseigneControllers");
 const accessibiliteControllers = require("./controllers/accessibiliteControllers");
 const tarificationControllers = require("./controllers/tarificationControllers");
 const borneControllers = require("./controllers/borneControllers");
+
+// Route to get a list of users
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+  console.info(`Nouvelle requête depuis : ${ip}`);
+
+  // Ici, vérifier les identifiants contre base de données ou service d'authentification
+  // Authentification réussie
+  const [user] = await database.query(
+    `SELECT * FROM users WHERE email = ? AND password = ?`,
+    [email, password]
+  );
+
+  if (user.length === 1) {
+    res.status(200).send(ip);
+  } else {
+    // Authentification échouée
+    res
+      .status(401)
+      .send({ message: "Nom d'utilisateur ou mot de passe incorrect." });
+  }
+});
 
 // Route to get a list of users
 router.get("/users", userControllers.browse);
