@@ -1,57 +1,60 @@
+/* eslint-disable react/jsx-props-no-spreading */
+// Le composant dropzone a besoin des prop spreading pour fonctionner. Vu avec SAM
 import "../scss/admin-add-bornes.scss";
 import { Link } from "react-router-dom";
-import { useRef } from "react";
+import { useDropzone } from "react-dropzone";
+import { useCallback } from "react";
 import ScrollToTop from "./ResetScrollOnPage";
 
 export default function AdminAddBornes() {
-  const inputRef = useRef(null);
-
-  const handleClick = () => {
-    inputRef.current.click();
-  };
-
   const handleFileChange = (e) => {
+    e.preventDefault();
     const fileObj = e.target.files && e.target.files[0];
     if (!fileObj) {
-      return;
+      return null;
     }
-    e.target.value = null;
     console.info(fileObj);
+    return fileObj;
   };
 
-  function dropHandler(e) {
-    e.preventDefault();
-    console.info(e.dataTransfer.files[0]);
-  }
+  const onDrop = useCallback((acceptedFiles) => {
+    console.info(acceptedFiles[0]);
+  }, []);
 
-  function dragOverHandler(e) {
-    e.preventDefault();
-  }
-
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   return (
     <main className="add-bornes-main backgroundImageMain">
       <ScrollToTop />
       <Link to="/admin">Retour</Link>
       <div className="upload-card">
         <h1>Ajouter des Bornes</h1>
-        <div
-          className="upload"
-          onDrop={dropHandler}
-          onDragOver={dragOverHandler}
-        />
+        <div className="upload">
+          <div {...getRootProps()}>
+            <input {...getInputProps()} />
+            {isDragActive ? (
+              <p>Chargez votre fichier ici ...</p>
+            ) : (
+              <p>
+                Drag 'n' drop le fichier ici, ou cliquez sur
+                <form encType="multipart/form-data" method="post">
+                  <input
+                    type="file"
+                    name="uploadfile"
+                    accept="csv"
+                    onChange={handleFileChange}
+                  />
+                </form>
+              </p>
+            )}
+          </div>
+        </div>
         <div className="buttons-container">
-          <input
-            style={{ display: "none" }}
-            ref={inputRef}
-            type="file"
-            onChange={handleFileChange}
-            accept=".csv"
-          />
-          <button type="button" onClick={handleClick} className="blue-button">
-            Charger
+          <button type="submit" className="buttons-container_blue">
+            Charger le CSV
           </button>
+
           <Link to="/admin">
-            <button type="button" className="dark-blue-button">
+            <button type="button" className="buttons-container_dark">
               Annuler
             </button>
           </Link>
