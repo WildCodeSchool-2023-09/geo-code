@@ -3,12 +3,14 @@ import Filtre from "../components/Filtre";
 import LocationMarker from "../components/LocationMarker";
 import BornesMarker from "../components/BornesMarker";
 import SecondaryButton from "../components/buttons/SecondaryButton";
+import ScrollToTop from "./ResetScrollOnPage";
 import "../scss/root.scss";
 import "../scss/components/Map.scss";
 
 function Map() {
   return (
     <div className="allMap">
+      <ScrollToTop />
       <div className="Container">
         <div className="Container_Filter">
           <Filtre />

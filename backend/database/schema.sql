@@ -1,7 +1,6 @@
-USE p3;
- DROP TABLE IF EXISTS 'user';
-CREATE TABLE `user` (
-	id int AUTO_INCREMENT NOT NULL,
+DROP TABLE IF EXISTS 'users';
+CREATE TABLE `users` (
+	`id` int NOT NULL,
 	`firstname` varchar(80) NOT NULL,
 	`lastname` varchar(80) NOT NULL,
 	`rue` varchar(255) NOT NULL

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../../scss/auth/SignInPage.scss";
-
+import ScrollToTop from "../ResetScrollOnPage";
 import SecondaryButton from "../../components/buttons/SecondaryButton";
 
 export default function SignIn() {
@@ -50,6 +50,7 @@ export default function SignIn() {
 
   return (
     <main className="backgroundImageMain">
+      <ScrollToTop />
       <div className="SignIn_container ">
         <div className="SignIn_container_title">
           <h1>Connexion</h1>

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
 import { useCallback } from "react";
 
+
 export default function AdminAddBornes() {
   const handleFileChange = (e) => {
     e.preventDefault();
@@ -24,6 +25,7 @@ export default function AdminAddBornes() {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   return (
     <main className="add-bornes-main backgroundImageMain">
+      <ScrollToTop />
       <Link to="/admin">Retour</Link>
       <div className="upload-card">
         <h1>Ajouter des Bornes</h1>
