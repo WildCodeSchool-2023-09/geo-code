@@ -80,28 +80,24 @@ const add = async (req, res, next) => {
 };
 
 const login = async (req, res, next) => {
-  const { email, password } = req.body;
-
-  const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
-  console.info(`Nouvelle requête depuis : ${ip}`);
   try {
+    const { email, password } = req.body;
+    const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+    console.info(`Nouvelle requête depuis : ${ip}`);
     const user = await tables.users.signIn(email);
     if (user.length === 1) {
-      next();
+      if (user[0].password === password) {
+        res.status(200).send({ message: "Authentification réussie" });
+      } else {
+        res.status(401).send({ message: "Mot de passe incorrect" });
+      }
     } else {
-      // Authentification failed
       res
         .status(401)
-        .send({ message: "Aucun compte n'a été trouver avec cette email" });
-    }
-    if (user[0].password === password) {
-      next();
-    } else {
-      // Authentification failed
-      res.status(401).send({ message: "Mot de passe incorrect" });
+        .send({ message: "Aucun compte n'a été trouvé avec cet email" });
     }
   } catch (err) {
-    res.status(501).send(err);
+    next(err);
   }
 };
 // The D of BREAD - Destroy (Delete) operation

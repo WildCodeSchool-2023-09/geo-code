@@ -79,9 +79,9 @@ export default function SignIn() {
       // -------------------------------
 
       // -------------------------------
-      console.info(response.data);
+      console.info(response.data.message);
     } catch (error) {
-      console.error(error);
+      console.error(error.response.data.message);
     }
   };
 
