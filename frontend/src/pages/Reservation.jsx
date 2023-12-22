@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 
+import ScrollToTop from "./ResetScrollOnPage";
 import data from "../data/UserDataTest.json";
 import "../scss/reservation.scss";
 import PrimaryButton from "../components/buttons/PrimaryButton";
@@ -7,6 +8,7 @@ import PrimaryButton from "../components/buttons/PrimaryButton";
 export default function Reservation() {
   return (
     <main className="reservation-main">
+      <ScrollToTop />
       <div className="reservation-container">
         <Link to="/profil">Retour sur le profil</Link>
         <div className="info-container">

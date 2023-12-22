@@ -4,6 +4,7 @@ import Markdown from "react-markdown";
 // Components
 import PrimaryButton from "../components/buttons/PrimaryButton";
 import SecondaryButton from "../components/buttons/SecondaryButton";
+import ScrollToTop from "./ResetScrollOnPage";
 
 // SCSS Styles
 import "../scss/home.scss";
@@ -59,6 +60,7 @@ export default function Home() {
         <title>Portail Geo Code</title>
       </Helmet>
       <div className="header">
+        <ScrollToTop />
         <video
           className="background-video"
           autoPlay
