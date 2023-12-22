@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
 // Le composant dropzone a besoin des prop spreading pour fonctionner. Vu avec SAM
-
 import "../scss/admin-add-bornes.scss";
 import { Link } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
