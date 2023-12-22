@@ -1,41 +1,64 @@
-import Counter from "./components/Counter";
-import logo from "./assets/logo.svg";
+import { Outlet } from "react-router-dom";
+import { useMemo, useState } from "react";
 
-import "./App.css";
+import FilterResearch from "./Context/ResearchContext";
+import LocationContext from "./Context/locationContext";
+
+import Navbar from "./components/navbar";
+import NavMobile from "./components/navmobile";
+import Footer from "./components/footer";
+import "./scss/root.scss";
+import "./scss/components/footer.scss";
+
+import navData from "./data/NavBarData.json";
 
 function App() {
+  const [research, setResearch] = useState({
+    code: "",
+    enseigne: "",
+    rayon: "1085",
+    puissance: "",
+    disponible: "",
+    tarification: "",
+    prise: "",
+  });
+
+  const value = useMemo(
+    () => ({ research, setResearch }),
+    [research, setResearch]
+  );
+
+  const [position, setPosition] = useState({ lat: 0, lng: 0 });
+  const positionValue = useMemo(
+    () => ({ position, setPosition }),
+    [position, setPosition]
+  );
+  function FixScrollOnPage() {
+    const resizeObserver = new ResizeObserver(() => {
+      if (window.innerWidth < 720) {
+        if (window.location.pathname === "/map") {
+          document.body.classList.add("no-scroll");
+          document.documentElement.scrollTop = 0;
+        }
+      }
+      document.body.classList.remove("no-scroll");
+    });
+    resizeObserver.observe(document.body);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React !</p>
-
-        <Counter />
-
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {" | "}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
+    <>
+      <Navbar navData={navData} />
+      <main>
+        <LocationContext.Provider value={positionValue}>
+          <FilterResearch.Provider value={value}>
+            <Outlet onChange={() => FixScrollOnPage()} />
+          </FilterResearch.Provider>
+        </LocationContext.Provider>
+      </main>
+      <Footer className="FooterParams" />
+      <NavMobile />
+    </>
   );
 }
 

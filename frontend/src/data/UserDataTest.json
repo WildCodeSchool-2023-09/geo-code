@@ -1,0 +1,32 @@
+[
+  {
+    "firstname": "Baptiste",
+    "lastname": "Save",
+    "img": "https://picsum.photos/200",
+    "sexe": "Homme",
+    "code_postal": "75000",
+    "adresse": "25 rue de Paris",
+    "ville": "Paris",
+    "pays": "France",
+    "email": "baptiste.save@test.com",
+    "nb_vehicule": 1,
+    "langue": "Français",
+    "date_naissance": "14/12/1998",
+    "phone": "0123456789"
+  },
+  {
+    "firstname": "John",
+    "lastname": "Doe",
+    "img": "https://picsum.photos/200",
+    "sexe": "Homme",
+    "code_postal": "75000",
+    "adresse": "25 rue de Paris",
+    "ville": "Paris",
+    "pays": "France",
+    "email": "baptiste.save@test.com",
+    "nb_vehicule": 1,
+    "langue": "Français",
+    "date_naissance": "14/12/1998",
+    "phone": "0123456789"
+  }
+]

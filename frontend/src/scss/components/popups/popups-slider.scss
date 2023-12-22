@@ -1,0 +1,106 @@
+@import "../../color-config.scss";
+
+@media screen and (min-width: 721px) {
+  .menuToggle {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .menuToggle {
+    display: flex;
+    position: fixed;
+    box-sizing: border-box;
+    right: 0;
+
+    :checked ~ ul {
+      right: 0;
+    }
+    li {
+      text-align: center;
+    }
+  }
+
+  .settings-icon {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    right: 1rem;
+    position: relative;
+    background: url(/assets/svg/settings-icon.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    z-index: 999;
+    -webkit-touch-callout: none;
+    transition: 0.5s;
+
+    :checked {
+      transform: scale(0.9);
+      transition: 0.5s;
+    }
+  }
+
+  .menuToggle input {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    background: url(./assets/svg/settings-icon.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    opacity: 0;
+    -webkit-touch-callout: none;
+  }
+
+  .m-nav {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    align-items: center;
+    width: 100vw;
+    height: 130vh;
+    margin: -100px 0 0 -230px;
+    padding: 1.2rem;
+    padding-top: 180px;
+    background: $navmobile-color;
+    list-style-type: none;
+    transition: all 0.2s ease;
+    transform: translate(100%, 0);
+    overflow-x: scroll;
+    gap: 1rem;
+
+    .m-link {
+      color: $navmobile-linkname;
+      font-family: $font;
+      font-size: 1.2rem;
+
+      &:hover {
+        color: $navmobile-linkname-hover;
+        transform: scale(0.95);
+      }
+    }
+  }
+  .menuToggle input:checked ~ ul {
+    transform: translate(0, 0);
+  }
+  .nav_subnav {
+    .nav_separator {
+      width: 230px;
+      border-bottom: solid 1px $navmobile-linkname;
+      opacity: 0.4;
+    }
+  }
+  .sublist {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0 0 1.2rem;
+    padding-bottom: 1.2rem;
+    gap: 0.5rem;
+
+    :last-child {
+      margin-top: 1rem;
+    }
+  }
+}

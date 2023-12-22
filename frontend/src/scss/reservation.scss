@@ -1,0 +1,107 @@
+@import "./color-config.scss";
+
+.reservation-main {
+  display: flex;
+  justify-content: center;
+  padding-top: 5rem;
+  min-height: 100vh;
+  margin-bottom: 80px;
+
+  Link {
+    background: none;
+    border: 0;
+  }
+
+  .reservation-container {
+    width: 70%;
+
+    .info-container {
+      text-align: center;
+
+      img {
+        border-radius: 50%;
+        border: solid $color-primary 4px;
+        width: 10rem;
+      }
+
+      h1 {
+        margin-top: 0.4rem;
+      }
+    }
+
+    .next-reservation-container {
+      h2 {
+        margin-top: 3.5rem;
+        font-size: 1.3rem;
+      }
+
+      .next-reservation {
+        background-color: $color-grey;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 8px;
+        color: $color-white;
+        padding-left: 2rem;
+        padding-right: 1.5rem;
+        height: 80px;
+
+        .buttons-container {
+          max-width: 430px;
+          width: 100%;
+
+          button {
+            background-color: $color-primary-light;
+            border: 0;
+            color: $color-white;
+            height: 50px;
+            max-width: 200px;
+            width: 100%;
+            border-radius: 12px;
+            font-size: 1rem;
+            margin-left: 0.5rem;
+          }
+        }
+      }
+    }
+
+    .past-reservation-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+
+      h2 {
+        margin-top: 3.5rem;
+        font-size: 1.3rem;
+      }
+
+      .past-reservation {
+        background-color: $color-grey;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: $color-white;
+        padding-left: 1.5rem;
+        padding-right: 2rem;
+        height: 80px;
+
+        button {
+          background-color: $color-primary-light;
+          border: 0;
+          color: $color-white;
+          height: 50px;
+          max-width: 200px;
+          width: 100%;
+          border-radius: 12px;
+          font-size: 1rem;
+          margin-left: 0.5rem;
+        }
+      }
+    }
+
+    .past-reservation-container:first-child {
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+  }
+}

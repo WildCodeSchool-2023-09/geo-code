@@ -1,0 +1,40 @@
+@import "../color-config.scss";
+
+.card-borne {
+  width: 100%;
+  height: 80px;
+  background-color: $color-grey;
+  border: 0;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+
+  h2 {
+    font-size: 1.2rem;
+    color: $color-light;
+  }
+
+  h3 {
+    color: $color-light;
+    font-size: 1rem;
+  }
+
+  button {
+    width: 200px;
+    height: 40px;
+    border-radius: 12px;
+    border: 0;
+  }
+
+  .blue-button {
+    color: $color-white;
+    background-color: $color-primary-light;
+  }
+
+  .blue-button:hover {
+    background-color: $color-primary;
+  }
+}
