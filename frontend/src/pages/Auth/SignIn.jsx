@@ -49,6 +49,7 @@ export default function SignIn() {
 
     try {
       if (!isEmailValid(details.email)) {
+        document.getElementById("errorLog").innerText = "";
         document.getElementById("errorEmail").innerText =
           "Votre Email n'est pas valide";
         document.getElementById("email").classList.add("errorOnPlaceholder");
@@ -66,6 +67,11 @@ export default function SignIn() {
 
         // -------------------------------
         console.info(response.data.message);
+        document.getElementById("successLog").innerText =
+          "Authentification en cours...";
+        setTimeout(() => {
+          window.location.href = "/success-auth";
+        }, 500);
       }
     } catch (error) {
       document.getElementById("errorLog").innerText =
@@ -132,6 +138,7 @@ export default function SignIn() {
           </button>
           <p className="error_container" id="errorEmail" />
           <p className="error_container" id="errorLog" />
+          <p className="success_container" id="successLog" />
         </form>
       </div>
     </main>
