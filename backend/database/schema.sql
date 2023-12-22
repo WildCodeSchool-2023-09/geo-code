@@ -1,5 +1,4 @@
-USE p3;
- DROP TABLE IF EXISTS 'users';
+DROP TABLE IF EXISTS 'users';
 CREATE TABLE `users` (
 	`id` int NOT NULL,
 	`firstname` varchar(80) NOT NULL,
