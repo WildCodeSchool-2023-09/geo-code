@@ -80,7 +80,7 @@ export default function SignIn() {
   };
 
   return (
-    <main className="backgroundImageMain">
+    <main className="backgroundImageMain SignInMain">
       <ScrollToTop />
       <div className="SignIn_container ">
         <div className="SignIn_container_title">
@@ -135,6 +135,13 @@ export default function SignIn() {
           </div>
           <button type="button" className="forgotPassword">
             Mot de passe oublier
+          </button>
+          <button
+            type="button"
+            onClick={() => window.location.assign("/")}
+            className="cancel"
+          >
+            Annuler
           </button>
           <p className="error_container" id="errorEmail" />
           <p className="error_container" id="errorLog" />

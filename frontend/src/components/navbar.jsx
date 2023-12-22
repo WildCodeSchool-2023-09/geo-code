@@ -91,6 +91,9 @@ export default function Navbar({ navData }) {
             );
           })}
         </ul>
+        <a className="sign-in" href="/sign-in">
+          {}
+        </a>
         <SettingsPhone navData={navData} />
       </div>
     </nav>

@@ -161,3 +161,12 @@
     transition: 0.5s;
   }
 }
+.sign-in {
+  display: flex;
+  background: url(assets/svg/account-icon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 24px;
+  height: 24px;
+}
