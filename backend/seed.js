@@ -1,4 +1,3 @@
-import csv from "./public/assets/images/csv.csv";
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 
 // Load environment variables from .env file
@@ -20,14 +19,16 @@ const seed = async () => {
     // Generating Seed Data
 
     // Optional: Truncate tables (remove existing data)
-    await database.query("truncate borne");
+    // await database.query("truncate borne");
 
     // Insert fake data into the 'item' table
 
     queries.push(
       database.query(
-        "LOAD DATA INFILE ? INTO borne FIELDS TERMINATED BY ',' IGNORE 1 LINES ",
-        [csv]
+        "LOAD DATA INFILE ? INTO TABLE borne FIELDS TERMINATED BY ',' IGNORE 1 LINES  ",
+        [
+          "C:\\Users\\morga\\P3\\geo-code\\backend\\public\\assets\\images\\csv.csv",
+        ]
       )
     );
 

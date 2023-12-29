@@ -2,26 +2,54 @@
 // Le composant dropzone a besoin des prop spreading pour fonctionner. Vu avec SAM
 import "../scss/admin-add-bornes.scss";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import { useDropzone } from "react-dropzone";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import ScrollToTop from "./ResetScrollOnPage";
 
 export default function AdminAddBornes() {
+  const [file, setFile] = useState({});
   const handleFileChange = (e) => {
     e.preventDefault();
-    const fileObj = e.target.files && e.target.files[0];
-    if (!fileObj) {
+    const acceptedFile = e.target.files && e.target.files[0];
+    if (!acceptedFile) {
       return null;
     }
-    console.info(fileObj);
-    return fileObj;
+    console.info(acceptedFile);
+    setFile(acceptedFile);
+    console.info(file);
+    return acceptedFile;
   };
 
-  const onDrop = useCallback((acceptedFiles) => {
-    console.info(acceptedFiles[0]);
-  }, []);
+  const onDrop = useCallback(
+    (acceptedFile) => {
+      console.info(acceptedFile[0]);
+      setFile(acceptedFile);
+      console.info(file);
+    },
+    [file]
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+  function Submit(e) {
+    e.preventDefault();
+    const url = "http://localhost:3306/uploadFile";
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("fileName", file.name);
+    const config = {
+      Headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+    axios
+      .post(url, formData, config)
+      .then((response) => {
+        console.info(response.data);
+      })
+      .catch((err) => console.info(err));
+  }
   return (
     <main className="add-bornes-main backgroundImageMain">
       <ScrollToTop />
@@ -34,22 +62,24 @@ export default function AdminAddBornes() {
             {isDragActive ? (
               <p>Chargez votre fichier ici ...</p>
             ) : (
-              <p>
-                Drag 'n' drop le fichier ici, ou cliquez sur
-                <form encType="multipart/form-data" method="post">
-                  <input
-                    type="file"
-                    name="uploadfile"
-                    accept="csv"
-                    onChange={handleFileChange}
-                  />
-                </form>
-              </p>
+              <div>Drag 'n' drop le fichier ici, ou cliquez sur</div>
             )}
           </div>
+          <form encType="multipart/form-data" method="post">
+            <input
+              type="file"
+              name="uploadfile"
+              accept="csv"
+              onChange={handleFileChange}
+            />
+          </form>
         </div>
         <div className="buttons-container">
-          <button type="submit" className="buttons-container_blue">
+          <button
+            type="submit"
+            className="buttons-container_blue"
+            onClick={Submit}
+          >
             Charger le CSV
           </button>
 
