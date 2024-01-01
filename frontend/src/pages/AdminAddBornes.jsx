@@ -11,7 +11,7 @@ export default function AdminAddBornes() {
   const [file, setFile] = useState({});
   const handleFileChange = (e) => {
     e.preventDefault();
-    const acceptedFile = e.target.files && e.target.files[0];
+    const acceptedFile = e.target.files[0];
     if (!acceptedFile) {
       return null;
     }
@@ -25,7 +25,6 @@ export default function AdminAddBornes() {
     (acceptedFile) => {
       console.info(acceptedFile[0]);
       setFile(acceptedFile);
-      console.info(file);
     },
     [file]
   );
@@ -34,10 +33,11 @@ export default function AdminAddBornes() {
 
   function Submit(e) {
     e.preventDefault();
-    const url = "http://localhost:3306/uploadFile";
+    const url = "http://localhost:3310/api/uploadFile";
     const formData = new FormData();
     formData.append("file", file);
     formData.append("fileName", file.name);
+    console.info(formData);
     const config = {
       Headers: {
         "content-type": "multipart/form-data",
@@ -65,10 +65,10 @@ export default function AdminAddBornes() {
               <div>Drag 'n' drop le fichier ici, ou cliquez sur</div>
             )}
           </div>
-          <form encType="multipart/form-data" method="post">
+          <form htmlFor="file">
             <input
               type="file"
-              name="uploadfile"
+              name="file"
               accept="csv"
               onChange={handleFileChange}
             />
