@@ -40,11 +40,13 @@ const read = async (req, res, next) => {
 // The A of BREAD - Add (Create) operation
 const add = async (req, res, next) => {
   // Extract the item data from the request body
-  const borne = req.body;
+  const { file } = req.file;
+  const fileName = req.file.name;
 
+  console.info({ file });
   try {
     // Insert the item into the database
-    const insertId = await tables.borne.create(borne);
+    const insertId = await tables.borne.create(file, fileName);
 
     // Respond with HTTP 201 (Created) and the ID of the newly inserted item
     res.status(201).json({ insertId });

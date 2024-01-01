@@ -9,28 +9,14 @@ class BorneManager extends AbstractManager {
 
   // The C of CRUD - Create operation
 
-  async create(borne) {
+  async create(file, fileName) {
     // Execute the SQL INSERT query to add a new item to the "item" table
-    const [result] = await this.database.query(
-      `insert into ${this.table} (name, code_postal, lng, lat, puissance, tarification_id, accessibilite_id,
-                                        booked, type_prise, enseigne_id)
-             values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [
-        borne.name,
-        borne.code_postal,
-        borne.lng,
-        borne.lat,
-        borne.puissance,
-        borne.tarification_id,
-        borne.accessibilite_id,
-        borne.booked,
-        borne.type_prise,
-        borne.enseigne_id,
-      ]
-    );
-
+    const [result] = await this.database.query(`LOAD DATA INFILE ?`, [
+      `C:\\Users\\morga\\P3\\geo-code\\backend\\public\\assets\\images\\uploads\\${fileName}`,
+    ]);
+    console.info(file, fileName);
     // Return the ID of the newly inserted item
-    return result.insertId;
+    return result;
   }
 
   // The Rs of CRUD - Read operations
