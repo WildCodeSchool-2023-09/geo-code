@@ -30,19 +30,18 @@ export default function AdminAddBornes() {
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const url = "http://localhost:3310/api/uploads";
 
   function Submit(e) {
     e.preventDefault();
-    const url = "http://localhost:3310/api/uploadFile";
     const formData = new FormData();
-    formData.append("file", file);
-    formData.append("fileName", file.name);
-    console.info(formData);
     const config = {
       Headers: {
         "content-type": "multipart/form-data",
       },
     };
+    formData.append("file", file);
+    formData.append("fileName", file.name);
     axios
       .post(url, formData, config)
       .then((response) => {
