@@ -81,7 +81,7 @@ router.get("/bornes", borneControllers.browse);
 router.get("/bornes/:id", borneControllers.read);
 
 // Route pour ajouter le fichier csv
-router.post("/uploadFile", upload.single("file"), borneControllers.add);
+router.post("/uploads", upload.single("file"), borneControllers.add);
 
 /* ************************************************************************* */
 

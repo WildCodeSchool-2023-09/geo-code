@@ -1,4 +1,5 @@
 // Import access to database tables
+const fs = require("fs");
 const tables = require("../tables");
 
 // The B of BREAD - Browse (Read All) operation
@@ -40,13 +41,15 @@ const read = async (req, res, next) => {
 // The A of BREAD - Add (Create) operation
 const add = async (req, res, next) => {
   // Extract the item data from the request body
-  const { file } = req.file;
-  const fileName = req.file.name;
 
-  console.info({ file });
+  const myFile = req.file;
+  let newName = `public/uploads/default.csv`;
+  newName = `${myFile.destination}${myFile.filename}-${myFile.originalname}`;
+  fs.renameSync(`${myFile.destination}/${myFile.filename}`, newName);
+
   try {
     // Insert the item into the database
-    const insertId = await tables.borne.create(file, fileName);
+    const insertId = await tables.borne.create(newName);
 
     // Respond with HTTP 201 (Created) and the ID of the newly inserted item
     res.status(201).json({ insertId });

@@ -9,12 +9,13 @@ class BorneManager extends AbstractManager {
 
   // The C of CRUD - Create operation
 
-  async create(file, fileName) {
+  async create(newName) {
     // Execute the SQL INSERT query to add a new item to the "item" table
-    const [result] = await this.database.query(`LOAD DATA INFILE ?`, [
-      `C:\\Users\\morga\\P3\\geo-code\\backend\\public\\assets\\images\\uploads\\${fileName}`,
-    ]);
-    console.info(file, fileName);
+    const [result] = await this.database.query(
+      `LOAD DATA INFILE ? INTO TABLE ${this.table} FIELDS TERMINATED BY "," ENCLOSED BY '"' LINES ERMINATED BY '\n' IGNORE 1 LINES`,
+      [newName]
+    );
+    console.info(newName);
     // Return the ID of the newly inserted item
     return result;
   }

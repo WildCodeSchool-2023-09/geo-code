@@ -25,9 +25,9 @@ const seed = async () => {
 
     queries.push(
       database.query(
-        "LOAD DATA INFILE ? INTO TABLE borne FIELDS TERMINATED BY ',' IGNORE 1 LINES  ",
+        `LOAD DATA INFILE ? INTO TABLE ${this.table} FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES ERMINATED BY '\n' IGNORE 1 LINES`,
         [
-          "C:\\Users\\morga\\P3\\geo-code\\backend\\public\\assets\\images\\csv.csv",
+          `C:\\Users\\morga\\P3\\geo-code\\backend\\public\\uploads\\f464ae4c3b280cbcc8edccbed3168860-csv.csv`,
         ]
       )
     );
