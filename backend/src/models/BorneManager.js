@@ -10,12 +10,12 @@ class BorneManager extends AbstractManager {
   // The C of CRUD - Create operation
 
   async create(newName) {
+    console.info(newName);
     // Execute the SQL INSERT query to add a new item to the "item" table
     const [result] = await this.database.query(
-      `LOAD DATA INFILE ? INTO TABLE ${this.table} FIELDS TERMINATED BY "," ENCLOSED BY '"' LINES ERMINATED BY '\n' IGNORE 1 LINES`,
-      [newName]
+      `LOAD DATA INFILE ? INTO TABLE ${this.table} FIELDS TERMINATED BY "," ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES`,
+      [`${__dirname}../../../${newName}`]
     );
-    console.info(newName);
     // Return the ID of the newly inserted item
     return result;
   }

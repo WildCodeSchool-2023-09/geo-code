@@ -43,8 +43,9 @@ const add = async (req, res, next) => {
   // Extract the item data from the request body
 
   const myFile = req.file;
-  let newName = `public/uploads/default.csv`;
-  newName = `${myFile.destination}${myFile.filename}-${myFile.originalname}`;
+  console.info(myFile);
+
+  const newName = `${myFile.destination}${myFile.filename}-${myFile.originalname}`;
   fs.renameSync(`${myFile.destination}/${myFile.filename}`, newName);
 
   try {
