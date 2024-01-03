@@ -24,7 +24,7 @@ export default function AdminAddBornes() {
   const onDrop = useCallback(
     (acceptedFile) => {
       console.info(acceptedFile[0]);
-      setFile(acceptedFile);
+      setFile(acceptedFile[0]);
     },
     [file]
   );
