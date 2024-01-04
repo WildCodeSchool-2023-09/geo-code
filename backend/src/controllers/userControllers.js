@@ -129,6 +129,7 @@ const checktoken = async (req, res, next) => {
       res.status(200).send({ message: "OK" });
     } else res.status(200).send({ message: "Error" });
   } catch (err) {
+    res.status(200).send({ message: "Error" });
     next(err);
   }
 };
