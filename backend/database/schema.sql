@@ -72,7 +72,8 @@ create table users
     logged_in   tinyint(1) default 0 not null,
     nb_vehicule int                  not null,
     isAdmin     tinyint(1) default 0 not null,
-    birthday    date                 not null
+    birthday    date                 not null,
+    token       varchar(255)          null,
 );
 
 create table vehicule
