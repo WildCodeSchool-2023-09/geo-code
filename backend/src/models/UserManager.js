@@ -86,8 +86,24 @@ class UserManager extends AbstractManager {
 
   async signIn(email) {
     const [user] = await this.database.query(
-      `SELECT * FROM users WHERE email = ?`,
+      `SELECT * FROM user WHERE email = ?`,
       [email]
+    );
+    return user;
+  }
+
+  async saveToken(token, email) {
+    const [result] = await this.database.query(
+      `UPDATE user SET token=? WHERE email=?`,
+      [token, email]
+    );
+    return result;
+  }
+
+  async checkToken(token) {
+    const [user] = await this.database.query(
+      `SELECT * FROM user WHERE token = ?`,
+      [token]
     );
     return user;
   }

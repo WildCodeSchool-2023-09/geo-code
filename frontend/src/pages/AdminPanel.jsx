@@ -1,8 +1,27 @@
 import "../scss/admin-panel.scss";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import ScrollToTop from "./ResetScrollOnPage";
 
 export default function AdminPanel() {
+  if (localStorage.getItem("EpimeleiaAdminToken") !== null) {
+    axios
+      .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
+        token: localStorage.getItem("UserToken"),
+      })
+      .then((res) => {
+        if (res.data.message === "OK") {
+          console.info("Connexion Approuvée");
+        } else {
+          console.info("Connexion Expirée ! Reconnectez-vous");
+          localStorage.removeItem("UserToken");
+          window.location.href = "/sign-in";
+        }
+      });
+  } else {
+    console.info("no token");
+    window.location.href = "/sign-in";
+  }
   return (
     <main className="backgroundImageMain">
       <ScrollToTop />

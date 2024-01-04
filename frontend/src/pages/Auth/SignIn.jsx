@@ -69,6 +69,9 @@ export default function SignIn() {
         console.info(response.data.message);
         document.getElementById("successLog").innerText =
           "Authentification en cours...";
+
+        localStorage.setItem("UserToken", response.data.token);
+
         setTimeout(() => {
           window.location.href = "/success-auth";
         }, 500);

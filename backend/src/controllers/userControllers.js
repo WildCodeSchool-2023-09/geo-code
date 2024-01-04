@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 // Import access to database tables
 const tables = require("../tables");
 
@@ -84,10 +85,18 @@ const login = async (req, res, next) => {
     const { email, password } = req.body;
     const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
     console.info(`Nouvelle requête depuis : ${ip}`);
-    const user = await tables.users.signIn(email);
+    const user = await tables.user.signIn(email);
     if (user.length === 1) {
       if (user[0].password === password) {
-        res.status(200).send({ message: "Authentification réussie" });
+        const tokenUser = jwt.sign(
+          { email: user[0].email, userId: user[0].id },
+          "gPddQfXz5Kc6QQRc4s3sTLxEA7fmT3x6qo9dgbfj",
+          { expiresIn: "1h" }
+        );
+        res
+          .status(200)
+          .send({ message: "Authentification réussie", token: tokenUser });
+        await tables.user.saveToken(tokenUser, email);
       } else {
         res.status(401).send({ message: "Mot de passe incorrect" });
       }
@@ -96,6 +105,32 @@ const login = async (req, res, next) => {
         .status(401)
         .send({ message: "Aucun compte n'a été trouvé avec cet email" });
     }
+  } catch (err) {
+    next(err);
+  }
+};
+
+const checktoken = async (req, res, next) => {
+  const { token } = req.body;
+  console.info("checkencours");
+
+  try {
+    const decodedToken = jwt.verify(
+      token,
+      "gPddQfXz5Kc6QQRc4s3sTLxEA7fmT3x6qo9dgbfj"
+    );
+
+    const { userId } = decodedToken;
+    const checkUserToken = await tables.user.checkToken(token);
+    console.info(checkUserToken);
+    if (
+      checkUserToken.length === 1 &&
+      checkUserToken[0].token === token &&
+      checkUserToken[0].admin === 1 &&
+      checkUserToken[0].id === userId
+    ) {
+      res.status(200).send({ message: "OK" });
+    } else res.status(200).send({ message: "Error" });
   } catch (err) {
     next(err);
   }
@@ -110,5 +145,6 @@ module.exports = {
   edit,
   add,
   login,
+  checktoken,
   // destroy,
 };
