@@ -123,10 +123,12 @@ const checktoken = async (req, res, next) => {
     if (
       checkUserToken.length === 1 &&
       checkUserToken[0].token === token &&
-      checkUserToken[0].admin === 1 &&
       checkUserToken[0].id === userId
     ) {
-      res.status(200).send({ message: "OK" });
+      if (checkUserToken[0].isAdmin === 1) {
+        res.status(200).send({ admin: true, message: "OK" });
+      }
+      res.status(200).send({ message: "OK", admin: false });
     } else res.status(200).send({ message: "Error" });
   } catch (err) {
     res.status(200).send({ message: "Error" });

@@ -10,7 +10,7 @@ export default function AdminPanel() {
         token: localStorage.getItem("UserToken"),
       })
       .then((res) => {
-        if (res.data.message === "OK") {
+        if (res.data.message === "OK" && res.data.admin === true) {
           console.info("Connexion Approuvée");
         } else {
           console.info("Connexion Expirée ! Reconnectez-vous");
