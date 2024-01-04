@@ -1,3 +1,4 @@
+import axios from "axios";
 import "../scss/admin-utilisateur.scss";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -7,6 +8,25 @@ import ScrollToTop from "./ResetScrollOnPage";
 import data from "../data/UserDataTest.json";
 
 export default function AdminUtilisateur() {
+  if (localStorage.getItem("UserToken") !== null) {
+    axios
+      .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
+        token: localStorage.getItem("UserToken"),
+      })
+      .then((res) => {
+        if (res.data.message === "OK" && res.data.admin === true) {
+          console.info("Connexion Approuvée");
+        } else {
+          console.info("Connexion Expirée ! Reconnectez-vous");
+          localStorage.removeItem("UserToken");
+          window.location.href = "/sign-in";
+        }
+      });
+  } else {
+    console.info("Connexion Expirée ! Reconnectez-vous");
+    window.location.href = "/sign-in";
+  }
+
   const [searchForm, setSearchForm] = useState("");
   function updateForm(e) {
     e.preventDefault();

@@ -1,3 +1,4 @@
+import axios from "axios";
 import "../scss/admin-borne.scss";
 import { Link } from "react-router-dom";
 
@@ -12,6 +13,25 @@ export default function AdminBorne() {
   function updateForm(e) {
     e.preventDefault();
     setSearchForm(e.target[0].value);
+  }
+
+  if (localStorage.getItem("UserToken") !== null) {
+    axios
+      .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
+        token: localStorage.getItem("UserToken"),
+      })
+      .then((res) => {
+        if (res.data.message === "OK" && res.data.admin === true) {
+          console.info("Connexion Approuvée");
+        } else {
+          console.info("Connexion Expirée ! Reconnectez-vous");
+          localStorage.removeItem("UserToken");
+          window.location.href = "/sign-in";
+        }
+      });
+  } else {
+    console.info("Connexion Expirée ! Reconnectez-vous");
+    window.location.href = "/sign-in";
   }
 
   return (

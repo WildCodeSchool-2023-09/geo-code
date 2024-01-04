@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import ScrollToTop from "./ResetScrollOnPage";
 
 export default function AdminPanel() {
-  if (localStorage.getItem("EpimeleiaAdminToken") !== null) {
+  if (localStorage.getItem("UserToken") !== null) {
     axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
         token: localStorage.getItem("UserToken"),
@@ -19,7 +19,7 @@ export default function AdminPanel() {
         }
       });
   } else {
-    console.info("no token");
+    console.info("Connexion Expirée ! Reconnectez-vous");
     window.location.href = "/sign-in";
   }
   return (
