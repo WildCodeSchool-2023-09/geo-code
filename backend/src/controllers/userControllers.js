@@ -90,7 +90,7 @@ const login = async (req, res, next) => {
       if (user[0].password === password) {
         const tokenUser = jwt.sign(
           { email: user[0].email, userId: user[0].id },
-          "gPddQfXz5Kc6QQRc4s3sTLxEA7fmT3x6qo9dgbfj",
+          process.env.JWT_SECRET,
           { expiresIn: "1h" }
         );
         res
@@ -115,10 +115,7 @@ const checktoken = async (req, res, next) => {
   console.info("checkencours");
 
   try {
-    const decodedToken = jwt.verify(
-      token,
-      "gPddQfXz5Kc6QQRc4s3sTLxEA7fmT3x6qo9dgbfj"
-    );
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
     const { userId } = decodedToken;
     const checkUserToken = await tables.user.checkToken(token);
