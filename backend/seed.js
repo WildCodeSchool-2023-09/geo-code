@@ -29,7 +29,7 @@ const seed = async () => {
         [
           `C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\Copie de bornes-irve - bornes-irve.csv`,
         ]
-        // chemin obligatoire ou mettre le fichier csv pour pouvoir faire l'import initial des bornes
+        // chemin obligatoire ou mettre le fichier csv pour pouvoir faire l'import initial des bornes le fichier a utiliser est dans public/assets/image. Il faudra le déplacer pour qu'il soit dans le chemin mit plus haut
       )
     );
 
