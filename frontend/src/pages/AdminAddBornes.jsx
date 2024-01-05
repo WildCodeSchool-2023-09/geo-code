@@ -3,7 +3,6 @@ import Lottie from "react-lottie-player";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-import PrimaryButton from "../components/buttons/PrimaryButton";
 import ScrollToTop from "./ResetScrollOnPage";
 import mailError from "../assets/LottieFiles/EmailError.json";
 
@@ -86,9 +85,9 @@ export default function AdminAddBornes() {
           <p className="message">
             {`
           Vous n'êtes pas autorisé(e) à acceder a cette page.  `}
-            <br /> {` Vous allez être redirigé(e) vers la page de connexion. `}
+            <br />
+            {` Vous n'avez pas les droits nécéssaire ! Redirection vers l'accueil `}
           </p>
-          <PrimaryButton btnText="Se connecter" btnLink="/sign-in" />
         </div>
       </section>
     );

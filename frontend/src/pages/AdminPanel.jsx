@@ -8,7 +8,6 @@ import ScrollToTop from "./ResetScrollOnPage";
 import "../scss/admin-panel.scss";
 
 import mailError from "../assets/LottieFiles/EmailError.json";
-import PrimaryButton from "../components/buttons/PrimaryButton";
 
 export default function AdminPanel() {
   const [isLoading, setIsLoading] = useState(true);
@@ -64,9 +63,9 @@ export default function AdminPanel() {
           <p className="message">
             {`
           Vous n'êtes pas autorisé(e) à acceder a cette page.  `}
-            <br /> {` Vous allez être redirigé(e) vers la page de connexion. `}
+            <br />
+            {` Vous n'avez pas les droits nécéssaire ! Redirection vers l'accueil `}
           </p>
-          <PrimaryButton btnText="Se connecter" btnLink="/sign-in" />
         </div>
       </section>
     );

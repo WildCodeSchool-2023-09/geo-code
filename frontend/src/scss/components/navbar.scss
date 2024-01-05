@@ -173,3 +173,31 @@
     display: none;
   }
 }
+
+.navbtnmobile {
+  display: none;
+  @media screen and (max-width: 720px) {
+    display: flex;
+    margin-right: 80px;
+    gap: 1rem;
+  }
+
+  .reservation {
+    display: flex;
+    background: url(assets/svg/reservations-icon.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+  }
+  .admin {
+    display: flex;
+    background: url(assets/svg/admin-icon.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+  }
+}

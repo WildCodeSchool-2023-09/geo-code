@@ -1,9 +1,30 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "../scss/components/mobilenav.scss";
 import { NavLink as Link } from "react-router-dom";
 import "../scss/root.scss";
 import data from "../data/TabData.json";
 
 export default function navmobile() {
+  const [isConnected, setIsConnected] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("UserToken") !== null) {
+      axios
+        .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
+          token: localStorage.getItem("UserToken"),
+        })
+        .then((res) => {
+          if (res.data.message === "OK" && res.data.admin === true) {
+            console.info("Connexion Approuvée");
+            setIsConnected(true);
+          } else if (res.data.message === "OK" && res.data.admin === false) {
+            console.info("Connexion Approuvée");
+            setIsConnected(true);
+          }
+        });
+    }
+  }, []);
   return (
     <div className="TAB">
       <svg
@@ -26,18 +47,43 @@ export default function navmobile() {
       </svg>
 
       <div className="TAB__container">
-        {data.map((dataIndex) => (
-          <Link key={dataIndex.id} to={dataIndex.linkurl}>
-            <div className="TAB__container__item">
-              <div className="TAB__container__item__icon">
-                <img src={dataIndex.icon} alt={dataIndex.name} />
-              </div>
-              <div className="TAB__container__item__text">
-                <p>{dataIndex.name}</p>
-              </div>
-            </div>
-          </Link>
-        ))}
+        {isConnected === true
+          ? data
+              .filter(
+                (dataIndex) =>
+                  dataIndex.connected === undefined ||
+                  dataIndex.connected === true
+              )
+              .map((dataIndex) => (
+                <Link key={dataIndex.id} to={dataIndex.linkurl}>
+                  <div className="TAB__container__item">
+                    <div className="TAB__container__item__icon">
+                      <img src={dataIndex.icon} alt={dataIndex.name} />
+                    </div>
+                    <div className="TAB__container__item__text">
+                      <p>{dataIndex.name}</p>
+                    </div>
+                  </div>
+                </Link>
+              ))
+          : data
+              .filter(
+                (dataIndex) =>
+                  dataIndex.connected === undefined ||
+                  dataIndex.connected === false
+              )
+              .map((dataIndex) => (
+                <Link key={dataIndex.id} to={dataIndex.linkurl}>
+                  <div className="TAB__container__item">
+                    <div className="TAB__container__item__icon">
+                      <img src={dataIndex.icon} alt={dataIndex.name} />
+                    </div>
+                    <div className="TAB__container__item__text">
+                      <p>{dataIndex.name}</p>
+                    </div>
+                  </div>
+                </Link>
+              ))}
       </div>
     </div>
   );

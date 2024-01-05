@@ -7,7 +7,6 @@ import "../scss/admin-utilisateur.scss";
 
 import UserCard from "../components/UserCard";
 import ScrollToTop from "./ResetScrollOnPage";
-import PrimaryButton from "../components/buttons/PrimaryButton";
 import mailError from "../assets/LottieFiles/EmailError.json";
 
 import data from "../data/UserDataTest.json";
@@ -71,9 +70,9 @@ export default function AdminUtilisateur() {
           <p className="message">
             {`
           Vous n'êtes pas autorisé(e) à acceder a cette page.  `}
-            <br /> {` Vous allez être redirigé(e) vers la page de connexion. `}
+            <br />
+            {` Vous n'avez pas les droits nécéssaire ! Redirection vers l'accueil `}
           </p>
-          <PrimaryButton btnText="Se connecter" btnLink="/sign-in" />
         </div>
       </section>
     ); // or render a login component
