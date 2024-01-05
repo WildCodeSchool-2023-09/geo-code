@@ -21,6 +21,6 @@
     "id": "4",
     "name": "Compte",
     "icon": "assets/svg/account-icon.svg",
-    "linkurl": "/account"
+    "linkurl": "/profil"
   }
 ]

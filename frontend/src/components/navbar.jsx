@@ -11,6 +11,7 @@ import SettingsPhone from "./popups/popup-slider";
 
 export default function Navbar({ navData }) {
   const [isAdmin, setIsAdmin] = useState();
+  const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem("UserToken") !== null) {
@@ -22,9 +23,11 @@ export default function Navbar({ navData }) {
           if (res.data.message === "OK" && res.data.admin === true) {
             console.info("Connexion Approuvée");
             setIsAdmin(true);
+            setIsConnected(true);
           } else if (res.data.message === "OK" && res.data.admin === false) {
             console.info("Connexion Approuvée");
             setIsAdmin(false);
+            setIsConnected(true);
           }
         });
     }
@@ -190,7 +193,10 @@ export default function Navbar({ navData }) {
                 );
               })}
         </ul>
-        <a className="sign-in" href="/sign-in">
+        <a
+          className="sign-in"
+          href={isConnected === true ? "/profil" : "/sign-in"}
+        >
           {}
         </a>
         <SettingsPhone navData={navData} />

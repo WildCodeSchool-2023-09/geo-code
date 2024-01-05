@@ -28,18 +28,10 @@
     "admin": false
   },
   {
-    "id": "5",
-    "linkname": "Profil",
-    "linkurl": "/Profil",
-    "btn": false,
-    "admin": false
-  },
-  {
     "id": "6",
     "linkname": "Administrateur",
     "linkurl": "/admin",
     "btn": false,
     "admin": true
   }
- 
 ]
