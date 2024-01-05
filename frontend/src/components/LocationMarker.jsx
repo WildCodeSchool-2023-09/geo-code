@@ -4,12 +4,7 @@ import LocationContext from "../Context/locationContext";
 
 function LocationMarker() {
   const { position, setPosition } = useContext(LocationContext);
-
   const map = useMap();
-  const locateMe = () =>
-    map.locate().on("locationfound", (e) => {
-      map.flyTo(e.latlng, map.getZoom());
-    });
 
   useEffect(() => {
     map.locate().on("locationfound", (e) => {
@@ -17,6 +12,12 @@ function LocationMarker() {
       map.flyTo(e.latlng, map.getZoom());
     });
   }, []);
+  const locateMe = () => {
+    map.locate().on("locationfound", (e) => {
+      map.flyTo(e.latlng, map.getZoom());
+    });
+    console.info(position);
+  };
 
   return (
     <Marker position={position}>

@@ -50,6 +50,15 @@ class ReservationManager extends AbstractManager {
     return rows;
   }
 
+  async checkReservationForDelete(vehiculeId) {
+    const [rows] = await this.database.query(
+      `SELECT * FROM reservation WHERE vehicule_id = ?`,
+      [vehiculeId]
+    );
+
+    return rows;
+  }
+
   // The U of CRUD - Update operation
   // TODO: Implement the update operation to modify an existing item
 

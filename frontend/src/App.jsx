@@ -34,25 +34,42 @@ function App() {
     [position, setPosition]
   );
 
-  const resizeObserver = new ResizeObserver(() => {
-    if (window.innerWidth < 720) {
-      if (window.location.pathname === "/map") {
-        document.body.classList.add("no-scroll");
-        document.documentElement.scrollTop = 0;
-      }
-    } else {
-      document.body.classList.remove("no-scroll");
-    }
-  });
+  function OnChangePage() {
+    const resizeObserver = new ResizeObserver(() => {
+      if (window.innerWidth < 721) {
+        if (
+          window.location.pathname === "/map" ||
+          window.location.pathname === "/sign-in" ||
+          window.location.pathname === "/success-auth"
+        ) {
+          document.documentElement.scrollTop = 0;
+          document.body.classList.add("no-scroll");
 
-  resizeObserver.observe(document.body);
+          if (
+            window.location.pathname === "/sign-in" ||
+            window.location.pathname === "/success-auth"
+          ) {
+            document.querySelector("nav").style.visibility = "hidden";
+            document.querySelector(".TAB").style.visibility = "hidden";
+          } else {
+            document.querySelector("nav").style.removeProperty("visibility");
+            document.querySelector(".TAB").style.removeProperty("visibility");
+          }
+        } else {
+          document.body.classList.remove("no-scroll");
+        }
+      }
+    });
+    resizeObserver.observe(document.body);
+  }
+
   return (
     <>
       <Navbar navData={navData} />
       <main>
         <LocationContext.Provider value={positionValue}>
           <FilterResearch.Provider value={value}>
-            <Outlet />
+            <Outlet onChange={OnChangePage()} />
           </FilterResearch.Provider>
         </LocationContext.Provider>
       </main>

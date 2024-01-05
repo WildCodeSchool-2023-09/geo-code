@@ -59,9 +59,9 @@ describe("Create user", () => {
     expect(foundItem.ville).toBe(testUser.ville);
     expect(foundItem.email).toBe(testUser.email);
     expect(foundItem.password).toBe(testUser.password);
-    expect(foundItem.logged_in).toBe(testUser.logged_in === true ? 1 : 0);
+    expect(foundItem.logged_in).toBe(0);
     expect(foundItem.nb_vehicule).toBe(testUser.nb_vehicule);
-    expect(foundItem.isAdmin).toBe(testUser.isAdmin === true ? 1 : 0);
+    expect(foundItem.isAdmin).toBe(1);
     // expect(foundItem.birthday).toBe(testUser.birthday);
   });
 
@@ -69,7 +69,7 @@ describe("Create user", () => {
     // Thx https://jestjs.io/docs/asynchronous#asyncawait
 
     // Send a create request to the item table with an empty object
-    const promise = tables.users.create({});
+    const promise = tables.users.update({});
 
     // Assertions
     await expect(promise).rejects.toThrow();
@@ -102,50 +102,58 @@ describe("Update user", () => {
       ville: "Paris",
       email: "nom.prenom@wcs.com",
       password: "Azerty1234",
-      logged_in: false,
+      logged_in: true,
       nb_vehicule: 1,
-      isAdmin: true,
+      isAdmin: false,
     };
 
     const response = await tables.users.update(insertId, updatedUser);
 
-    console.info(response);
-  });
-  //   const [rows] = await database.query(
-  //     "select * from users where id = ?",
-  //     response
-  //   );
-  //   const foundItem = rows[0];
+    const [rows] = await database.query(
+      "select * from users where id = ?",
+      response
+    );
+    const foundItem = rows[0];
 
-  //   // Assertions
-  //   expect(foundItem).toBeDefined();
-  //   expect(foundItem).toHaveProperty("id");
-  //   expect(foundItem).toHaveProperty("firstname");
-  //   expect(foundItem).toHaveProperty("lastname");
-  //   expect(foundItem).toHaveProperty("code_postal");
-  //   expect(foundItem).toHaveProperty("ville");
-  //   expect(foundItem).toHaveProperty("email");
-  //   expect(foundItem).toHaveProperty("password");
-  //   expect(foundItem).toHaveProperty("logged_in");
-  //   expect(foundItem).toHaveProperty("nb_vehicule");
-  //   expect(foundItem).toHaveProperty("isAdmin");
-  //   expect(typeof foundItem.id).toEqual("number");
-  //   expect(typeof foundItem.firstname).toEqual("string");
-  //   expect(typeof foundItem.lastname).toEqual("string");
-  //   expect(typeof foundItem.code_postal).toEqual("number");
-  //   expect(typeof foundItem.ville).toEqual("string");
-  //   expect(typeof foundItem.email).toEqual("string");
-  //   expect(typeof foundItem.password).toEqual("string");
-  //   expect(typeof foundItem.logged_in).toEqual("number");
-  //   expect(typeof foundItem.nb_vehicule).toEqual("number");
-  //   expect(typeof foundItem.isAdmin).toEqual("number");
-  //   expect(foundItem.firstname).toBe(testUser.firstname);
-  //   expect(foundItem.lastname).toBe(testUser.lastname);
-  //   expect(foundItem.code_postal).toBe(testUser.code_postal);
-  //   expect(foundItem.ville).toBe(testUser.ville);
-  //   expect(foundItem.email).toBe(testUser.email);
-  //   expect(foundItem.password).toBe(testUser.password);
-  //   expect(foundItem.logged_in).toBe(testUser.logged_in === true ? 1 : 0);
-  //   expect(foundItem.nb_vehicule).toBe(testUser.nb_vehicule);
-  //   expect(foundItem.isAdmin).toBe(testUser.isAdmin === true ? 1 : 0);
+    // Assertions
+    expect(foundItem).toBeDefined();
+    expect(foundItem).toHaveProperty("id");
+    expect(foundItem).toHaveProperty("firstname");
+    expect(foundItem).toHaveProperty("lastname");
+    expect(foundItem).toHaveProperty("code_postal");
+    expect(foundItem).toHaveProperty("ville");
+    expect(foundItem).toHaveProperty("email");
+    expect(foundItem).toHaveProperty("password");
+    expect(foundItem).toHaveProperty("logged_in");
+    expect(foundItem).toHaveProperty("nb_vehicule");
+    expect(foundItem).toHaveProperty("isAdmin");
+    expect(foundItem).toHaveProperty("birthday");
+    expect(typeof foundItem.id).toEqual("number");
+    expect(typeof foundItem.firstname).toEqual("string");
+    expect(typeof foundItem.lastname).toEqual("string");
+    expect(typeof foundItem.code_postal).toEqual("number");
+    expect(typeof foundItem.ville).toEqual("string");
+    expect(typeof foundItem.email).toEqual("string");
+    expect(typeof foundItem.password).toEqual("string");
+    expect(typeof foundItem.logged_in).toEqual("number");
+    expect(typeof foundItem.nb_vehicule).toEqual("number");
+    expect(typeof foundItem.isAdmin).toEqual("number");
+    expect(typeof foundItem.birthday).toEqual("object");
+    expect(foundItem.firstname).toBe("didi");
+    expect(foundItem.lastname).toBe(testUser.lastname);
+    expect(foundItem.code_postal).toBe(testUser.code_postal);
+    expect(foundItem.ville).toBe(testUser.ville);
+    expect(foundItem.email).toBe(testUser.email);
+    expect(foundItem.password).toBe(testUser.password);
+    expect(foundItem.logged_in).toBe(1);
+    expect(foundItem.nb_vehicule).toBe(testUser.nb_vehicule);
+    expect(foundItem.isAdmin).toBe(0);
+  });
+
+  it("should return an error", async () => {
+    const promise = tables.users.create({});
+
+    // Assertions
+    await expect(promise).rejects.toThrow();
+  });
 });
