@@ -41,39 +41,9 @@ const edit = async (req, res, next) => {
     isAdmin: req.body.isAdmin,
   };
   const { id } = req.params;
-  const { nom } = req.body.nom;
-  const { prenom } = req.body.prenom;
-  const { rue } = req.body.rue;
-  const { codePostal } = req.body.code_postal;
-  const { ville } = req.body.ville;
-  const { email } = req.body.email;
-  const { password } = req.body.password;
-  const { connection } = req.body.connection;
-  const { nbVehicule } = req.body.nb_vehicule;
-  const { admin } = req.body.admin;
-  const { anniversaire } = req.body.anniversaire;
-  const { inscription } = req.body.inscription;
-  const { derniereMaj } = req.body.derniere_maj;
-  const { token } = req.body.token;
 
   try {
-    const user = await tables.user.update(
-      id,
-      nom,
-      prenom,
-      rue,
-      codePostal,
-      ville,
-      email,
-      password,
-      connection,
-      nbVehicule,
-      admin,
-      anniversaire,
-      inscription,
-      derniereMaj,
-      token
-    );
+    const user = await tables.users.update(id, updatedUser);
 
     if (user.affectedRows === 0) {
       res.sendStatus(404);
