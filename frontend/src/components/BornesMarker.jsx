@@ -1,5 +1,4 @@
 import { Marker } from "react-leaflet";
-// import axios from "axios";
 import L from "leaflet";
 import { useContext, useEffect } from "react";
 import convertToDistance from "../services/ConvertToDistance";
@@ -16,12 +15,6 @@ function GetIcon(_iconSize) {
 }
 
 function BornesMarker() {
-  // const bornes = () => {
-  //   axios
-  //     .get()
-  //     .then()
-  //     .catch((error) => console.info(error));
-  // };
   const { research } = useContext(FilterContext);
   useEffect(() => {
     console.info(research);
