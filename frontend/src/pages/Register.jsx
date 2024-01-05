@@ -28,6 +28,11 @@ function Register() {
   return (
     <main className="register-page">
       <Link to="/register" />
+      <img
+        className="logo_register"
+        src="\assets\svg\logo_black.svg"
+        alt="logo_black"
+      />
       <h1>Créer un compte</h1>
       <h2> informations personnelles </h2>
       <form className="userInfo">
@@ -75,7 +80,7 @@ function Register() {
         </div>
         <div className="content_input">
           <label className="content_input_label" htmlFor="password">
-            Password
+            Mot de passe
           </label>
           <input
             className="content_input_placeholder"
@@ -84,12 +89,12 @@ function Register() {
             name="password"
             id="password"
             onChange={handleChange}
-            placeholder="Enter your password"
+            placeholder="Entrer votre mot de passe"
           />
         </div>
         <div className="content_input">
           <label className="content_input_label" htmlFor="confirm">
-            Confirm
+            Confirmez
           </label>
           <input
             className="content_input_placeholder"
@@ -98,7 +103,7 @@ function Register() {
             name="confirm"
             id="confirm"
             onChange={handleChange}
-            placeholder="Confirm your password"
+            placeholder="Confirmez le mot de passe"
           />
         </div>
         <div className="content_input">
@@ -186,8 +191,8 @@ function Register() {
           />
         </div>
       </form>
-      <h3>informations sur le(s) véhicules</h3>
       <form className="vehiculeInfo">
+        <h3>informations sur le(s) véhicules</h3>
         <div className="content_input">
           <label className="content_input_label" htmlFor="marque">
             Marque
