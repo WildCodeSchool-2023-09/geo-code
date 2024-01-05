@@ -2,26 +2,55 @@
 // Le composant dropzone a besoin des prop spreading pour fonctionner. Vu avec SAM
 import "../scss/admin-add-bornes.scss";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import { useDropzone } from "react-dropzone";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import ScrollToTop from "./ResetScrollOnPage";
 
+// require("dotenv").config();
+
 export default function AdminAddBornes() {
+  const [file, setFile] = useState({});
   const handleFileChange = (e) => {
     e.preventDefault();
-    const fileObj = e.target.files && e.target.files[0];
-    if (!fileObj) {
+    const acceptedFile = e.target.files[0];
+    if (!acceptedFile) {
       return null;
     }
-    console.info(fileObj);
-    return fileObj;
+    console.info(acceptedFile);
+    setFile(acceptedFile);
+    console.info(file);
+    return acceptedFile;
   };
 
-  const onDrop = useCallback((acceptedFiles) => {
-    console.info(acceptedFiles[0]);
-  }, []);
+  const onDrop = useCallback(
+    (acceptedFile) => {
+      console.info(acceptedFile[0]);
+      setFile(acceptedFile[0]);
+    },
+    [file]
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const url = "http://localhost:3310/api/uploads";
+
+  function Submit(e) {
+    e.preventDefault();
+    const formData = new FormData();
+    const config = {
+      Headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+    formData.append("file", file);
+    formData.append("fileName", file.name);
+    axios
+      .post(url, formData, config)
+      .then((response) => {
+        console.info(response.data);
+      })
+      .catch((err) => console.info(err));
+  }
   return (
     <main className="add-bornes-main backgroundImageMain">
       <ScrollToTop />
@@ -29,27 +58,32 @@ export default function AdminAddBornes() {
       <div className="upload-card">
         <h1>Ajouter des Bornes</h1>
         <div className="upload">
-          <div {...getRootProps()}>
+          <div className="upload_DragDrop" {...getRootProps()}>
             <input {...getInputProps()} />
             {isDragActive ? (
-              <p>Chargez votre fichier ici ...</p>
+              <p>Chargez votre fichier ici ... </p>
             ) : (
-              <p>
+              <div className="upload_DragDrop_text">
                 Drag 'n' drop le fichier ici, ou cliquez sur
-                <form encType="multipart/form-data" method="post">
-                  <input
-                    type="file"
-                    name="uploadfile"
-                    accept="csv"
-                    onChange={handleFileChange}
-                  />
-                </form>
-              </p>
+              </div>
             )}
           </div>
+          <form htmlFor="file" className="upload_form">
+            <input
+              type="file"
+              name="file"
+              accept="csv"
+              onChange={handleFileChange}
+              className="upload_form_input"
+            />
+          </form>
         </div>
         <div className="buttons-container">
-          <button type="submit" className="buttons-container_blue">
+          <button
+            type="submit"
+            className="buttons-container_blue"
+            onClick={Submit}
+          >
             Charger le CSV
           </button>
 

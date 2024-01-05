@@ -1,5 +1,7 @@
 const express = require("express");
+const multer = require("multer");
 
+const upload = multer({ dest: "public/uploads/" });
 const router = express.Router();
 
 /* ************************************************************************* */
@@ -78,8 +80,8 @@ router.get("/bornes", borneControllers.browse);
 // Route to get a specific bornes by ID
 router.get("/bornes/:id", borneControllers.read);
 
-// Route to add a new bornes
-router.post("/bornes", borneControllers.add);
+// Route pour ajouter le fichier csv
+router.post("/uploads", upload.single("file"), borneControllers.add);
 
 /* ************************************************************************* */
 
