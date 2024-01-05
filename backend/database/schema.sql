@@ -63,7 +63,7 @@ CREATE TABLE modele (
 DROP TABLE IF EXISTS vehicule;
 CREATE TABLE vehicule (
 	id int AUTO_INCREMENT NOT NULL,
-	prorpietaire_id int NOT NULL,
+	proprietaire_id int NOT NULL,
 	modele_id int NOT NULL,
 	PRIMARY KEY (id)
 );
@@ -83,7 +83,7 @@ CREATE TABLE reservation (
 
 ALTER TABLE modele ADD CONSTRAINT modele_fk0 FOREIGN KEY (marque_id) REFERENCES marque(id);
 
-ALTER TABLE vehicule ADD CONSTRAINT vehicule_fk0 FOREIGN KEY (prorpietaire_id) REFERENCES user(id);
+ALTER TABLE vehicule ADD CONSTRAINT vehicule_fk0 FOREIGN KEY (proprietaire_id) REFERENCES user(id);
 
 ALTER TABLE vehicule ADD CONSTRAINT vehicule_fk1 FOREIGN KEY (modele_id) REFERENCES modele(id);
 

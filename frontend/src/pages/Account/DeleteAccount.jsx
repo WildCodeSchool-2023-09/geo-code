@@ -80,6 +80,13 @@ export default function SignIn() {
           setTimeout(() => {
             window.location.href = "/sign-in";
           }, 3800);
+        } else if (
+          response.data.message ===
+          "Impossible de supprimer vous avez des réservations en cours veuillez les annuler si vous souhaitez supprimer votre compte de notre site de type internet merci de votre compréhension"
+        ) {
+          document.getElementById("successLog").innerText = "";
+          document.getElementById("errorLog").innerText =
+            "Vous avez des réservations en cours, suppression du compte impossible";
         } else if (response.data.message === "Password incorrect") {
           document.getElementById("successLog").innerText = "";
           document.getElementById("errorLog").innerText =

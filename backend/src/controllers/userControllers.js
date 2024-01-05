@@ -46,7 +46,7 @@ const edit = async (req, res, next) => {
   const { token } = req.body.token;
 
   try {
-    const user = await tables.users.update(
+    const user = await tables.user.update(
       id,
       nom,
       prenom,
@@ -174,8 +174,20 @@ const userDelete = async (req, res, next) => {
     if (user.length === 1) {
       if (user[0].password === password) {
         if (user[0].token === token) {
-          await tables.user.userDelete(user[0].id);
-          res.status(200).send({ message: "Compte supprimé" });
+          const vehicules = await tables.vehicule.checkVehicule(user[0].id);
+          vehicules.forEach(async (vehicule) => {
+            const reservation =
+              await tables.reservation.checkReservationForDelete(vehicule.id);
+            if (reservation.length === 0) {
+              await tables.user.userDelete(user[0].id);
+              res.status(200).send({ message: "Compte supprimé" });
+            } else {
+              res.status(200).send({
+                message:
+                  "Impossible de supprimer vous avez des réservations en cours veuillez les annuler si vous souhaitez supprimer votre compte de notre site de type internet merci de votre compréhension",
+              });
+            }
+          });
         } else {
           res.status(200).send({ message: "Token incorrect" });
         }
