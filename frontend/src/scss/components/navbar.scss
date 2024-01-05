@@ -163,7 +163,7 @@
 }
 .sign-in {
   display: flex;
-  background: url(assets/svg/account-icon.svg);
+  background: url(/assets/svg/account-icon.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -184,7 +184,7 @@
 
   .reservation {
     display: flex;
-    background: url(assets/svg/reservations-icon.svg);
+    background: url(/assets/svg/reservations-icon.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -193,7 +193,7 @@
   }
   .admin {
     display: flex;
-    background: url(assets/svg/admin-icon.svg);
+    background: url(/assets/svg/admin-icon.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;

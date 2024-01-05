@@ -166,6 +166,30 @@ const checktoken = async (req, res, next) => {
 // The D of BREAD - Destroy (Delete) operation
 // This operation is not yet implemented
 
+const userDelete = async (req, res, next) => {
+  try {
+    const { email, password, token } = req.body;
+    const user = await tables.user.signIn(email);
+
+    if (user.length === 1) {
+      if (user[0].password === password) {
+        if (user[0].token === token) {
+          await tables.user.userDelete(user[0].id);
+          res.status(200).send({ message: "Compte supprimé" });
+        } else {
+          res.status(200).send({ message: "Token incorrect" });
+        }
+      } else {
+        res.status(200).send({ message: "Password incorrect" });
+      }
+    } else {
+      res.status(200).send({ message: "Email incorrect" });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
 // Ready to export the controller functions
 module.exports = {
   browse,
@@ -174,5 +198,5 @@ module.exports = {
   add,
   login,
   checktoken,
-  // destroy,
+  userDelete,
 };

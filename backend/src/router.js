@@ -20,6 +20,9 @@ const borneControllers = require("./controllers/borneControllers");
 // Route to connect user
 router.post("/login", userControllers.login);
 
+// Route to delete user
+router.post("/delete", userControllers.userDelete);
+
 // Route to verify token
 router.post("/checktoken", userControllers.checktoken);
 

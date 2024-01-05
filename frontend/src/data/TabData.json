@@ -2,28 +2,28 @@
   {
     "id": "1",
     "name": "Home",
-    "icon": "assets/svg/home-icon.svg",
+    "icon": "/assets/svg/home-icon.svg",
     "linkurl": "/"
     
   },
   {
     "id": "2",
     "name": "Carte",
-    "icon": "assets/svg/map-icon.svg",
+    "icon": "/assets/svg/map-icon.svg",
     "linkurl": "/map"
     
   },
   {
     "id": "3",
     "name": "Filtres",
-    "icon": "assets/svg/filter-icon.svg",
+    "icon": "/assets/svg/filter-icon.svg",
     "linkurl": "/filter"
     
   },
   {
     "id": "4",
     "name": "Compte",
-    "icon": "assets/svg/account-icon.svg",
+    "icon": "/assets/svg/account-icon.svg",
     "linkurl": "/profil",
     "connected":true
   }
@@ -31,7 +31,7 @@
   {
     "id": "5",
     "name": "Compte",
-    "icon": "assets/svg/account-icon.svg",
+    "icon": "/assets/svg/account-icon.svg",
     "linkurl": "/sign-in",
     "connected":false
   }

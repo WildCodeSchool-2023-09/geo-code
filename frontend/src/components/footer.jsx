@@ -66,6 +66,15 @@ export default function Footer() {
                   Cookies
                 </Link>
               </li>
+              <li className="section-item">
+                <Link
+                  className="underline-animation"
+                  to="/account/delete"
+                  title="Supprimer son compte"
+                >
+                  Supprimer son compte
+                </Link>
+              </li>
             </ul>
           </div>
           <div className="section">

@@ -17,6 +17,7 @@ import BornesListe from "./pages/BornesListe";
 
 import SignIn from "./pages/Auth/SignIn";
 import SuccessAuth from "./pages/Auth/SuccessAuth";
+import DeleteAccount from "./pages/Account/DeleteAccount";
 
 import AdminPanel from "./pages/AdminPanel";
 import AdminUtilisateur from "./pages/AdminUtilisateur";
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
       {
         path: "/success-auth",
         element: <SuccessAuth />,
+      },
+      {
+        path: "/account/delete",
+        element: <DeleteAccount />,
       },
     ],
   },
