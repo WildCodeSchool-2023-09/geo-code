@@ -7,6 +7,8 @@ import { useDropzone } from "react-dropzone";
 import { useCallback, useState } from "react";
 import ScrollToTop from "./ResetScrollOnPage";
 
+// require("dotenv").config();
+
 export default function AdminAddBornes() {
   const [file, setFile] = useState({});
   const handleFileChange = (e) => {
@@ -56,20 +58,23 @@ export default function AdminAddBornes() {
       <div className="upload-card">
         <h1>Ajouter des Bornes</h1>
         <div className="upload">
-          <div {...getRootProps()}>
+          <div className="upload_DragDrop" {...getRootProps()}>
             <input {...getInputProps()} />
             {isDragActive ? (
-              <p>Chargez votre fichier ici ...</p>
+              <p>Chargez votre fichier ici ... </p>
             ) : (
-              <div>Drag 'n' drop le fichier ici, ou cliquez sur</div>
+              <div className="upload_DragDrop_text">
+                Drag 'n' drop le fichier ici, ou cliquez sur
+              </div>
             )}
           </div>
-          <form htmlFor="file">
+          <form htmlFor="file" className="upload_form">
             <input
               type="file"
               name="file"
               accept="csv"
               onChange={handleFileChange}
+              className="upload_form_input"
             />
           </form>
         </div>
