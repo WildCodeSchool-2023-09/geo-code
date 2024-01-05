@@ -1,3 +1,5 @@
+-- SQLBook: Code
+
 
  DROP TABLE IF EXISTS user;
 CREATE TABLE user (
@@ -15,25 +17,23 @@ CREATE TABLE user (
 	anniversaire DATE NOT NULL,
 	inscription DATE NOT NULL,
 	derniere_maj DATE NOT NULL,
-    token VARCHAR(255) NULL
-	
+  token VARCHAR(255) NULL
 );
 
 DROP TABLE IF EXISTS borne;
 CREATE TABLE borne (
-    id int  NOT NULL PRIMARY KEY,
-	id_station VARCHAR (80),
-	n_station VARCHAR(255),
-	ad_station VARCHAR(255),
-	code_insee VARCHAR (80),
-	xlongitude FLOAT NOT NULL,
-	ylatitude FLOAT NOT NULL,
-	puiss_max VARCHAR(80),
-	accessibilite VARCHAR(80) ,
-	type_prise VARCHAR(250),
-	n_enseigne  VARCHAR (80) ,
+  id VARCHAR(250)  NOT NULL PRIMARY KEY,
+	id_station VARCHAR (80) NOT NULL,
+	n_station VARCHAR(255)  NOT NULL,
+	ad_station VARCHAR(255)  NOT NULL,
+	code_postal VARCHAR (80)  NOT NULL,
+	lng FLOAT NOT NULL,
+	lat FLOAT NOT NULL,
+	puiss_max VARCHAR(80) NOT NULL,
+	accessibilite VARCHAR(80)  NOT NULL,
+	type_prise VARCHAR(250)  NOT NULL,
+	n_enseigne  VARCHAR (80)  NOT NULL,
 	date_maj DATE NOT NULL
-	
 );
 
 DROP TABLE IF EXISTS marque;
@@ -71,15 +71,13 @@ CREATE TABLE vehicule (
 DROP TABLE IF EXISTS reservation;
 CREATE TABLE reservation (
 	id int  AUTO_INCREMENT NOT NULL,
-	borne_id int NOT NULL,
+	borne_id VARCHAR(250) NOT NULL,
 	vehicule_id int NOT NULL,
 	date_reservation DATE NOT NULL,
 	heure TIME NOT NULL,
 	heure_fin TIME NOT NULL,
 	PRIMARY KEY (id)
 );
-
-
 
 ALTER TABLE modele ADD CONSTRAINT modele_fk0 FOREIGN KEY (marque_id) REFERENCES marque(id);
 

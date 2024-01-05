@@ -12,7 +12,9 @@ import ScrollToTop from "./ResetScrollOnPage";
 function BornesListe() {
   const { research } = useContext(FilterContext);
   useEffect(() => {
-    console.info(research);
+    console.info(
+      research
+    ); /* le console.info est là pour forcer le re-render */
   }, [research]);
 
   const { position } = useContext(LocationContext);
@@ -60,7 +62,6 @@ function BornesListe() {
                     disponible={borne.disponible}
                     pdc={borne.pdc}
                     prise={borne.prise}
-                    convertToDistance={convertToDistance}
                   />
                 </div>
               );

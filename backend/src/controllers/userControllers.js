@@ -29,6 +29,17 @@ const read = async (req, res, next) => {
 
 // The E of BREAD - Edit (Update) operation
 const edit = async (req, res, next) => {
+  const updatedUser = {
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    code_postal: req.body.code_postal,
+    ville: req.body.ville,
+    email: req.body.email,
+    password: req.body.password,
+    logged_in: req.body.logged_in,
+    nb_vehicule: req.body.nb_vehicule,
+    isAdmin: req.body.isAdmin,
+  };
   const { id } = req.params;
   const { nom } = req.body.nom;
   const { prenom } = req.body.prenom;
@@ -63,6 +74,7 @@ const edit = async (req, res, next) => {
       derniereMaj,
       token
     );
+
     if (user.affectedRows === 0) {
       res.sendStatus(404);
     } else {

@@ -1,5 +1,7 @@
 const express = require("express");
+const multer = require("multer");
 
+const upload = multer({ dest: "public/uploads/" });
 const router = express.Router();
 
 /* ************************************************************************* */
@@ -12,8 +14,6 @@ const reservationControllers = require("./controllers/reservationControllers");
 const marqueControllers = require("./controllers/marqueControllers");
 const modeleControllers = require("./controllers/modeleControllers");
 const vehiculeControllers = require("./controllers/vehiculeControllers");
-const enseigneControllers = require("./controllers/enseigneControllers");
-const accessibiliteControllers = require("./controllers/accessibiliteControllers");
 const tarificationControllers = require("./controllers/tarificationControllers");
 const borneControllers = require("./controllers/borneControllers");
 
@@ -74,24 +74,6 @@ router.get("/vehicules/:id", vehiculeControllers.read);
 // Route to add a new reservations
 router.post("/vehicules", vehiculeControllers.add);
 
-// Route to get a list of enseignes
-router.get("/enseignes", enseigneControllers.browse);
-
-// Route to get a specific enseignes by ID
-router.get("/enseignes/:id", enseigneControllers.read);
-
-// Route to add a new enseignes
-router.post("/enseignes", enseigneControllers.add);
-
-// Route to get a list of accessibilites
-router.get("/accessibilites", accessibiliteControllers.browse);
-
-// Route to get a specific accessibilites by ID
-router.get("/accessibilites/:id", accessibiliteControllers.read);
-
-// Route to add a new accessibilites
-router.post("/accessibilites", accessibiliteControllers.add);
-
 // Route to get a list of tarifications
 router.get("/tarifications", tarificationControllers.browse);
 
@@ -107,8 +89,8 @@ router.get("/bornes", borneControllers.browse);
 // Route to get a specific bornes by ID
 router.get("/bornes/:id", borneControllers.read);
 
-// Route to add a new bornes
-router.post("/bornes", borneControllers.add);
+// Route pour ajouter le fichier csv
+router.post("/uploads", upload.single("file"), borneControllers.add);
 
 /* ************************************************************************* */
 

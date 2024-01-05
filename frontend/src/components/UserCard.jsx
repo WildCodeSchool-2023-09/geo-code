@@ -1,16 +1,7 @@
 import "../scss/components/user-card.scss";
 import PropTypes from "prop-types";
 
-export default function UserCard({
-  firstname,
-  lastname,
-  img,
-  /* sexe,
-  code_postal,
-  ville,
-  email,
-  nb_vehicule, */
-}) {
+export default function UserCard({ firstname, lastname, img }) {
   return (
     <div className="card">
       <img src={img} alt="" />
@@ -34,9 +25,4 @@ UserCard.propTypes = {
   firstname: PropTypes.string.isRequired,
   lastname: PropTypes.string.isRequired,
   img: PropTypes.string.isRequired,
-  /* sexe: PropTypes.string.isRequired,
-  code_postal: PropTypes.string.isRequired,
-  ville: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  nb_vehicule: PropTypes.string.isRequired, */
 };

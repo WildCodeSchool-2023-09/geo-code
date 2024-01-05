@@ -2,6 +2,7 @@ import "../scss/components/borneCardUser.scss";
 import PropTypes from "prop-types";
 import { useContext } from "react";
 import LocationContext from "../Context/locationContext";
+import convertToDistance from "../services/ConvertToDistance";
 
 export default function BorneCard({
   name,
@@ -14,7 +15,6 @@ export default function BorneCard({
   tarification,
   disponible,
   prise,
-  convertToDistance,
 }) {
   const { position } = useContext(LocationContext);
   return (
@@ -65,5 +65,4 @@ BorneCard.propTypes = {
   tarification: PropTypes.string.isRequired,
   disponible: PropTypes.string.isRequired,
   prise: PropTypes.string.isRequired,
-  convertToDistance: PropTypes.func.isRequired,
 };
