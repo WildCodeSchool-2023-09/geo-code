@@ -1,4 +1,3 @@
-/* eslint-disable no-fallthrough */
 const fs = require("fs");
 const csv = require("csv-parser");
 const { v4: uuidv4 } = require("uuid");
@@ -76,7 +75,6 @@ class BorneManager extends AbstractManager {
         return true;
       });
 
-    // const [upload] = await this.database.query(console.info("tata"));
     // Return the ID of the newly inserted item
   }
 
