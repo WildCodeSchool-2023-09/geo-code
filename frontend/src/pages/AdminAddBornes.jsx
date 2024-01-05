@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Lottie from "react-lottie-player";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -9,18 +9,11 @@ import { useDropzone } from "react-dropzone";
 import ScrollToTop from "./ResetScrollOnPage";
 import mailError from "../assets/LottieFiles/EmailError.json";
 
-import "../scss/admin-add-bornes.scss";
-
 export default function AdminAddBornes() {
   const [isAdmin, setIsAdmin] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const inputRef = useRef(null);
 
-  const handleClick = () => {
-    inputRef.current.click();
-  };
-  
   const [file, setFile] = useState({});
   const handleFileChange = (e) => {
     e.preventDefault();
