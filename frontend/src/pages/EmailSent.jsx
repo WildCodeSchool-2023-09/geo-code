@@ -1,6 +1,6 @@
 import "../scss/pages.scss";
 import Lottie from "react-lottie-player";
-import mailSent from "../data/MailSend.json";
+import mailSent from "../assets/LottieFiles/MailSend.json";
 import PrimaryButton from "../components/buttons/PrimaryButton";
 import ScrollToTop from "./ResetScrollOnPage";
 

@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 // Import access to database tables
 const tables = require("../tables");
 
@@ -43,6 +44,7 @@ const edit = async (req, res, next) => {
 
   try {
     const user = await tables.users.update(id, updatedUser);
+
     if (user.affectedRows === 0) {
       res.sendStatus(404);
     } else {
@@ -70,8 +72,117 @@ const add = async (req, res, next) => {
   }
 };
 
+const login = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+    console.info(`Nouvelle requête depuis : ${ip}`);
+    const user = await tables.user.signIn(email);
+    if (user.length === 1) {
+      if (user[0].password === password) {
+        const tokenUser = jwt.sign(
+          { email: user[0].email, userId: user[0].id },
+          process.env.JWT_SECRET,
+          { expiresIn: "1h" }
+        );
+        if (user[0].admin === 1) {
+          res.status(200).send({
+            message: "Authentification réussie",
+            token: tokenUser,
+            admin: true,
+          });
+          await tables.user.saveToken(tokenUser, email);
+        } else {
+          res.status(200).send({
+            message: "Authentification réussie",
+            token: tokenUser,
+            admin: false,
+          });
+          await tables.user.saveToken(tokenUser, email);
+        }
+      } else {
+        res.status(401).send({ message: "Mot de passe incorrect" });
+      }
+    } else {
+      res
+        .status(401)
+        .send({ message: "Aucun compte n'a été trouvé avec cet email" });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+const checktoken = async (req, res, next) => {
+  const { token } = req.body;
+  console.info("checkencours");
+
+  try {
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+
+    const { userId } = decodedToken;
+    const checkUserToken = await tables.user.checkToken(token);
+    console.info(checkUserToken);
+    if (
+      checkUserToken.length === 1 &&
+      checkUserToken[0].token === token &&
+      checkUserToken[0].id === userId &&
+      checkUserToken[0].admin === 1
+    ) {
+      res.status(200).send({ message: "OK", admin: true });
+      console.info(checkUserToken[0].admin, "admin");
+    } else if (
+      checkUserToken.length === 1 &&
+      checkUserToken[0].token === token &&
+      checkUserToken[0].id === userId &&
+      checkUserToken[0].admin === 0
+    ) {
+      res.status(200).send({ message: "OK", admin: false });
+      console.info(checkUserToken[0].admin, "Not an admin");
+    } else res.status(200).send({ message: "ErrorElse" });
+  } catch (err) {
+    res.status(200).send({ message: "ErrorCatch" });
+    next(err);
+  }
+};
 // The D of BREAD - Destroy (Delete) operation
 // This operation is not yet implemented
+
+const userDelete = async (req, res, next) => {
+  try {
+    const { email, password, token } = req.body;
+    const user = await tables.user.signIn(email);
+
+    if (user.length === 1) {
+      if (user[0].password === password) {
+        if (user[0].token === token) {
+          const vehicules = await tables.vehicule.checkVehicule(user[0].id);
+          vehicules.forEach(async (vehicule) => {
+            const reservation =
+              await tables.reservation.checkReservationForDelete(vehicule.id);
+            if (reservation.length === 0) {
+              await tables.user.userDelete(user[0].id);
+              res.status(200).send({ message: "Compte supprimé" });
+            } else {
+              res.status(200).send({
+                message:
+                  "Impossible de supprimer vous avez des réservations en cours veuillez les annuler si vous souhaitez supprimer votre compte de notre site de type internet merci de votre compréhension",
+              });
+            }
+          });
+        } else {
+          res.status(200).send({ message: "Token incorrect" });
+        }
+      } else {
+        res.status(200).send({ message: "Password incorrect" });
+      }
+    } else {
+      res.status(200).send({ message: "Email incorrect" });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
 
 // Ready to export the controller functions
 module.exports = {
@@ -79,5 +190,7 @@ module.exports = {
   read,
   edit,
   add,
-  // destroy,
+  login,
+  checktoken,
+  userDelete,
 };

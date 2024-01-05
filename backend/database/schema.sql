@@ -1,5 +1,6 @@
 -- SQLBook: Code
 
+
  DROP TABLE IF EXISTS user;
 CREATE TABLE user (
 	id int AUTO_INCREMENT NOT NULL PRIMARY KEY,
@@ -15,13 +16,13 @@ CREATE TABLE user (
 	admin BOOLEAN NOT NULL,
 	anniversaire DATE NOT NULL,
 	inscription DATE NOT NULL,
-	derniere_maj DATE NOT NULL
-	
+	derniere_maj DATE NOT NULL,
+  token VARCHAR(255) NULL
 );
 
 DROP TABLE IF EXISTS borne;
 CREATE TABLE borne (
-    id VARCHAR(250)  NOT NULL PRIMARY KEY,
+  id VARCHAR(250)  NOT NULL PRIMARY KEY,
 	id_station VARCHAR (80) NOT NULL,
 	n_station VARCHAR(255)  NOT NULL,
 	ad_station VARCHAR(255)  NOT NULL,
@@ -33,7 +34,6 @@ CREATE TABLE borne (
 	type_prise VARCHAR(250)  NOT NULL,
 	n_enseigne  VARCHAR (80)  NOT NULL,
 	date_maj DATE NOT NULL
-	
 );
 
 DROP TABLE IF EXISTS marque;
@@ -63,7 +63,7 @@ CREATE TABLE modele (
 DROP TABLE IF EXISTS vehicule;
 CREATE TABLE vehicule (
 	id int AUTO_INCREMENT NOT NULL,
-	prorpietaire_id int NOT NULL,
+	proprietaire_id int NOT NULL,
 	modele_id int NOT NULL,
 	PRIMARY KEY (id)
 );
@@ -79,11 +79,9 @@ CREATE TABLE reservation (
 	PRIMARY KEY (id)
 );
 
-
-
 ALTER TABLE modele ADD CONSTRAINT modele_fk0 FOREIGN KEY (marque_id) REFERENCES marque(id);
 
-ALTER TABLE vehicule ADD CONSTRAINT vehicule_fk0 FOREIGN KEY (prorpietaire_id) REFERENCES user(id);
+ALTER TABLE vehicule ADD CONSTRAINT vehicule_fk0 FOREIGN KEY (proprietaire_id) REFERENCES user(id);
 
 ALTER TABLE vehicule ADD CONSTRAINT vehicule_fk1 FOREIGN KEY (modele_id) REFERENCES modele(id);
 
@@ -91,5 +89,3 @@ ALTER TABLE vehicule ADD CONSTRAINT vehicule_fk1 FOREIGN KEY (modele_id) REFEREN
 ALTER TABLE reservation ADD CONSTRAINT reservation_fk0 FOREIGN KEY (borne_id) REFERENCES borne(id);
 
 ALTER TABLE reservation ADD CONSTRAINT reservation_fk1 FOREIGN KEY (vehicule_id) REFERENCES vehicule(id);
-
-
