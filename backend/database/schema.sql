@@ -1,3 +1,4 @@
+-- SQLBook: Code
 
  DROP TABLE IF EXISTS user;
 CREATE TABLE user (
@@ -5,7 +6,7 @@ CREATE TABLE user (
 	nom VARCHAR(80) NOT NULL,
 	prenom VARCHAR(80) NOT NULL,
 	rue VARCHAR(255) NOT NULL,
-	code_insee int NOT NULL,
+	code_postal int NOT NULL,
 	ville VARCHAR(255) NOT NULL,
 	email VARCHAR(255) NOT NULL,
 	password VARCHAR(80) NOT NULL,

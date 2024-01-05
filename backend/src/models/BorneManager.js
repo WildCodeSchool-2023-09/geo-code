@@ -15,7 +15,15 @@ class BorneManager extends AbstractManager {
 
   async create(fileCSV) {
     // Execute the SQL INSERT query to add a new item to the "item" table
+    await this.database.query(
+      `ALTER TABLE reservation DROP FOREIGN KEY reservation_fk0`
+    );
 
+    this.database.query(`TRUNCATE TABLE ${this.table}`);
+
+    this.database.query(
+      `ALTER TABLE reservation ADD CONSTRAINT reservation_fk0 FOREIGN KEY (borne_id) REFERENCES borne(id);`
+    );
     fs.createReadStream(fileCSV)
       .pipe(csv({ separator: "," }))
       .on("data", (data) => {
