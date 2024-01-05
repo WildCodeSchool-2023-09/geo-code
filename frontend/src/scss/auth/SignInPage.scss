@@ -7,13 +7,14 @@
   min-height: 74dvh;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
+  padding: 0.5rem;
 
   &_title {
     display: flex;
     flex-direction: column;
     width: 100%;
     max-width: 1280px;
-    padding: 2rem 0;
     margin: 0 auto;
     align-items: center;
     justify-content: center;
@@ -24,7 +25,7 @@
 
     @media screen and (max-width: 720px) {
       padding: 0;
-      color: $color-black;
+      color: $color-primary;
     }
   }
 
@@ -41,10 +42,6 @@
     height: auto;
     margin: 0 auto;
     padding: 1rem;
-
-    @media screen and (max-width: 720px) {
-      background-color: transparent;
-    }
 
     .form_placeholder {
       display: flex;
@@ -121,6 +118,7 @@
       display: flex;
       padding: 0.6rem 1.2rem;
       background: none;
+      margin-top: 1rem;
 
       border-radius: 0.6rem;
       justify-content: center;
@@ -181,6 +179,7 @@
     font-size: 0.9rem;
     transition: transform 0.1s ease-in-out;
     border: none;
+    gap: 1rem;
 
     &:hover {
       transform: scale(0.96);
