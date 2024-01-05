@@ -30,28 +30,38 @@ const read = async (req, res, next) => {
 // The E of BREAD - Edit (Update) operation
 const edit = async (req, res, next) => {
   const { id } = req.params;
-  const { firstname } = req.body.firstname;
-  const { lastname } = req.body.lastname;
+  const { nom } = req.body.nom;
+  const { prenom } = req.body.prenom;
+  const { rue } = req.body.rue;
   const { codePostal } = req.body.code_postal;
   const { ville } = req.body.ville;
   const { email } = req.body.email;
   const { password } = req.body.password;
-  const { loggedIn } = req.body.logged_in;
+  const { connection } = req.body.connection;
   const { nbVehicule } = req.body.nb_vehicule;
-  const { isAdmin } = req.body.isAdmin;
+  const { admin } = req.body.admin;
+  const { anniversaire } = req.body.anniversaire;
+  const { inscription } = req.body.inscription;
+  const { derniereMaj } = req.body.derniere_maj;
+  const { token } = req.body.token;
 
   try {
     const user = await tables.users.update(
       id,
-      firstname,
-      lastname,
+      nom,
+      prenom,
+      rue,
       codePostal,
       ville,
       email,
       password,
-      loggedIn,
+      connection,
       nbVehicule,
-      isAdmin
+      admin,
+      anniversaire,
+      inscription,
+      derniereMaj,
+      token
     );
     if (user.affectedRows === 0) {
       res.sendStatus(404);
@@ -93,10 +103,21 @@ const login = async (req, res, next) => {
           process.env.JWT_SECRET,
           { expiresIn: "1h" }
         );
-        res
-          .status(200)
-          .send({ message: "Authentification réussie", token: tokenUser });
-        await tables.user.saveToken(tokenUser, email);
+        if (user[0].admin === 1) {
+          res.status(200).send({
+            message: "Authentification réussie",
+            token: tokenUser,
+            admin: true,
+          });
+          await tables.user.saveToken(tokenUser, email);
+        } else {
+          res.status(200).send({
+            message: "Authentification réussie",
+            token: tokenUser,
+            admin: false,
+          });
+          await tables.user.saveToken(tokenUser, email);
+        }
       } else {
         res.status(401).send({ message: "Mot de passe incorrect" });
       }
@@ -123,15 +144,22 @@ const checktoken = async (req, res, next) => {
     if (
       checkUserToken.length === 1 &&
       checkUserToken[0].token === token &&
-      checkUserToken[0].id === userId
+      checkUserToken[0].id === userId &&
+      checkUserToken[0].admin === 1
     ) {
-      if (checkUserToken[0].isAdmin === 1) {
-        res.status(200).send({ admin: true, message: "OK" });
-      }
+      res.status(200).send({ message: "OK", admin: true });
+      console.info(checkUserToken[0].admin, "admin");
+    } else if (
+      checkUserToken.length === 1 &&
+      checkUserToken[0].token === token &&
+      checkUserToken[0].id === userId &&
+      checkUserToken[0].admin === 0
+    ) {
       res.status(200).send({ message: "OK", admin: false });
-    } else res.status(200).send({ message: "Error" });
+      console.info(checkUserToken[0].admin, "Not an admin");
+    } else res.status(200).send({ message: "ErrorElse" });
   } catch (err) {
-    res.status(200).send({ message: "Error" });
+    res.status(200).send({ message: "ErrorCatch" });
     next(err);
   }
 };

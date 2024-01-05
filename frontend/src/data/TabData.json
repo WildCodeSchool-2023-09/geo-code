@@ -3,28 +3,24 @@
     "id": "1",
     "name": "Home",
     "icon": "assets/svg/home-icon.svg",
-    "linkurl": "/",
-    "connected": false
+    "linkurl": "/"
   },
   {
     "id": "2",
     "name": "Carte",
     "icon": "assets/svg/map-icon.svg",
-    "linkurl": "/map",
-    "connected": false
+    "linkurl": "/map"
   },
   {
     "id": "3",
     "name": "Filtres",
     "icon": "assets/svg/filter-icon.svg",
-    "linkurl": "/filter",
-    "connected": false
+    "linkurl": "/filter"
   },
   {
     "id": "4",
     "name": "Compte",
     "icon": "assets/svg/account-icon.svg",
-    "linkurl": "/account",
-    "connected": false
+    "linkurl": "/account"
   }
 ]

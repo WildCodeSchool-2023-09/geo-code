@@ -2,27 +2,29 @@ const AbstractManager = require("./AbstractManager");
 
 class UserManager extends AbstractManager {
   constructor() {
-    super({ table: "users" });
+    super({ table: "user" });
   }
 
   // The C of CRUD - Create operation
 
   async create(user) {
     const [result] = await this.database.query(
-      `insert into ${this.table} (firstname, lastname, code_postal, ville, email, password, logged_in,
-                                        nb_vehicule, isAdmin, birthday)
-             values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      `insert into ${this.table} (prenom, nom, code_postal, ville, email, password, connection,
+                                        nb_vehicule, admin, anniversaire, inscription, derniere_maj)
+             values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
-        user.firstname,
-        user.lastname,
+        user.prenom,
+        user.nom,
         user.code_postal,
         user.ville,
         user.email,
         user.password,
-        user.logged_in,
+        user.connection,
         user.nb_vehicule,
-        user.isAdmin,
-        user.birthday,
+        user.admin,
+        user.anniversaire,
+        user.inscription,
+        user.derniere_maj,
       ]
     );
 
@@ -58,25 +60,31 @@ class UserManager extends AbstractManager {
 
   async update(id, updatedUser) {
     const [result] = await this.database.query(
-      `UPDATE ${this.table} SET firstname=?,
-    lastname=?,
+      `UPDATE ${this.table} SET nom=?,
+    prenom=?,
     code_postal=?,
     ville=?,
     email=?,
     password=?,
-    logged_in=?,
+    connection=?,
     nb_vehicule=?,
-    isAdmin=? WHERE id=? `,
+    admin=?,
+    anniversaire=?,
+    inscription=?,
+    derniere_maj=? WHERE id=? `,
       [
-        updatedUser.firstname,
-        updatedUser.lastname,
+        updatedUser.nom,
+        updatedUser.prenom,
         updatedUser.code_postal,
         updatedUser.ville,
         updatedUser.email,
         updatedUser.password,
-        updatedUser.logged_in,
+        updatedUser.connection,
         updatedUser.nb_vehicule,
-        updatedUser.isAdmin,
+        updatedUser.admin,
+        updatedUser.anniversaire,
+        updatedUser.inscription,
+        updatedUser.derniere_maj,
         id,
       ]
     );

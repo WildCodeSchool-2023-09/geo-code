@@ -3,37 +3,43 @@
     "id": "1",
     "linkname": "Accueil",
     "linkurl": "/",
-    "btn": false
+    "btn": false,
+    "admin": false
   },
   {
     "id": "2",
     "linkname": "Carte",
     "linkurl": "/map",
-    "btn": false
+    "btn": false,
+    "admin": false
   },
   {
     "id": "3",
     "linkname": "Actualités",
     "linkurl": "/news",
-    "btn": false
+    "btn": false,
+    "admin": false
   },
   {
     "id": "4",
     "linkname": "Réservations",
     "linkurl": "/reservations",
-    "btn": false
+    "btn": false,
+    "admin": false
   },
   {
     "id": "5",
     "linkname": "Profil",
     "linkurl": "/Profil",
-    "btn": false
+    "btn": false,
+    "admin": false
   },
   {
     "id": "6",
     "linkname": "Administrateur",
     "linkurl": "/admin",
-    "btn": false
+    "btn": false,
+    "admin": true
   }
  
 ]

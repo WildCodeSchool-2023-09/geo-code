@@ -62,10 +62,7 @@ export default function SignIn() {
           email: escapeHtml(details.email),
           password: escapeHtml(details.password),
         });
-        // Gérez ici la réponse et le stockage du token
-        // -------------------------------
 
-        // -------------------------------
         console.info(response.data.message);
         document.getElementById("successLog").innerText =
           "Authentification en cours...";
