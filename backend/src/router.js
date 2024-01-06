@@ -39,7 +39,7 @@ router.get("/users/:id", userControllers.read);
 router.post("/users", userControllers.add);
 
 // Route to edit a user
-router.post("/users/:id", userControllers.edit);
+router.post("/edituser", userControllers.edit);
 
 // Route to get a list of reservations
 router.get("/reservations", reservationControllers.browse);

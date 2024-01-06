@@ -29,26 +29,45 @@ const read = async (req, res, next) => {
 
 // The E of BREAD - Edit (Update) operation
 const edit = async (req, res, next) => {
-  const updatedUser = {
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    code_postal: req.body.code_postal,
-    ville: req.body.ville,
-    email: req.body.email,
-    password: req.body.password,
-    logged_in: req.body.logged_in,
-    nb_vehicule: req.body.nb_vehicule,
-    isAdmin: req.body.isAdmin,
-  };
-  const { id } = req.params;
+  const {
+    token,
+    prenom,
+    nom,
+    anniversaire,
+    rue,
+    codePostal,
+    ville,
+    derniereMaj,
+  } = req.body;
 
   try {
-    const user = await tables.user.update(id, updatedUser);
+    const birthday = new Date(anniversaire);
+    if (codePostal.toString().length === 5) {
+      if (
+        anniversaire < derniereMaj &&
+        Math.floor((Date.now() - birthday) / 31557600000) >= 18
+      ) {
+        const user = await tables.user.update(
+          token,
+          prenom,
+          nom,
+          anniversaire,
+          rue,
+          codePostal,
+          ville,
+          derniereMaj
+        );
 
-    if (user.affectedRows === 0) {
-      res.sendStatus(404);
+        if (user.affectedRows === 0) {
+          res.sendStatus(404);
+        } else {
+          res.status(202).send({ message: "user updated" });
+        }
+      } else {
+        res.status(202).send({ message: "Date d'anniversaire incorrect" });
+      }
     } else {
-      res.sendStatus(204);
+      res.status(202).send({ message: "Code Postal incorrect" });
     }
   } catch (err) {
     next(err);

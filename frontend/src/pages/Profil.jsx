@@ -50,10 +50,9 @@ export default function Profil() {
           token: localStorage.getItem("UserToken"),
         })
         .then((res) => {
-          const [date] = res.data[0].anniversaire.split("T");
           setLastname(res.data[0].nom);
           setFirstname(res.data[0].prenom);
-          setBirthday(date);
+          setBirthday(res.data[0].anniversaire);
           setEmail(res.data[0].email);
           setAdresse(res.data[0].rue);
           setCodePostal(res.data[0].code_postal);
@@ -71,6 +70,37 @@ export default function Profil() {
   if (isLoading) {
     return null;
   }
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    const date = `${new Date().getFullYear()}-${
+      new Date().getMonth() + 1 < 10
+        ? `0${new Date().getMonth() + 1}`
+        : new Date().getMonth() + 1
+    }-${
+      new Date().getDay() < 10 ? `0${new Date().getDay()}` : new Date().getDay()
+    }`;
+
+    axios
+      .post(`${import.meta.env.VITE_BACKEND_URL}/api/edituser`, {
+        token: localStorage.getItem("UserToken"),
+        nom: lastname,
+        prenom: firstname,
+        anniversaire: birthday,
+        email,
+        rue: adresse,
+        codePostal,
+        ville,
+        derniereMaj: date,
+      })
+      .then((res) => {
+        if (res.data.message === "user updated") {
+          console.info("Modification effectuée");
+        } else {
+          console.info(res.data.message);
+        }
+      });
+  };
 
   if (!isLoggedIn) {
     return (
@@ -176,13 +206,21 @@ export default function Profil() {
               <Link to="/profil-vehicule" className="button grey-button">
                 Modifier les véhicules
               </Link>
-              <button type="button" className="button blue-button">
+              <button
+                type="submit"
+                className="button blue-button"
+                onClick={handleChange}
+              >
                 Enregistrer les changements
               </button>
               <button type="button" className="no-button">
                 Demander un nouveau mot de passe
               </button>
-              <button type="button" className="no-button">
+              <button
+                type="button"
+                className="no-button"
+                onClick={() => window.location.reload()}
+              >
                 Annuler les changements
               </button>
             </div>
