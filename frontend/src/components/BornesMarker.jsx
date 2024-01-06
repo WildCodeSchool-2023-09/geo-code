@@ -1,42 +1,50 @@
 import { Marker } from "react-leaflet";
-// import axios from "axios";
+import axios from "axios";
 import L from "leaflet";
-import { useContext, useEffect } from "react";
+// import useSupercluster from "use-supercluster";
+import { useContext, useEffect, useState } from "react";
 import convertToDistance from "../services/ConvertToDistance";
+import iconMarker from "../assets/borne-marker-white.svg";
 import LocationContext from "../Context/locationContext";
 import FilterContext from "../Context/ResearchContext";
-import iconMarker from "../assets/borne-marker-black.svg";
-import bornes from "../data/BorneUser";
 
-function GetIcon(_iconSize) {
+const API_URL = `${import.meta.env.VITE_BACKEND_URL}/api`;
+
+function GetIcon() {
   return L.icon({
     iconUrl: iconMarker,
-    iconSize: [_iconSize],
+    iconSize: [30, 30],
+    iconAnchor: [30, 15],
   });
 }
-
 function BornesMarker() {
-  // const bornes = () => {
-  //   axios
-  //     .get()
-  //     .then()
-  //     .catch((error) => console.info(error));
-  // };
+  const [bornes, setBornes] = useState([]);
   const { research } = useContext(FilterContext);
+  const { position } = useContext(LocationContext);
   useEffect(() => {
     console.info(research);
   }, [research]);
-  const { position } = useContext(LocationContext);
+
+  useEffect(() => {
+    axios
+      .get(`${API_URL}/bornes`)
+      .then((res) => setBornes(res.data))
+      .catch((error) => console.info(error));
+  }, [research]);
+  if (research.rayon === "" || research.rayon === "0") {
+    research.rayon = "1085";
+  }
   return (
     <div>
       {bornes
         .filter(
           (borne) =>
-            borne.code.includes(research.code) &&
-            borne.enseigne.includes(research.enseigne) &&
-            borne.tarification.includes(research.tarification) &&
-            borne.puissance.includes(research.puissance) &&
-            borne.prise.includes(research.prise) &&
+            borne.code_postal.includes(research.code) &&
+            borne.n_enseigne.includes(research.enseigne) &&
+            borne.puiss_max.includes(research.puissance) &&
+            borne.type_prise.includes(
+              research.prise || research.prise.toLowerCase()
+            ) &&
             convertToDistance(
               borne.lat,
               borne.lng,
@@ -45,7 +53,7 @@ function BornesMarker() {
             ) <= parseInt(research.rayon, 10)
         )
         .map((borne) => (
-          <Marker position={borne} key={borne.name} icon={GetIcon()} />
+          <Marker position={borne} key={borne.id} icon={GetIcon()} />
         ))}
     </div>
   );

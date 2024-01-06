@@ -19,7 +19,6 @@ function App() {
     rayon: "1085",
     puissance: "",
     disponible: "",
-    tarification: "",
     prise: "",
   });
 
