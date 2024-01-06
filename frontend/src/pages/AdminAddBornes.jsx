@@ -15,17 +15,6 @@ export default function AdminAddBornes() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const [file, setFile] = useState({});
-  const handleFileChange = (e) => {
-    e.preventDefault();
-    const acceptedFile = e.target.files[0];
-    if (!acceptedFile) {
-      return null;
-    }
-    console.info(acceptedFile);
-    setFile(acceptedFile);
-    console.info(file);
-    return acceptedFile;
-  };
 
   const onDrop = useCallback(
     (acceptedFile) => {
@@ -119,25 +108,17 @@ export default function AdminAddBornes() {
       <div className="upload-card">
         <h1>Ajouter des Bornes</h1>
         <div className="upload">
+          {isDragActive ? (
+            <p className="upload_text">Relacher le fichier pour l'ajouter </p>
+          ) : (
+            <p className="upload_text">
+              Drag 'n' drop ou Cliquez <br />
+              pour sélectionner un fichier
+            </p>
+          )}
           <div className="upload_DragDrop" {...getRootProps()}>
             <input {...getInputProps()} />
-            {isDragActive ? (
-              <p>Chargez votre fichier ici ... </p>
-            ) : (
-              <div className="upload_DragDrop_text">
-                Drag 'n' drop le fichier ici, ou cliquez sur
-              </div>
-            )}
           </div>
-          <form htmlFor="file" className="upload_form">
-            <input
-              type="file"
-              name="file"
-              accept="csv"
-              onChange={handleFileChange}
-              className="upload_form_input"
-            />
-          </form>
         </div>
         <div className="buttons-container">
           <button

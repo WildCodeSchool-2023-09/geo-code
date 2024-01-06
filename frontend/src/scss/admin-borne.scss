@@ -5,6 +5,9 @@
   flex-direction: column;
   padding: 1rem;
   margin-bottom: 80px;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
 
   h1 {
     display: flex;
@@ -91,6 +94,6 @@
   .card-list {
     display: flex;
     flex-direction: column;
-    width: 70%;
+    width: 100%;
   }
 }
