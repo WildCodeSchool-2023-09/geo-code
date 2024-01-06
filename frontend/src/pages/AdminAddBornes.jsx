@@ -24,7 +24,7 @@ export default function AdminAddBornes() {
     [file]
   );
 
-  const { getRootProps, getInputProps } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   const url = "http://localhost:3310/api/uploads";
 
   function Submit(e) {
@@ -108,6 +108,14 @@ export default function AdminAddBornes() {
       <div className="upload-card">
         <h1>Ajouter des Bornes</h1>
         <div className="upload">
+          {isDragActive ? (
+            <p className="upload_text">Relacher le fichier pour l'ajouter </p>
+          ) : (
+            <p className="upload_text">
+              Drag 'n' drop ou Cliquez <br />
+              pour sélectionner un fichier
+            </p>
+          )}
           <div className="upload_DragDrop" {...getRootProps()}>
             <input {...getInputProps()} />
           </div>
