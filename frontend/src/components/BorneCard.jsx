@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 
 export default function BorneCard({ name, adresse }) {
   return (
-    <div className="card-borne">
-      <h2>{name}</h2>
-      <h3>{adresse}</h3>
+    <div className="card_borne">
+      <p className="card_borne_name">{name}</p>
+      <p className="card_borne_adresse">{adresse}</p>
       <button type="button" className="blue-button">
         Plus d’informations
       </button>
