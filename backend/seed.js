@@ -53,9 +53,12 @@ const seed = async () => {
 
         if (data.accessibilite === "") line.accessibilite = "non renseigné";
 
-        queries.push([
+        queries.push(
           database.query(
-            `INSERT INTO borne (id, id_station, n_station, ad_station, code_postal, lng, lat, puiss_max, accessibilite, type_prise, date_maj, n_enseigne) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            `INSERT INTO borne (id, id_station, n_station, ad_station, code_postal, lng, lat, puiss_max,
+                                            accessibilite, type_prise, n_enseigne,
+                                            date_maj)
+                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
               uuidv4(),
               line.id_station,
@@ -67,21 +70,64 @@ const seed = async () => {
               line.puiss_max,
               line.accessibilite,
               line.type_prise,
-              line.date_maj,
               line.n_enseigne,
+              line.date_maj,
             ]
-          ),
-        ]);
-      })
-      .on("end", async () => {
-        await Promise.all(queries);
-        console.info(`${database.databaseName} filled from ${__filename} 🌱`);
+          )
+        );
       });
     /* ************************************************************************* */
 
-    // Wait for all the insertion queries to complete
+    queries.push(
+      database.query(
+        `INSERT INTO user (nom, prenom, rue, code_postal, ville, email, password, connection,
+                                   nb_vehicule, admin, anniversaire, inscription, derniere_maj)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          "nom",
+          "user",
+          "rue",
+          "12345",
+          "ville",
+          "user@gmail.com",
+          "Azerty1234",
+          1,
+          1,
+          0,
+          "1990-01-01",
+          "2024-01-01",
+          "2024-01-01",
+        ]
+      ),
+      database.query(
+        `INSERT INTO user (nom, prenom, rue, code_postal, ville, email, password, connection,
+                                   nb_vehicule, admin, anniversaire, inscription, derniere_maj)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          "nom",
+          "admin",
+          "rue",
+          "12345",
+          "ville",
+          "admin@gmail.com",
+          "Azerty1234",
+          1,
+          1,
+          1,
+          "1990-01-01",
+          "2024-01-01",
+          "2024-01-01",
+        ]
+      )
+    );
 
-    // Close the database connection
+    // Wait for all the insertion queries to complete
+    await Promise.all(queries);
+
+    setTimeout(() => {
+      database.end();
+      console.info(`${database.databaseName} filled from ${__filename} 🌱`);
+    }, 10000);
   } catch (err) {
     console.error("Error filling the database:", err.message);
   }
