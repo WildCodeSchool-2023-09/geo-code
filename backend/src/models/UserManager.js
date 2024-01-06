@@ -9,12 +9,12 @@ class UserManager extends AbstractManager {
 
   async create(user) {
     const [result] = await this.database.query(
-      `insert into ${this.table} (prenom, nom, code_postal, ville, email, password, connection,
+      `insert into ${this.table} (nom, prenom, code_postal, ville, email, password, connection,
                                         nb_vehicule, admin, anniversaire, inscription, derniere_maj)
              values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
-        user.prenom,
         user.nom,
+        user.prenom,
         user.code_postal,
         user.ville,
         user.email,
@@ -60,18 +60,20 @@ class UserManager extends AbstractManager {
 
   async update(id, updatedUser) {
     const [result] = await this.database.query(
-      `UPDATE ${this.table} SET nom=?,
-    prenom=?,
-    code_postal=?,
-    ville=?,
-    email=?,
-    password=?,
-    connection=?,
-    nb_vehicule=?,
-    admin=?,
-    anniversaire=?,
-    inscription=?,
-    derniere_maj=? WHERE id=? `,
+      `UPDATE ${this.table}
+         SET nom=?,
+             prenom=?,
+             code_postal=?,
+             ville=?,
+             email=?,
+             password=?,
+             connection=?,
+             nb_vehicule=?,
+             admin=?,
+             anniversaire=?,
+             inscription=?,
+             derniere_maj=?
+         WHERE id = ? `,
       [
         updatedUser.nom,
         updatedUser.prenom,
@@ -94,7 +96,9 @@ class UserManager extends AbstractManager {
 
   async signIn(email) {
     const [user] = await this.database.query(
-      `SELECT * FROM user WHERE email = ?`,
+      `SELECT *
+         FROM user
+         WHERE email = ?`,
       [email]
     );
     return user;
@@ -102,7 +106,9 @@ class UserManager extends AbstractManager {
 
   async saveToken(token, email) {
     const [result] = await this.database.query(
-      `UPDATE user SET token=? WHERE email=?`,
+      `UPDATE user
+         SET token=?
+         WHERE email = ?`,
       [token, email]
     );
     return result;
@@ -110,7 +116,19 @@ class UserManager extends AbstractManager {
 
   async checkToken(token) {
     const [user] = await this.database.query(
-      `SELECT * FROM user WHERE token = ?`,
+      `SELECT *
+         FROM user
+         WHERE token = ?`,
+      [token]
+    );
+    return user;
+  }
+
+  async takeData(token) {
+    const [user] = await this.database.query(
+      `SELECT nom, prenom, rue, code_postal, ville, email, anniversaire
+             FROM user
+             WHERE token = ?`,
       [token]
     );
     return user;
@@ -120,9 +138,12 @@ class UserManager extends AbstractManager {
   // TODO: Implement the delete operation to remove an item by its ID
 
   async userDelete(id) {
-    const [result] = await this.database.query(`DELETE FROM user WHERE id=?`, [
-      id,
-    ]);
+    const [result] = await this.database.query(
+      `DELETE
+           FROM user
+           WHERE id = ?`,
+      [id]
+    );
     return result;
   }
 }

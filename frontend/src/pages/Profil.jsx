@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Lottie from "react-lottie-player";
 
@@ -11,15 +11,14 @@ import mailError from "../assets/LottieFiles/EmailError.json";
 import PrimaryButton from "../components/buttons/PrimaryButton";
 
 export default function Profil() {
-  const [lastname, setLastname] = useState(data[0].lastname);
-  const [firstname, setFirstname] = useState(data[0].firstname);
-  const [birthday, setBirthday] = useState(data[0].date_naissance);
-  const [email, setEmail] = useState(data[0].email);
-  const [phone, setPhone] = useState(data[0].phone);
-  const [adresse, setAdresse] = useState(data[0].adresse);
-  const [codePostal, setCodePostal] = useState(data[0].code_postal);
-  const [ville, setVille] = useState(data[0].ville);
-  const [pays, setPays] = useState(data[0].pays);
+  const [lastname, setLastname] = useState();
+  const [firstname, setFirstname] = useState();
+  const [birthday, setBirthday] = useState();
+  const [email, setEmail] = useState();
+  const [adresse, setAdresse] = useState();
+  const [codePostal, setCodePostal] = useState();
+  const [ville, setVille] = useState();
+  const [avatar, setAvatar] = useState(data[0].img);
 
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -44,6 +43,21 @@ export default function Profil() {
             }, 3800);
           }
           setIsLoading(false);
+        });
+
+      axios
+        .post(`${import.meta.env.VITE_BACKEND_URL}/api/takedata`, {
+          token: localStorage.getItem("UserToken"),
+        })
+        .then((res) => {
+          const [date] = res.data[0].anniversaire.split("T");
+          setLastname(res.data[0].nom);
+          setFirstname(res.data[0].prenom);
+          setBirthday(date);
+          setEmail(res.data[0].email);
+          setAdresse(res.data[0].rue);
+          setCodePostal(res.data[0].code_postal);
+          setVille(res.data[0].ville);
         });
     } else {
       console.info("Connexion Expirée ! Reconnectez-vous");
@@ -89,15 +103,30 @@ export default function Profil() {
         </Link>
         <div className="general-container">
           <div className="profil">
-            <img src={data[0].img} alt="" />
+            <img src={avatar} alt="" />
             <h1>
-              {data[0].firstname} {data[0].lastname}
+              {firstname} {lastname}
             </h1>
             <div className="buttons">
-              <button type="button" className="grey-button">
-                Changer la photo de profil
-              </button>
-              <button type="button" className="blue-button">
+              <form htmlFor="file" className="upload_form">
+                <input
+                  type="file"
+                  name="file"
+                  accept=".png, .jpg, .jpeg"
+                  onChange={(e) =>
+                    setAvatar(URL.createObjectURL(e.target.files[0]))
+                  }
+                  className="upload_form_input"
+                />
+              </form>
+              <button
+                type="button"
+                className="blue-button"
+                onClick={() => {
+                  URL.revokeObjectURL(avatar);
+                  setAvatar(data[0].img);
+                }}
+              >
                 Utiliser l'avatar par default
               </button>
             </div>
@@ -119,16 +148,7 @@ export default function Profil() {
                   value={birthday}
                   onChange={(e) => setBirthday(e.target.value)}
                 />
-                <input
-                  value={email}
-                  type="email"
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <input
-                  value={phone}
-                  type="number"
-                  onChange={(e) => setPhone(e.target.value)}
-                />
+                <input value={email} readOnly={email} type="email" />
               </form>
             </div>
             <div className="info-localisation">
@@ -147,7 +167,6 @@ export default function Profil() {
                   value={ville}
                   onChange={(e) => setVille(e.target.value)}
                 />
-                <input value={pays} onChange={(e) => setPays(e.target.value)} />
               </form>
             </div>
             <div className="buttons">

@@ -26,6 +26,9 @@ router.post("/delete", userControllers.userDelete);
 // Route to verify token
 router.post("/checktoken", userControllers.checktoken);
 
+// Route to verify token
+router.post("/takedata", userControllers.takeData);
+
 // Route to get a list of users
 router.get("/users", userControllers.browse);
 
