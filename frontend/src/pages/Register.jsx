@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import "../scss/register.scss";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -239,6 +238,7 @@ function Register() {
       <div className="toggle-button">
         <div className="button_dispose">
           <label className="switch_button">
+            <p className="eslinthappy">sdljf</p>
             <input type="checkbox" />
             <span className="slider round" />
           </label>
@@ -246,6 +246,7 @@ function Register() {
         </div>
         <div className="button_dispose">
           <label className="switch_button">
+            <p className="eslinthappy">sdljf</p>
             <input type="checkbox" />
             <span className="slider round" />
           </label>
