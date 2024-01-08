@@ -8,6 +8,7 @@ import "../scss/root.scss";
 import "../scss/components/Map.scss";
 
 function Map() {
+  window.scrollTo(0, 0);
   return (
     <div className="allMap">
       <ScrollToTop />
@@ -20,7 +21,7 @@ function Map() {
             className="Map"
             center={{ lat: 46.67470283734314, lng: 2.425212152134166 }}
             zoom={10}
-            scrollWheelZoom={false}
+            scrollWheelZoom={window.innerWidth > 980}
           >
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

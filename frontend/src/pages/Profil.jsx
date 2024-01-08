@@ -1,20 +1,128 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Lottie from "react-lottie-player";
+
 import ScrollToTop from "./ResetScrollOnPage";
 import "../scss/profil.scss";
 
 import data from "../data/UserDataTest.json";
+import mailError from "../assets/LottieFiles/EmailError.json";
+import PrimaryButton from "../components/buttons/PrimaryButton";
 
 export default function Profil() {
-  const [lastname, setLastname] = useState(data[0].lastname);
-  const [firstname, setFirstname] = useState(data[0].firstname);
-  const [birthday, setBirthday] = useState(data[0].date_naissance);
-  const [email, setEmail] = useState(data[0].email);
-  const [phone, setPhone] = useState(data[0].phone);
-  const [adresse, setAdresse] = useState(data[0].adresse);
-  const [codePostal, setCodePostal] = useState(data[0].code_postal);
-  const [ville, setVille] = useState(data[0].ville);
-  const [pays, setPays] = useState(data[0].pays);
+  const [lastname, setLastname] = useState();
+  const [firstname, setFirstname] = useState();
+  const [birthday, setBirthday] = useState();
+  const [email, setEmail] = useState();
+  const [adresse, setAdresse] = useState();
+  const [codePostal, setCodePostal] = useState();
+  const [ville, setVille] = useState();
+  const [avatar, setAvatar] = useState(data[0].img);
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("UserToken") !== null) {
+      axios
+        .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
+          token: localStorage.getItem("UserToken"),
+        })
+        .then((res) => {
+          if (res.data.message === "OK") {
+            console.info("Connexion Approuvée");
+            setIsLoggedIn(true);
+          } else {
+            setIsLoggedIn(false);
+            console.info(
+              "Vous devez vous connecter pour acceder à cette page !"
+            );
+            setTimeout(() => {
+              window.location.href = "/sign-in";
+            }, 3800);
+          }
+          setIsLoading(false);
+        });
+
+      axios
+        .post(`${import.meta.env.VITE_BACKEND_URL}/api/takedata`, {
+          token: localStorage.getItem("UserToken"),
+        })
+        .then((res) => {
+          setLastname(res.data[0].nom);
+          setFirstname(res.data[0].prenom);
+          setBirthday(res.data[0].anniversaire);
+          setEmail(res.data[0].email);
+          setAdresse(res.data[0].rue);
+          setCodePostal(res.data[0].code_postal);
+          setVille(res.data[0].ville);
+        });
+    } else {
+      console.info("Connexion Expirée ! Reconnectez-vous");
+      setTimeout(() => {
+        window.location.href = "/sign-in";
+      }, 3800);
+      setIsLoading(false);
+    }
+  }, []);
+
+  if (isLoading) {
+    return null;
+  }
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    const date = `${new Date().getFullYear()}-${
+      new Date().getMonth() + 1 < 10
+        ? `0${new Date().getMonth() + 1}`
+        : new Date().getMonth() + 1
+    }-${
+      new Date().getDay() < 10 ? `0${new Date().getDay()}` : new Date().getDay()
+    }`;
+
+    axios
+      .post(`${import.meta.env.VITE_BACKEND_URL}/api/edituser`, {
+        token: localStorage.getItem("UserToken"),
+        nom: lastname,
+        prenom: firstname,
+        anniversaire: birthday,
+        email,
+        rue: adresse,
+        codePostal,
+        ville,
+        derniereMaj: date,
+      })
+      .then((res) => {
+        if (res.data.message === "user updated") {
+          console.info("Modification effectuée");
+        } else {
+          console.info(res.data.message);
+        }
+      });
+  };
+
+  if (!isLoggedIn) {
+    return (
+      <section>
+        <div className="containererror">
+          <Lottie
+            loop
+            animationData={mailError}
+            play
+            style={{ width: 120, height: 120 }}
+          />
+          <h1>Accès Impossible</h1>
+          <p className="message">
+            {`
+          Vous devez vous connecter pour acceder à cette page.  `}
+            <br /> {` Vous allez être redirigé(e) vers la page de connexion. `}
+          </p>
+          <PrimaryButton btnText="Se connecter" btnLink="/sign-in" />
+        </div>
+      </section>
+    );
+  }
 
   return (
     <main className="profil-main">
@@ -25,15 +133,30 @@ export default function Profil() {
         </Link>
         <div className="general-container">
           <div className="profil">
-            <img src={data[0].img} alt="" />
+            <img src={avatar} alt="" />
             <h1>
-              {data[0].firstname} {data[0].lastname}
+              {firstname} {lastname}
             </h1>
             <div className="buttons">
-              <button type="button" className="grey-button">
-                Changer la photo de profil
-              </button>
-              <button type="button" className="blue-button">
+              <form htmlFor="file" className="upload_form">
+                <input
+                  type="file"
+                  name="file"
+                  accept=".png, .jpg, .jpeg"
+                  onChange={(e) =>
+                    setAvatar(URL.createObjectURL(e.target.files[0]))
+                  }
+                  className="upload_form_input"
+                />
+              </form>
+              <button
+                type="button"
+                className="blue-button"
+                onClick={() => {
+                  URL.revokeObjectURL(avatar);
+                  setAvatar(data[0].img);
+                }}
+              >
                 Utiliser l'avatar par default
               </button>
             </div>
@@ -55,16 +178,7 @@ export default function Profil() {
                   value={birthday}
                   onChange={(e) => setBirthday(e.target.value)}
                 />
-                <input
-                  value={email}
-                  type="email"
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <input
-                  value={phone}
-                  type="number"
-                  onChange={(e) => setPhone(e.target.value)}
-                />
+                <input value={email} readOnly={email} type="email" />
               </form>
             </div>
             <div className="info-localisation">
@@ -83,7 +197,6 @@ export default function Profil() {
                   value={ville}
                   onChange={(e) => setVille(e.target.value)}
                 />
-                <input value={pays} onChange={(e) => setPays(e.target.value)} />
               </form>
             </div>
             <div className="buttons">
@@ -93,17 +206,36 @@ export default function Profil() {
               <Link to="/profil-vehicule" className="button grey-button">
                 Modifier les véhicules
               </Link>
-              <button type="button" className="button blue-button">
+              <button
+                type="submit"
+                className="button blue-button"
+                onClick={handleChange}
+              >
                 Enregistrer les changements
               </button>
               <button type="button" className="no-button">
                 Demander un nouveau mot de passe
               </button>
-              <button type="button" className="no-button">
+              <button
+                type="button"
+                className="no-button"
+                onClick={() => window.location.reload()}
+              >
                 Annuler les changements
               </button>
             </div>
           </div>
+          <button
+            className="Logout-button"
+            type="button"
+            id="LogOut"
+            onClick={() => {
+              localStorage.removeItem("UserToken");
+              window.location.href = "/sign-in";
+            }}
+          >
+            Déconnexion
+          </button>
         </div>
       </div>
     </main>

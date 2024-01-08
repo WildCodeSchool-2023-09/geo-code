@@ -4,6 +4,7 @@
   display: flex;
   justify-content: center;
   padding-top: 5rem;
+
   background-color: $color-white;
 
   .back {
@@ -13,11 +14,13 @@
 
   .profil-container {
     width: 70%;
+    margin-bottom: 8rem;
 
     .general-container {
       display: flex;
       flex-direction: column;
       align-items: center;
+      gap: 1rem;
 
       .profil {
         text-align: center;
@@ -27,6 +30,7 @@
           border-radius: 50%;
           border: solid $color-primary 4px;
           width: 10rem;
+          height: 10rem;
         }
 
         h1 {
@@ -78,7 +82,6 @@
         padding: 2rem;
         margin-top: 4rem;
         border-radius: 8px;
-        margin-bottom: 8rem;
 
         h2 {
           margin-bottom: 1rem;
@@ -135,13 +138,15 @@
             border: none;
             margin-top: 0.5rem;
             color: $color-grey;
-          }
+            font-size: 0.95rem;
 
-          .no-button:hover {
-            background: none;
-            border: none;
-            margin-top: 0.5rem;
-            color: $color-grey-hover;
+            &:hover {
+              background: none;
+              border: none;
+              margin-top: 0.5rem;
+              color: $color-grey-hover;
+              transform: scale(0.98);
+            }
           }
 
           .grey-button {
@@ -162,5 +167,21 @@
         }
       }
     }
+  }
+}
+
+.Logout-button {
+  background: none;
+  border: none;
+  margin-top: 0.5rem;
+  color: $color-grey;
+  font-size: 0.95rem;
+
+  &:hover {
+    background: none;
+    border: none;
+    margin-top: 0.5rem;
+    color: $color-grey-hover;
+    transform: scale(0.98);
   }
 }

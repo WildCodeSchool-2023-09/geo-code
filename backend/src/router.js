@@ -1,5 +1,7 @@
 const express = require("express");
+const multer = require("multer");
 
+const upload = multer({ dest: "public/uploads/" });
 const router = express.Router();
 
 /* ************************************************************************* */
@@ -15,6 +17,18 @@ const vehiculeControllers = require("./controllers/vehiculeControllers");
 const tarificationControllers = require("./controllers/tarificationControllers");
 const borneControllers = require("./controllers/borneControllers");
 
+// Route to connect user
+router.post("/login", userControllers.login);
+
+// Route to delete user
+router.post("/delete", userControllers.userDelete);
+
+// Route to verify token
+router.post("/checktoken", userControllers.checktoken);
+
+// Route to verify token
+router.post("/takedata", userControllers.takeData);
+
 // Route to get a list of users
 router.get("/users", userControllers.browse);
 
@@ -25,7 +39,7 @@ router.get("/users/:id", userControllers.read);
 router.post("/users", userControllers.add);
 
 // Route to edit a user
-router.post("/users/:id", userControllers.edit);
+router.post("/edituser", userControllers.edit);
 
 // Route to get a list of reservations
 router.get("/reservations", reservationControllers.browse);
@@ -78,8 +92,8 @@ router.get("/bornes", borneControllers.browse);
 // Route to get a specific bornes by ID
 router.get("/bornes/:id", borneControllers.read);
 
-// Route to add a new bornes
-router.post("/bornes", borneControllers.add);
+// Route pour ajouter le fichier csv
+router.post("/uploads", upload.single("file"), borneControllers.add);
 
 /* ************************************************************************* */
 
