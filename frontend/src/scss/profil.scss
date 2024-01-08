@@ -30,6 +30,7 @@
           border-radius: 50%;
           border: solid $color-primary 4px;
           width: 10rem;
+          height: 10rem;
         }
 
         h1 {
@@ -147,6 +148,7 @@
               transform: scale(0.98);
             }
           }
+
           .grey-button {
             background-color: $color-grey;
           }

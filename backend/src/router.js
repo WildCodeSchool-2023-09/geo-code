@@ -26,6 +26,9 @@ router.post("/delete", userControllers.userDelete);
 // Route to verify token
 router.post("/checktoken", userControllers.checktoken);
 
+// Route to verify token
+router.post("/takedata", userControllers.takeData);
+
 // Route to get a list of users
 router.get("/users", userControllers.browse);
 
@@ -36,7 +39,7 @@ router.get("/users/:id", userControllers.read);
 router.post("/users", userControllers.add);
 
 // Route to edit a user
-router.post("/users/:id", userControllers.edit);
+router.post("/edituser", userControllers.edit);
 
 // Route to get a list of reservations
 router.get("/reservations", reservationControllers.browse);

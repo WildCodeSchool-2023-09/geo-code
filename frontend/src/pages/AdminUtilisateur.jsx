@@ -9,13 +9,13 @@ import UserCard from "../components/UserCard";
 import ScrollToTop from "./ResetScrollOnPage";
 import mailError from "../assets/LottieFiles/EmailError.json";
 
-import data from "../data/UserDataTest.json";
-
 export default function AdminUtilisateur() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState();
   const [searchForm, setSearchForm] = useState("");
+  const [data, setData] = useState();
+
   function updateForm(e) {
     e.preventDefault();
     setSearchForm(e.target[0].value);
@@ -43,6 +43,10 @@ export default function AdminUtilisateur() {
           }
           setIsLoading(false);
         });
+
+      axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users`).then((res) => {
+        setData(res.data);
+      });
     } else {
       console.info("Connexion Expirée ! Reconnectez-vous");
       setTimeout(() => {
@@ -99,15 +103,15 @@ export default function AdminUtilisateur() {
       <div className="card-list">
         {data
           .filter((user) =>
-            `${user.firstname.toLowerCase()} ${user.lastname.toLowerCase()}`.includes(
+            `${user.prenom.toLowerCase()} ${user.nom.toLowerCase()}`.includes(
               searchForm.toLowerCase()
             )
           )
           .map((user) => (
             <UserCard
-              firstname={user.firstname}
-              img={user.img}
-              lastname={user.lastname}
+              firstname={user.prenom}
+              img={user.avatar || "https://i.imgur.com/5Nc6WY0.png"}
+              lastname={user.nom}
             />
           ))}
       </div>

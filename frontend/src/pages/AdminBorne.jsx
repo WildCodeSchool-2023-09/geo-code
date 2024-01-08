@@ -8,13 +8,13 @@ import mailError from "../assets/LottieFiles/EmailError.json";
 import BorneCard from "../components/BorneCard";
 import ScrollToTop from "./ResetScrollOnPage";
 
-import data from "../data/BorneDataTest.json";
-
 export default function AdminBorne() {
   const [searchForm, setSearchForm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState();
+
+  const [data, setData] = useState();
 
   function updateForm(e) {
     e.preventDefault();
@@ -42,6 +42,12 @@ export default function AdminBorne() {
             }, 3800);
           }
           setIsLoading(false);
+        });
+
+      axios
+        .get(`${import.meta.env.VITE_BACKEND_URL}/api/bornes`)
+        .then((res) => {
+          setData(res.data);
         });
     } else {
       console.info("Connexion Expirée ! Reconnectez-vous");
@@ -100,10 +106,10 @@ export default function AdminBorne() {
         <div className="card-list">
           {data
             .filter((borne) =>
-              borne.name.toLowerCase().includes(searchForm.toLowerCase())
+              borne.n_station.toLowerCase().includes(searchForm.toLowerCase())
             )
             .map((borne) => (
-              <BorneCard name={borne.name} adresse={borne.adresse} />
+              <BorneCard name={borne.n_station} adresse={borne.ad_station} />
             ))}
         </div>
       </div>

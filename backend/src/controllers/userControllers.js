@@ -5,7 +5,7 @@ const tables = require("../tables");
 // The B of BREAD - Browse (Read All) operation
 const browse = async (req, res, next) => {
   try {
-    const users = await tables.users.readAll();
+    const users = await tables.user.readAll();
     res.json(users);
   } catch (err) {
     next(err);
@@ -15,7 +15,7 @@ const browse = async (req, res, next) => {
 // The R of BREAD - Read operation
 const read = async (req, res, next) => {
   try {
-    const user = await tables.users.read(req.params.id);
+    const user = await tables.user.read(req.params.id);
 
     if (user == null) {
       res.sendStatus(404);
@@ -29,26 +29,45 @@ const read = async (req, res, next) => {
 
 // The E of BREAD - Edit (Update) operation
 const edit = async (req, res, next) => {
-  const updatedUser = {
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    code_postal: req.body.code_postal,
-    ville: req.body.ville,
-    email: req.body.email,
-    password: req.body.password,
-    logged_in: req.body.logged_in,
-    nb_vehicule: req.body.nb_vehicule,
-    isAdmin: req.body.isAdmin,
-  };
-  const { id } = req.params;
+  const {
+    token,
+    prenom,
+    nom,
+    anniversaire,
+    rue,
+    codePostal,
+    ville,
+    derniereMaj,
+  } = req.body;
 
   try {
-    const user = await tables.users.update(id, updatedUser);
+    const birthday = new Date(anniversaire);
+    if (codePostal.toString().length === 5) {
+      if (
+        anniversaire < derniereMaj &&
+        Math.floor((Date.now() - birthday) / 31557600000) >= 18
+      ) {
+        const user = await tables.user.update(
+          token,
+          prenom,
+          nom,
+          anniversaire,
+          rue,
+          codePostal,
+          ville,
+          derniereMaj
+        );
 
-    if (user.affectedRows === 0) {
-      res.sendStatus(404);
+        if (user.affectedRows === 0) {
+          res.sendStatus(404);
+        } else {
+          res.status(202).send({ message: "user updated" });
+        }
+      } else {
+        res.status(202).send({ message: "Date d'anniversaire incorrect" });
+      }
     } else {
-      res.sendStatus(204);
+      res.status(202).send({ message: "Code Postal incorrect" });
     }
   } catch (err) {
     next(err);
@@ -62,7 +81,7 @@ const add = async (req, res, next) => {
 
   try {
     // Insert the item into the database
-    const insertId = await tables.users.create(user);
+    const insertId = await tables.user.create(user);
 
     // Respond with HTTP 201 (Created) and the ID of the newly inserted item
     res.status(201).json({ insertId });
@@ -184,6 +203,20 @@ const userDelete = async (req, res, next) => {
   }
 };
 
+const takeData = async (req, res, next) => {
+  try {
+    const { token } = req.body;
+    const userData = await tables.user.takeData(token);
+    if (userData.length === 1) {
+      res.status(200).send(userData);
+    } else {
+      res.status(200).send({ message: "No User" });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
 // Ready to export the controller functions
 module.exports = {
   browse,
@@ -193,4 +226,5 @@ module.exports = {
   login,
   checktoken,
   userDelete,
+  takeData,
 };
