@@ -1,5 +1,6 @@
 import { Marker, useMap } from "react-leaflet";
 import L from "leaflet";
+import axios from "axios";
 import { useContext, useEffect, useState, useCallback } from "react";
 import Supercluster from "supercluster";
 import convertToDistance from "../services/ConvertToDistance";
@@ -22,12 +23,22 @@ function BornesMarker() {
   // import des contexts qui seront utilisés
   const { research } = useContext(FilterContext);
   const { position } = useContext(LocationContext);
-  const { bornes } = useContext(BornesContext);
+  const { bornes, setBornes } = useContext(BornesContext);
 
   useEffect(() => {
     // permet de réactualiser le composant reasearch à chaque changement.
     console.info(research);
   }, [research]);
+
+  const API_URL = `${import.meta.env.VITE_BACKEND_URL}/api`;
+
+  useEffect(() => {
+    // import des data sur les bornes
+    axios
+      .get(`${API_URL}/bornes`)
+      .then((res) => setBornes(res.data))
+      .catch((error) => console.info(error));
+  }, []);
 
   // transformation en geojson pour pouvoir faire le cluster
   allBornes = bornes.map((oneBorne) => ({
@@ -49,7 +60,7 @@ function BornesMarker() {
   }
   const borneFilters = allBornes.filter(
     (cluster) =>
-      cluster.code_postal.includes(research.code) &&
+      cluster.code_postal.slice(0, 2).includes(research.code) &&
       cluster.n_enseigne.includes(research.enseigne) &&
       cluster.puiss_max.includes(research.puissance) &&
       cluster.type_prise.includes(
@@ -86,7 +97,7 @@ function BornesMarker() {
   useEffect(() => {
     supercluster.load(borneFilters);
     setClusters(supercluster.getClusters(bounds, zoom));
-  }, [zoom]);
+  }, [zoom, research]);
 
   return (
     <div>

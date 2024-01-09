@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import convertToDistance from "../services/ConvertToDistance";
 import FilterContext from "../Context/ResearchContext";
 import BorneCardUser from "../components/BorneCardUser";
@@ -13,6 +13,7 @@ import ScrollToTop from "./ResetScrollOnPage";
 function BornesListe() {
   const { research } = useContext(FilterContext);
   const { bornes } = useContext(BornesContext);
+  const [pageActuel, setPageActuel] = useState(0);
 
   useEffect(() => {
     console.info(
@@ -22,6 +23,43 @@ function BornesListe() {
 
   const { position } = useContext(LocationContext);
 
+  const display = 10;
+  let bornesFilters = [];
+  const [max, setMax] = useState(bornes.length);
+
+  console.info(bornes);
+  if (research.rayon === "" || research.rayon === "0") {
+    research.rayon = "1085";
+  }
+  bornesFilters = bornes.filter(
+    (cluster) =>
+      cluster.code_postal.slice(0, 2).includes(research.code) &&
+      cluster.n_enseigne.includes(research.enseigne) &&
+      cluster.puiss_max.includes(research.puissance) &&
+      cluster.type_prise.includes(
+        research.prise || research.prise.toLowerCase()
+      ) &&
+      convertToDistance(cluster.lat, cluster.lng, position.lat, position.lng) <=
+        parseInt(research.rayon, 10)
+  );
+  console.info(bornesFilters);
+
+  useEffect(() => {
+    setMax(bornesFilters.length);
+  }, [bornesFilters]);
+
+  function handlePageNext(slice) {
+    if (!(slice + display > max)) {
+      setPageActuel(pageActuel + display);
+    }
+  }
+
+  function handlePagePrevious(slice) {
+    if (!(slice - display < 0)) {
+      setPageActuel(pageActuel - display);
+    }
+  }
+  console.info(max);
   return (
     <div className="borneListPage">
       <ScrollToTop />
@@ -35,35 +73,58 @@ function BornesListe() {
           <Filtre />
         </div>
         <div className="bornesContainer">
-          {bornes
-            .filter(
-              (borne) =>
-                borne.code_postal.includes(research.code) &&
-                borne.n_enseigne.includes(research.enseigne) &&
-                borne.puiss_max.includes(research.puissance) &&
-                borne.type_prise.includes(research.prise) &&
-                convertToDistance(
-                  borne.lat,
-                  borne.lng,
-                  position.lat,
-                  position.lng
-                ) <= parseInt(research.rayon, 10)
-            )
+          <div className="prevnext">
+            <SecondaryButton
+              btnLink="/#"
+              btnText="Précédent"
+              onClick={() => {
+                handlePagePrevious(pageActuel);
+              }}
+            />
+
+            <SecondaryButton
+              btnLink="/#"
+              btnText="Suivant"
+              onClick={() => {
+                handlePageNext(pageActuel);
+              }}
+            />
+          </div>
+          {bornesFilters
+            .slice(pageActuel, pageActuel + display)
             .map((borne) => {
               return (
-                <div key={borne.index} className="bornecard">
-                  <BorneCardUser
-                    name={borne.n_station}
-                    lat={borne.lat}
-                    lng={borne.lng}
-                    code={borne.code_postal}
-                    enseigne={borne.n_enseigne}
-                    puissance={borne.puiss_max}
-                    prise={borne.type_prise}
-                  />
+                <div>
+                  <div key={borne.index} className="bornecard">
+                    <BorneCardUser
+                      name={borne.n_station}
+                      lat={borne.lat}
+                      lng={borne.lng}
+                      code={borne.code_postal}
+                      enseigne={borne.n_enseigne}
+                      puissance={borne.puiss_max}
+                      prise={borne.type_prise}
+                    />
+                  </div>
                 </div>
               );
             })}
+          <div className="prevnext">
+            <SecondaryButton
+              btnLink="/#"
+              btnText="Précédent"
+              onClick={() => {
+                handlePagePrevious(pageActuel);
+              }}
+            />
+            <SecondaryButton
+              btnLink="/#"
+              btnText="Suivant"
+              onClick={() => {
+                handlePageNext(pageActuel);
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>

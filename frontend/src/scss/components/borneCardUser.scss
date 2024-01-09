@@ -5,11 +5,13 @@
   flex-direction: column;
   width: 380px;
   height: fit-content;
+  height: 280px;
   background-color: $color-grey;
   border-radius: 1rem;
   align-items: center;
   padding: 1rem;
   gap: 1rem;
+  justify-content: space-around;
   @media screen and (max-width: 559px) {
     min-width: 280px;
     width: auto;
@@ -30,9 +32,10 @@
   }
 
   &_name {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 700;
     color: $color-light;
+    text-align: center;
   }
 
   &_data {
