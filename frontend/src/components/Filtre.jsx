@@ -11,7 +11,6 @@ function Filtre() {
     rayon: "",
     puissance: "",
     disponible: "",
-    tarification: "",
     prise: "",
   });
   const handleChange = (e) => {
@@ -87,38 +86,25 @@ function Filtre() {
               <option value="Oui">Oui</option>
             </select>
           </div>
-          <div className="separates">
-            <label htmlFor="tarification">Prix</label>
-            <div className="Price">
-              <button
-                type="button"
-                value="Payant"
-                name="tarification"
-                onClick={selectValue}
-              >
-                Payant
-              </button>
-              <button
-                type="button"
-                value="Gratuit"
-                name="tarification"
-                onClick={selectValue}
-              >
-                Gratuit
-              </button>
-              <button
-                type="button"
-                value="Toutes"
-                name="tarification"
-                onClick={selectValue}
-              >
-                Toutes
-              </button>
-            </div>
-          </div>
           <div className="prise_container">
             <label htmlFor="prise">Type de Prise</label>
             <div className="prise_container_content">
+              <button
+                type="button"
+                value="A"
+                name="prise"
+                onClick={selectValue}
+              >
+                AC
+              </button>
+              <button
+                type="button"
+                value="E"
+                name="prise"
+                onClick={selectValue}
+              >
+                EF
+              </button>
               <button
                 type="button"
                 value="1"
@@ -141,15 +127,15 @@ function Filtre() {
                 name="prise"
                 onClick={selectValue}
               >
-                Type3
+                Type 3
               </button>
               <button
                 type="button"
-                value="deMO"
+                value="CHA"
                 name="prise"
                 onClick={selectValue}
               >
-                CHadeMO
+                CHADEMO
               </button>
               <button
                 type="button"

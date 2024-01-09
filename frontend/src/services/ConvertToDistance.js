@@ -16,6 +16,6 @@ function convertToDistance(lat, lng, poslat, poslng) {
             Math.sin(radlngDiff / 2)
       )
     );
-  return distance.toFixed(1);
+  return distance.toFixed(2);
 }
 export default convertToDistance;
