@@ -1,16 +1,15 @@
-import { Marker } from "react-leaflet";
-import axios from "axios";
+import { Marker, useMap } from "react-leaflet";
 import L from "leaflet";
-// import useSupercluster from "use-supercluster";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
+import Supercluster from "supercluster";
 import convertToDistance from "../services/ConvertToDistance";
 import iconMarker from "../assets/borne-marker-white.svg";
 import LocationContext from "../Context/locationContext";
 import FilterContext from "../Context/ResearchContext";
-
-const API_URL = `${import.meta.env.VITE_BACKEND_URL}/api`;
+import BornesContext from "../Context/BornesContext";
 
 function GetIcon() {
+  // fonction qui permet de customiser l'icône des bornes
   return L.icon({
     iconUrl: iconMarker,
     iconSize: [30, 30],
@@ -18,43 +17,109 @@ function GetIcon() {
   });
 }
 function BornesMarker() {
-  const [bornes, setBornes] = useState([]);
+  let allBornes = [];
+
+  // import des contexts qui seront utilisés
   const { research } = useContext(FilterContext);
   const { position } = useContext(LocationContext);
+  const { bornes } = useContext(BornesContext);
+
   useEffect(() => {
+    // permet de réactualiser le composant reasearch à chaque changement.
     console.info(research);
   }, [research]);
 
-  useEffect(() => {
-    axios
-      .get(`${API_URL}/bornes`)
-      .then((res) => setBornes(res.data))
-      .catch((error) => console.info(error));
-  }, [research]);
+  // transformation en geojson pour pouvoir faire le cluster
+  allBornes = bornes.map((oneBorne) => ({
+    ...oneBorne,
+    type: "Feature",
+    properties: {
+      cluster: true,
+      point_count: bornes.indexOf(oneBorne),
+      clusterId: oneBorne.code_postal.slice(0, 2),
+    },
+    geometry: {
+      type: "Point",
+      coordinates: [oneBorne.lat, oneBorne.lng],
+    },
+  }));
+
   if (research.rayon === "" || research.rayon === "0") {
     research.rayon = "1085";
   }
+  const borneFilters = allBornes.filter(
+    (cluster) =>
+      cluster.code_postal.includes(research.code) &&
+      cluster.n_enseigne.includes(research.enseigne) &&
+      cluster.puiss_max.includes(research.puissance) &&
+      cluster.type_prise.includes(
+        research.prise || research.prise.toLowerCase()
+      ) &&
+      convertToDistance(cluster.lat, cluster.lng, position.lat, position.lng) <=
+        parseInt(research.rayon, 10)
+  );
+
+  const supercluster = new Supercluster({ radius: 75, maxZoom: 15 });
+  const bounds = [
+    -36.64988022329375, -4.915832801313164, 51.328635401706265,
+    59.84481485969108,
+  ];
+  const [zoom, setZoom] = useState(20);
+  const [clusters, setClusters] = useState([]);
+  const map = useMap();
+
+  function updateMap() {
+    setZoom(map.getZoom());
+  }
+  const onMove = useCallback(() => {
+    updateMap();
+  }, [map]);
+
+  useEffect(() => {
+    updateMap();
+  }, []);
+
+  useEffect(() => {
+    map.on("move", onMove);
+  }, [map, onMove]);
+
+  useEffect(() => {
+    supercluster.load(borneFilters);
+    setClusters(supercluster.getClusters(bounds, zoom));
+  }, [zoom]);
+
   return (
     <div>
-      {bornes
-        .filter(
-          (borne) =>
-            borne.code_postal.includes(research.code) &&
-            borne.n_enseigne.includes(research.enseigne) &&
-            borne.puiss_max.includes(research.puissance) &&
-            borne.type_prise.includes(
-              research.prise || research.prise.toLowerCase()
-            ) &&
-            convertToDistance(
-              borne.lat,
-              borne.lng,
-              position.lat,
-              position.lng
-            ) <= parseInt(research.rayon, 10)
-        )
-        .map((borne) => (
-          <Marker position={borne} key={borne.id} icon={GetIcon()} />
-        ))}
+      {clusters.map((cluster) => {
+        // every cluster point has coordinates
+        const [lat, lng] = cluster.geometry.coordinates;
+        // the point may be either a cluster or a crime point
+        const { cluster: isCluster, clusterId } = cluster.properties;
+
+        if (isCluster) {
+          return (
+            <Marker
+              key={`cluster-${cluster.id}`}
+              position={[lat, lng]}
+              icon={GetIcon()}
+              eventHandlers={{
+                click: () => {
+                  const expansionZoom = Math.min(
+                    supercluster.getClusterExpansionZoom(clusterId),
+                    15
+                  );
+                  map.setView([lat, lng], expansionZoom, {
+                    animate: true,
+                  });
+                },
+              }}
+            />
+          );
+        }
+        return cluster.map((borne) => (
+          <Marker position={[lat, lng]} key={borne.id} icon={GetIcon()} />
+        ));
+      })}
     </div>
   );
 }

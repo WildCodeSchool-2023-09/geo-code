@@ -18,6 +18,11 @@ CREATE TABLE user (
 	derniere_maj DATE NOT NULL
 	
 );
+INSERT INTO user (nom, prenom, rue, code_postal,ville, email, password, connection, nb_vehicule, admin, anniversaire, inscription, derniere_maj)
+ VALUES('debarge', 'morgane', 'rue dupont', 75000, 'Arnac', 'morgane@debarge.fr', 'morgane', false, 1, true, '1990-01-01', '2023-01-09', '2023-01-09'),
+ ('save', 'baptiste', 'rue dupont', 75000, 'Arnac', 'baptiste@save.fr', 'baptiste', false, 1, true, '1990-01-01', '2023-01-09', '2023-01-09'),
+ ('foulon', 'raphael', 'rue dupont', 75000, 'Arnac', 'raphael@foulon.fr', 'raphael', false, 1, true, '1990-01-01', '2023-01-09', '2023-01-09'),
+ ('illien', 'jeremy', 'rue dupont', 75000, 'Arnac', 'jeremy@illien.fr', 'jeremy', false, 1, true, '1990-01-01', '2023-01-09', '2023-01-09');
 
 DROP TABLE IF EXISTS borne;
 CREATE TABLE borne (

@@ -3,14 +3,17 @@ import convertToDistance from "../services/ConvertToDistance";
 import FilterContext from "../Context/ResearchContext";
 import BorneCardUser from "../components/BorneCardUser";
 import LocationContext from "../Context/locationContext";
+import BornesContext from "../Context/BornesContext";
 import SecondaryButton from "../components/buttons/SecondaryButton";
 import Filtre from "../components/Filtre";
 import "../scss/bornesList.scss";
-import bornes from "../data/BorneUser";
+
 import ScrollToTop from "./ResetScrollOnPage";
 
 function BornesListe() {
   const { research } = useContext(FilterContext);
+  const { bornes } = useContext(BornesContext);
+
   useEffect(() => {
     console.info(
       research
@@ -35,11 +38,10 @@ function BornesListe() {
           {bornes
             .filter(
               (borne) =>
-                borne.code.includes(research.code) &&
-                borne.enseigne.includes(research.enseigne) &&
-                borne.tarification.includes(research.tarification) &&
-                borne.puissance.includes(research.puissance) &&
-                borne.prise.includes(research.prise) &&
+                borne.code_postal.includes(research.code) &&
+                borne.n_enseigne.includes(research.enseigne) &&
+                borne.puiss_max.includes(research.puissance) &&
+                borne.type_prise.includes(research.prise) &&
                 convertToDistance(
                   borne.lat,
                   borne.lng,
@@ -48,20 +50,16 @@ function BornesListe() {
                 ) <= parseInt(research.rayon, 10)
             )
             .map((borne) => {
-              console.info(borne);
               return (
                 <div key={borne.index} className="bornecard">
                   <BorneCardUser
-                    name={borne.names}
+                    name={borne.n_station}
                     lat={borne.lat}
                     lng={borne.lng}
-                    code={borne.code}
-                    enseigne={borne.enseigne}
-                    tarification={borne.tarification}
-                    puissance={borne.puissance}
-                    disponible={borne.disponible}
-                    pdc={borne.pdc}
-                    prise={borne.prise}
+                    code={borne.code_postal}
+                    enseigne={borne.n_enseigne}
+                    puissance={borne.puiss_max}
+                    prise={borne.type_prise}
                   />
                 </div>
               );

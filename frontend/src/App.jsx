@@ -1,9 +1,9 @@
 import { Outlet } from "react-router-dom";
-import { useMemo, useState } from "react";
-
+import { useMemo, useState, useEffect } from "react";
+import axios from "axios";
 import FilterResearch from "./Context/ResearchContext";
 import LocationContext from "./Context/locationContext";
-
+import BornesContext from "./Context/BornesContext";
 import Navbar from "./components/navbar";
 import NavMobile from "./components/navmobile";
 import Footer from "./components/footer";
@@ -45,15 +45,26 @@ function App() {
     resizeObserver.observe(document.body);
   }
 
+  const [bornes, setBornes] = useState([]);
+  const API_URL = `${import.meta.env.VITE_BACKEND_URL}/api`;
+  useEffect(() => {
+    // import des data sur les bornes
+    axios
+      .get(`${API_URL}/bornes`)
+      .then((res) => setBornes(res.data))
+      .catch((error) => console.info(error));
+  }, []);
   return (
     <>
       <Navbar navData={navData} />
       <main>
-        <LocationContext.Provider value={positionValue}>
-          <FilterResearch.Provider value={value}>
-            <Outlet onChange={() => FixScrollOnPage()} />
-          </FilterResearch.Provider>
-        </LocationContext.Provider>
+        <BornesContext.Provider value={bornes}>
+          <LocationContext.Provider value={positionValue}>
+            <FilterResearch.Provider value={value}>
+              <Outlet onChange={() => FixScrollOnPage()} />
+            </FilterResearch.Provider>
+          </LocationContext.Provider>
+        </BornesContext.Provider>
       </main>
       <Footer className="FooterParams" />
       <NavMobile />
