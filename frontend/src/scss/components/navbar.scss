@@ -161,3 +161,51 @@
     transition: 0.5s;
   }
 }
+.sign-in {
+  display: flex;
+  background: url(/assets/svg/account-icon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 24px;
+  height: 24px;
+  @media screen and (max-width: 720px) {
+    display: none;
+  }
+}
+
+.navbtnmobile {
+  display: none;
+  @media screen and (max-width: 720px) {
+    display: flex;
+    margin-right: 80px;
+    gap: 1rem;
+  }
+
+  .reservation {
+    display: flex;
+    background: url(/assets/svg/reservations-icon.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+    transition: 0.2s;
+    &:hover {
+      transform: scale(0.9);
+    }
+  }
+  .admin {
+    display: flex;
+    background: url(/assets/svg/admin-icon.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+    transition: 0.2s;
+    &:hover {
+      transform: scale(0.9);
+    }
+  }
+}

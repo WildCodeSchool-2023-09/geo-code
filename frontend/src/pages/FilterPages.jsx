@@ -4,10 +4,10 @@ import ScrollToTop from "./ResetScrollOnPage";
 
 function FilterPage() {
   return (
-    <>
+    <main>
       <ScrollToTop />
       <Filtre />
-    </>
+    </main>
   );
 }
 

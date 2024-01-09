@@ -45,6 +45,15 @@ class VehiculeManager extends AbstractManager {
     return rows;
   }
 
+  async checkVehicule(proprietaireId) {
+    const [rows] = await this.database.query(
+      `SELECT * FROM vehicule WHERE proprietaire_id = ?`,
+      [proprietaireId]
+    );
+
+    return rows;
+  }
+
   // The U of CRUD - Update operation
   // TODO: Implement the update operation to modify an existing item
 

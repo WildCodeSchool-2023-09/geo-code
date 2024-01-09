@@ -2,27 +2,29 @@ const AbstractManager = require("./AbstractManager");
 
 class UserManager extends AbstractManager {
   constructor() {
-    super({ table: "users" });
+    super({ table: "user" });
   }
 
   // The C of CRUD - Create operation
 
   async create(user) {
     const [result] = await this.database.query(
-      `insert into ${this.table} (firstname, lastname, code_postal, ville, email, password, logged_in,
-                                        nb_vehicule, isAdmin, birthday)
-             values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      `insert into ${this.table} (nom, prenom, code_postal, ville, email, password, connection,
+                                        nb_vehicule, admin, anniversaire, inscription, derniere_maj)
+             values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
-        user.firstname,
-        user.lastname,
+        user.nom,
+        user.prenom,
         user.code_postal,
         user.ville,
         user.email,
         user.password,
-        user.logged_in,
+        user.connection,
         user.nb_vehicule,
-        user.isAdmin,
-        user.birthday,
+        user.admin,
+        user.anniversaire,
+        user.inscription,
+        user.derniere_maj,
       ]
     );
 
@@ -56,40 +58,78 @@ class UserManager extends AbstractManager {
   // The U of CRUD - Update operation
   // TODO: Implement the update operation to modify an existing item
 
-  async update(id, updatedUser) {
+  async update(
+    token,
+    prenom,
+    nom,
+    anniversaire,
+    rue,
+    codePostal,
+    ville,
+    derniereMaj
+  ) {
     const [result] = await this.database.query(
-      `UPDATE ${this.table} SET firstname=?,
-    lastname=?,
-    code_postal=?,
-    ville=?,
-    email=?,
-    password=?,
-    logged_in=?,
-    nb_vehicule=?,
-    isAdmin=? WHERE id=? `,
-      [
-        updatedUser.firstname,
-        updatedUser.lastname,
-        updatedUser.code_postal,
-        updatedUser.ville,
-        updatedUser.email,
-        updatedUser.password,
-        updatedUser.logged_in,
-        updatedUser.nb_vehicule,
-        updatedUser.isAdmin,
-        id,
-      ]
+      `UPDATE user
+             SET nom=?, prenom=?, anniversaire=?, rue=?, code_postal=?, ville=?, derniere_maj=?
+                 WHERE token = ?`,
+      [nom, prenom, anniversaire, rue, codePostal, ville, derniereMaj, token]
     );
     console.info(result);
     return result;
   }
 
+  async signIn(email) {
+    const [user] = await this.database.query(
+      `SELECT *
+             FROM user
+             WHERE email = ?`,
+      [email]
+    );
+    return user;
+  }
+
+  async saveToken(token, email) {
+    const [result] = await this.database.query(
+      `UPDATE user
+             SET token=?
+             WHERE email = ?`,
+      [token, email]
+    );
+    return result;
+  }
+
+  async checkToken(token) {
+    const [user] = await this.database.query(
+      `SELECT *
+             FROM user
+             WHERE token = ?`,
+      [token]
+    );
+    return user;
+  }
+
+  async takeData(token) {
+    const [user] = await this.database.query(
+      `SELECT nom, prenom, rue, code_postal, ville, email, DATE_FORMAT(anniversaire, "%Y-%m-%d") as anniversaire
+             FROM user
+             WHERE token = ?`,
+      [token]
+    );
+    return user;
+  }
+
   // The D of CRUD - Delete operation
   // TODO: Implement the delete operation to remove an item by its ID
 
-  // async delete(id) {
-  //   ...
-  // }
+  async userDelete(id) {
+    const [result] = await this.database.query(
+      `DELETE
+             FROM user
+             WHERE id = ?`,
+      [id]
+    );
+    return result;
+  }
 }
 
 module.exports = UserManager;
