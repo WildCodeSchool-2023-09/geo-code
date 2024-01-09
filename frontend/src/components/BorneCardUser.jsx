@@ -6,14 +6,12 @@ import convertToDistance from "../services/ConvertToDistance";
 
 export default function BorneCard({
   name,
-  pdc,
   lat,
   lng,
   code,
   enseigne,
-  puissance,
-  tarification,
   disponible,
+  puissance,
   prise,
 }) {
   const { position } = useContext(LocationContext);
@@ -33,17 +31,12 @@ export default function BorneCard({
           <p className="userCardBorne_data_array_value">
             Enseigne : {enseigne}
           </p>
-          <p className="userCardBorne_data_array_value">
-            Nombre de prise : {pdc}
-          </p>
         </div>
         <div className="userCardBorne_data_array">
           <p className="userCardBorne_data_array_value">
             Puissance : {puissance}
           </p>
-          <p className="userCardBorne_data_array_value">
-            Tarification : {tarification}
-          </p>
+
           <p className="userCardBorne_data_array_value">Prise : {prise}</p>
         </div>
       </div>
@@ -59,10 +52,8 @@ BorneCard.propTypes = {
   enseigne: PropTypes.string.isRequired,
   lat: PropTypes.string.isRequired,
   lng: PropTypes.string.isRequired,
-  pdc: PropTypes.string.isRequired,
   code: PropTypes.string.isRequired,
   puissance: PropTypes.string.isRequired,
-  tarification: PropTypes.string.isRequired,
   disponible: PropTypes.string.isRequired,
   prise: PropTypes.string.isRequired,
 };
