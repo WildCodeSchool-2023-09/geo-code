@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Lottie from "react-lottie-player";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 import data from "../data/UserDataTest.json";
 
@@ -9,10 +10,17 @@ import "../scss/reservation.scss";
 import mailError from "../assets/LottieFiles/EmailError.json";
 import PrimaryButton from "../components/buttons/PrimaryButton";
 import ScrollToTop from "./ResetScrollOnPage";
+import ReservationCard from "../components/ReservationCard";
 
 export default function Reservation() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const [lastname, setLastname] = useState();
+  const [firstname, setFirstname] = useState();
+  const [avatar, setAvatar] = useState(data[0].img);
+
+  const [reservation, setReservation] = useState();
 
   useEffect(() => {
     if (localStorage.getItem("UserToken") !== null) {
@@ -24,6 +32,24 @@ export default function Reservation() {
           if (res.data.message === "OK") {
             console.info("Connexion Approuvée");
             setIsLoggedIn(true);
+
+            axios
+              .post(`${import.meta.env.VITE_BACKEND_URL}/api/takedata`, {
+                token: localStorage.getItem("UserToken"),
+              })
+              .then((resp) => {
+                setLastname(resp.data[0].nom);
+                setFirstname(resp.data[0].prenom);
+                setAvatar(data[0].img);
+              });
+
+            axios
+              .post(`${import.meta.env.VITE_BACKEND_URL}/api/reservations`, {
+                token: localStorage.getItem("UserToken"),
+              })
+              .then((respo) => {
+                setReservation(respo.data);
+              });
           } else {
             setIsLoggedIn(false);
             console.info(
@@ -70,33 +96,75 @@ export default function Reservation() {
     );
   }
   return (
-    <div className="backgroundImageMain">
-      <div className="reservation-main">
-        <ScrollToTop />
-        <div className="reservation-container">
-          <div className="info-container">
-            <img src={data[0].img} alt="" />
-            <h1>
-              {data[0].firstname} {data[0].lastname}
-            </h1>
-          </div>
-          <div className="next-reservation-container">
-            <h2>Réservation à venir</h2>
-            <div className="reservation_card">
-              <p className="nameborne">Borne Paris 2</p>
-              <p className="date">30/12/2023</p>
-              <div className="buttons-container">
-                <button type="button">Modifier la réservation</button>
-                <button type="button">Annuler la réservation</button>
-              </div>
-            </div>
-          </div>
+    <main className="reservation-main">
+      <ScrollToTop />
+      <div className="reservation-container">
+        <Link to="/profil">Retour sur le profil</Link>
+        <div className="info-container">
+          <img src={avatar} alt="" />
+          <h1>
+            {firstname} {lastname}
+          </h1>
+        </div>
+        <div className="next-reservation-container">
+          <h2>Réservation à venir</h2>
+          <div className="reservation-card-container">
+            {reservation &&
+              reservation.map((res) => {
+                return res.map((r) => {
+                  const hour = r.heure.split(":")[0];
+                  const minutes = r.heure.split(":")[1];
+                  const seconds = r.heure.split(":")[2];
 
-          <div className="past-reservation-container">
-            <h2>Réservation passés</h2>
+                  const reservationDate = new Date(r.date_reservation);
+                  reservationDate.setHours(hour);
+                  reservationDate.setMinutes(minutes);
+                  reservationDate.setSeconds(seconds);
+
+                  if (reservationDate >= new Date()) {
+                    return (
+                      <ReservationCard
+                        key={r.id}
+                        borneId={r.borne_id}
+                        date={r.date_reservation}
+                      />
+                    );
+                  }
+                  return null;
+                });
+              })}
           </div>
         </div>
+
+        <div className="past-reservation-container">
+          <h2>Réservation passés</h2>
+          {reservation &&
+            reservation.map((res) => {
+              return res.map((r) => {
+                const hour = r.heure.split(":")[0];
+                const minutes = r.heure.split(":")[1];
+                const seconds = r.heure.split(":")[2];
+
+                const reservationDate = new Date(r.date_reservation);
+                reservationDate.setHours(hour);
+                reservationDate.setMinutes(minutes);
+                reservationDate.setSeconds(seconds);
+
+                if (reservationDate < new Date()) {
+                  return (
+                    <ReservationCard
+                      key={r.id}
+                      id={r.id}
+                      borneId={r.borne_id}
+                      date={r.date_reservation}
+                    />
+                  );
+                }
+                return null;
+              });
+            })}
+        </div>
       </div>
-    </div>
+    </main>
   );
 }
