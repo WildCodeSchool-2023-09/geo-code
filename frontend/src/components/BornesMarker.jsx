@@ -60,7 +60,7 @@ function BornesMarker() {
   }
   let borneFilters = [];
 
-  if (research.prise.length === 0) {
+  if (research.prise === "") {
     borneFilters = allBornes.filter(
       (cluster) =>
         cluster.code_postal.slice(0, 2).includes(research.code) &&

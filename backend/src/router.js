@@ -1,5 +1,6 @@
 const express = require("express");
 const multer = require("multer");
+const { hashPassword } = require("./services/auth");
 
 const upload = multer({ dest: "public/uploads/" });
 const router = express.Router();
@@ -36,7 +37,7 @@ router.get("/users", userControllers.browse);
 router.get("/users/:id", userControllers.read);
 
 // Route to add a new users
-router.post("/users", userControllers.add);
+router.post("/users", hashPassword, userControllers.add);
 
 // Route to edit a user
 router.post("/edituser", userControllers.edit);
