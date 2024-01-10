@@ -4,7 +4,7 @@ import "../scss/components/Filter.scss";
 
 function Filtre() {
   const { setResearch } = useContext(FilterContext);
-  const [isActive, setIsActive] = useState("inactive");
+  let isActive = "inactive";
   const [valueDefault, setValueDefault] = useState({
     code: "",
     enseigne: "",
@@ -23,9 +23,16 @@ function Filtre() {
       [e.target.name]: `${valueDefault.prise}${e.target.value}`,
     });
   };
+
   const handleToogle = (e) => {
-    e.target.className = "active";
-    setIsActive(isActive);
+    if (isActive === "inactive") {
+      e.target.className = "filter_prisetype_buttons_active";
+      isActive = "active";
+    } else {
+      e.target.className = " filter_prisetype_buttons";
+      isActive = "inactive";
+    }
+    return e.target.className;
   };
 
   const handleSubmit = (event) => {
@@ -103,14 +110,10 @@ function Filtre() {
                 value="A"
                 name="prise"
                 onClick={(e) => {
-                  handleToogle(e, 1);
+                  handleToogle(e);
                   selectValue(e);
                 }}
-                className={
-                  isActive === "active"
-                    ? " filter_prisetype_buttons active"
-                    : " filter_prisetype_buttons inactive"
-                }
+                className=" filter_prisetype_buttons"
               >
                 AC
               </button>
@@ -119,14 +122,10 @@ function Filtre() {
                 value="E"
                 name="prise"
                 onClick={(e) => {
-                  handleToogle(e, 1);
+                  handleToogle(e);
                   selectValue(e);
                 }}
-                className={
-                  isActive === "active"
-                    ? " filter_prisetype_buttons active"
-                    : " filter_prisetype_buttons inactive"
-                }
+                className=" filter_prisetype_buttons"
               >
                 EF
               </button>
@@ -135,14 +134,10 @@ function Filtre() {
                 value="1"
                 name="prise"
                 onClick={(e) => {
-                  handleToogle(e, 1);
+                  handleToogle(e);
                   selectValue(e);
                 }}
-                className={
-                  isActive === "active"
-                    ? " filter_prisetype_buttons active"
-                    : " filter_prisetype_buttons inactive"
-                }
+                className=" filter_prisetype_buttons"
               >
                 Type 1
               </button>
@@ -151,14 +146,10 @@ function Filtre() {
                 value="2"
                 name="prise"
                 onClick={(e) => {
-                  handleToogle(e, 1);
+                  handleToogle(e);
                   selectValue(e);
                 }}
-                className={
-                  isActive === "active"
-                    ? " filter_prisetype_buttons active"
-                    : " filter_prisetype_buttons inactive"
-                }
+                className=" filter_prisetype_buttons"
               >
                 Type 2
               </button>
@@ -167,14 +158,10 @@ function Filtre() {
                 value="3"
                 name="prise"
                 onClick={(e) => {
-                  handleToogle(e, 1);
+                  handleToogle(e);
                   selectValue(e);
                 }}
-                className={
-                  isActive === "active"
-                    ? " filter_prisetype_buttons active"
-                    : " filter_prisetype_buttons inactive"
-                }
+                className=" filter_prisetype_buttons"
               >
                 Type 3
               </button>
@@ -183,14 +170,10 @@ function Filtre() {
                 value="CHA"
                 name="prise"
                 onClick={(e) => {
-                  handleToogle(e, 1);
+                  handleToogle(e);
                   selectValue(e);
                 }}
-                className={
-                  isActive === "active"
-                    ? " filter_prisetype_buttons active"
-                    : " filter_prisetype_buttons inactive"
-                }
+                className=" filter_prisetype_buttons"
               >
                 CHADEMO
               </button>
@@ -199,14 +182,10 @@ function Filtre() {
                 value="CCS"
                 name="prise"
                 onClick={(e) => {
-                  handleToogle(e, 1);
+                  handleToogle(e);
                   selectValue(e);
                 }}
-                className={
-                  isActive === "active"
-                    ? " filter_prisetype_buttons active"
-                    : " filter_prisetype_buttons inactive"
-                }
+                className=" filter_prisetype_buttons"
               >
                 Combo CCS
               </button>

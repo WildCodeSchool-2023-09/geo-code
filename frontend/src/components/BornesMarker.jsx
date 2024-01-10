@@ -58,18 +58,42 @@ function BornesMarker() {
   if (research.rayon === "" || research.rayon === "0") {
     research.rayon = "1085";
   }
+  let borneFilters = [];
 
-  const borneFilters = allBornes.filter(
-    (cluster) =>
-      cluster.code_postal.slice(0, 2).includes(research.code) &&
-      cluster.n_enseigne.includes(research.enseigne) &&
-      cluster.puiss_max.includes(research.puissance) &&
-      cluster.type_prise.includes(
-        research.pris || research.prise.toLowerCase()
-      ) &&
-      convertToDistance(cluster.lat, cluster.lng, position.lat, position.lng) <=
-        parseInt(research.rayon, 10)
-  );
+  if (research.prise.length === 0) {
+    borneFilters = allBornes.filter(
+      (cluster) =>
+        cluster.code_postal.slice(0, 2).includes(research.code) &&
+        cluster.n_enseigne.includes(research.enseigne) &&
+        cluster.puiss_max.includes(research.puissance) &&
+        cluster.type_prise.includes(
+          research.prise || research.prise.toLowerCase()
+        ) &&
+        convertToDistance(
+          cluster.lat,
+          cluster.lng,
+          position.lat,
+          position.lng
+        ) <= parseInt(research.rayon, 10)
+    );
+  }
+  for (let i = 0; i < research.prise.length; i += 1) {
+    borneFilters = allBornes.filter(
+      (cluster) =>
+        cluster.code_postal.slice(0, 2).includes(research.code) &&
+        cluster.n_enseigne.includes(research.enseigne) &&
+        cluster.puiss_max.includes(research.puissance) &&
+        cluster.type_prise.includes(
+          research.prise[i] || research.prise[i].toLowerCase()
+        ) &&
+        convertToDistance(
+          cluster.lat,
+          cluster.lng,
+          position.lat,
+          position.lng
+        ) <= parseInt(research.rayon, 10)
+    );
+  }
 
   const supercluster = new Supercluster({ radius: 75, maxZoom: 15 });
   const bounds = [
