@@ -16,7 +16,6 @@ function LocationMarker() {
     map.locate().on("locationfound", (e) => {
       map.flyTo(e.latlng, map.getZoom());
     });
-    console.info(position);
   };
 
   return (

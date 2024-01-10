@@ -37,7 +37,7 @@ function BornesMarker() {
     axios
       .get(`${API_URL}/bornes`)
       .then((res) => setBornes(res.data))
-      .catch((error) => console.info(error));
+      .catch((error) => console.error(error));
   }, []);
 
   // transformation en geojson pour pouvoir faire le cluster

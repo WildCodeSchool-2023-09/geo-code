@@ -35,7 +35,6 @@ function Register() {
 
     axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/api/users`, user)
-      .then((response) => console.info(response.data))
       .catch((err) => console.error(err));
 
     setTimeout(() => {

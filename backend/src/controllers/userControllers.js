@@ -93,25 +93,8 @@ const add = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
-  const hashingOptions = {
-    type: argon2.argon2id,
-    memoryCost: 19 * 2 ** 10 /* 19 Mio en kio (19 * 1024 kio) */,
-    timeCost: 2,
-    parallelism: 1,
-  };
-
-  // Hachage du mot de passe avec les options spécifiées
-  const hashedPassword = await argon2.hash(password, hashingOptions);
-
-  // Remplacement du mot de passe non haché par le mot de passe haché dans la requête
-  req.body.hashedPassword = hashedPassword;
-
-  // Suppression du mot de passe non haché de la requête par mesure de sécurité
-  delete req.body.password;
 
   try {
-    const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
-    console.info(`Nouvelle requête depuis : ${ip}`);
     const user = await tables.user.signIn(email);
     const ActualDate = new Date();
     if (user.length === 1) {
@@ -159,14 +142,12 @@ const login = async (req, res, next) => {
 
 const checktoken = async (req, res, next) => {
   const { token } = req.body;
-  console.info("checkencours");
 
   try {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
     const { userId } = decodedToken;
     const checkUserToken = await tables.user.checkToken(token);
-    console.info(checkUserToken);
     if (
       checkUserToken.length === 1 &&
       checkUserToken[0].token === token &&
@@ -174,7 +155,6 @@ const checktoken = async (req, res, next) => {
       checkUserToken[0].admin === 1
     ) {
       res.status(200).send({ message: "OK", admin: true });
-      console.info(checkUserToken[0].admin, "admin");
     } else if (
       checkUserToken.length === 1 &&
       checkUserToken[0].token === token &&
@@ -182,7 +162,6 @@ const checktoken = async (req, res, next) => {
       checkUserToken[0].admin === 0
     ) {
       res.status(200).send({ message: "OK", admin: false });
-      console.info(checkUserToken[0].admin, "Not an admin");
     } else res.status(200).send({ message: "ErrorElse" });
   } catch (err) {
     res.status(200).send({ message: "ErrorCatch" });

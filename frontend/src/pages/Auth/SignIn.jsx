@@ -66,7 +66,6 @@ export default function SignIn() {
           password: escapeHtml(details.password),
         });
 
-        console.info(response.data.message);
         document.getElementById("successLog").innerText =
           "Authentification en cours...";
 
@@ -92,7 +91,6 @@ export default function SignIn() {
         })
         .then((res) => {
           if (res.data.message === "OK") {
-            console.info("Connexion Approuvée");
             setIsLoggedIn(true);
             setTimeout(() => {
               window.location.href = "/profil";
