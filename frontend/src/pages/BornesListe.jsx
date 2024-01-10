@@ -72,7 +72,7 @@ function BornesListe() {
         <div className="bornesContainer">
           <div className="prevnext">
             <SecondaryButton
-              btnLink="/#"
+              btnLink="#"
               btnText="Précédent"
               onClick={() => {
                 handlePagePrevious(pageActuel);
@@ -80,7 +80,7 @@ function BornesListe() {
             />
 
             <SecondaryButton
-              btnLink="/#"
+              btnLink="#"
               btnText="Suivant"
               onClick={() => {
                 handlePageNext(pageActuel);
