@@ -4,7 +4,7 @@ import "../scss/components/Filter.scss";
 
 function Filtre() {
   const { setResearch } = useContext(FilterContext);
-  const [isActive, setIsActive] = useState("inactive");
+  let isActive = "inactive";
   const [valueDefault, setValueDefault] = useState({
     code: "",
     enseigne: "",
@@ -27,10 +27,10 @@ function Filtre() {
   const handleToogle = (e) => {
     if (isActive === "inactive") {
       e.target.className = "filter_prisetype_buttons_active";
-      setIsActive("active");
+      isActive = "active";
     } else {
       e.target.className = " filter_prisetype_buttons";
-      setIsActive("inactive");
+      isActive = "inactive";
     }
     return e.target.className;
   };
