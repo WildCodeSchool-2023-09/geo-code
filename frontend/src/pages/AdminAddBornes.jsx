@@ -8,6 +8,7 @@ import "../scss/admin-add-bornes.scss";
 import { useDropzone } from "react-dropzone";
 import ScrollToTop from "./ResetScrollOnPage";
 import mailError from "../assets/LottieFiles/EmailError.json";
+import Breadcrumb from "../components/breadcrumb";
 
 export default function AdminAddBornes() {
   const [isAdmin, setIsAdmin] = useState();
@@ -25,7 +26,7 @@ export default function AdminAddBornes() {
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-  const url = "http://localhost:3310/api/uploads";
+  const url = `${import.meta.env.VITE_BACKEND_URL}/api/uploads`;
 
   function Submit(e) {
     e.preventDefault();
@@ -101,41 +102,50 @@ export default function AdminAddBornes() {
       </section>
     );
   }
+
+  const arianfil = [{ name: "Admin", link: "/admin" }];
+
   return (
-    <main className="add-bornes-main backgroundImageMain">
-      <ScrollToTop />
-      <Link to="/admin">Retour</Link>
-      <div className="upload-card">
-        <h1>Ajouter des Bornes</h1>
-        <div className="upload">
-          {isDragActive ? (
-            <p className="upload_text">Relacher le fichier pour l'ajouter </p>
-          ) : (
-            <p className="upload_text">
-              Drag 'n' drop ou Cliquez <br />
-              pour sélectionner un fichier
-            </p>
-          )}
-          <div className="upload_DragDrop" {...getRootProps()}>
-            <input {...getInputProps()} />
+    <div className="backgroundImageMain">
+      <div className="add_bornes_page">
+        <ScrollToTop />
+        <Breadcrumb data={arianfil} currentname="Ajouter une borne" />
+        <div className="add_bornes_page_container">
+          <div className="upload-card">
+            <h1>Ajouter des Bornes</h1>
+            <div className="upload">
+              {isDragActive ? (
+                <p className="upload_text">
+                  Relacher le fichier pour l'ajouter{" "}
+                </p>
+              ) : (
+                <p className="upload_text">
+                  Drag 'n' drop ou Cliquez <br />
+                  pour sélectionner un fichier
+                </p>
+              )}
+              <div className="upload_DragDrop" {...getRootProps()}>
+                <input {...getInputProps()} />
+              </div>
+            </div>
+            <div className="buttons-container">
+              <button
+                type="submit"
+                className="buttons-container_blue"
+                onClick={Submit}
+              >
+                Charger le CSV
+              </button>
+
+              <Link to="/admin">
+                <button type="button" className="buttons-container_dark">
+                  Annuler
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
-        <div className="buttons-container">
-          <button
-            type="submit"
-            className="buttons-container_blue"
-            onClick={Submit}
-          >
-            Charger le CSV
-          </button>
-
-          <Link to="/admin">
-            <button type="button" className="buttons-container_dark">
-              Annuler
-            </button>
-          </Link>
-        </div>
       </div>
-    </main>
+    </div>
   );
 }

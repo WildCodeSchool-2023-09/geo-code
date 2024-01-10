@@ -9,19 +9,20 @@ class UserManager extends AbstractManager {
 
   async create(user) {
     const [result] = await this.database.query(
-      `insert into ${this.table} (nom, prenom, code_postal, ville, email, password, connection,
+      `insert into ${this.table} (nom, prenom, code_postal, ville, rue, email, password, connection,
                                         nb_vehicule, admin, anniversaire, inscription, derniere_maj)
-             values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+             values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         user.nom,
         user.prenom,
         user.code_postal,
         user.ville,
+        user.rue,
         user.email,
-        user.password,
-        user.connection,
+        user.hashedPassword,
+        false,
         user.nb_vehicule,
-        user.admin,
+        false,
         user.anniversaire,
         user.inscription,
         user.derniere_maj,
@@ -74,7 +75,7 @@ class UserManager extends AbstractManager {
                  WHERE token = ?`,
       [nom, prenom, anniversaire, rue, codePostal, ville, derniereMaj, token]
     );
-    console.info(result);
+
     return result;
   }
 
@@ -94,6 +95,16 @@ class UserManager extends AbstractManager {
              SET token=?
              WHERE email = ?`,
       [token, email]
+    );
+    return result;
+  }
+
+  async setLastConnexion(date, email) {
+    const [result] = await this.database.query(
+      `UPDATE user
+             SET connection=?
+             WHERE email = ?`,
+      [date, email]
     );
     return result;
   }

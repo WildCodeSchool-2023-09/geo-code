@@ -10,8 +10,8 @@ CREATE TABLE user (
 	code_postal int NOT NULL,
 	ville VARCHAR(255) NOT NULL,
 	email VARCHAR(255) NOT NULL,
-	password VARCHAR(80) NOT NULL,
-	connection BOOLEAN NOT NULL,
+	password VARCHAR(300) NOT NULL,
+	connection DATE NULL,
 	nb_vehicule int NOT NULL,
 	admin BOOLEAN NOT NULL,
 	anniversaire DATE NOT NULL,
@@ -20,10 +20,10 @@ CREATE TABLE user (
   token VARCHAR(255) NULL
 );
 INSERT INTO user (nom, prenom, rue, code_postal,ville, email, password, connection, nb_vehicule, admin, anniversaire, inscription, derniere_maj)
- VALUES('debarge', 'morgane', 'rue dupont', 75000, 'Arnac', 'morgane@debarge.fr', 'Morgane1', false, 1, true, '1990-01-01', '2023-01-09', '2023-01-09'),
- ('save', 'baptiste', 'rue dupont', 75000, 'Arnac', 'baptiste@save.fr', 'Baptiste1', false, 1, true, '1990-01-01', '2023-01-09', '2023-01-09'),
- ('foulon', 'raphael', 'rue dupont', 75000, 'Arnac', 'raphael@foulon.fr', 'Raphael1', false, 1, true, '1990-01-01', '2023-01-09', '2023-01-09'),
- ('illien', 'jeremy', 'rue dupont', 75000, 'Arnac', 'jeremy@illien.fr', 'Jeremy11', false, 1, true, '1990-01-01', '2023-01-09', '2023-01-09');
+ VALUES('debarge', 'morgane', 'rue dupont', 75000, 'Arnac', 'morgane@debarge.fr', '$argon2id$v=19$m=19456,t=2,p=1$AHLIs9tC/Ye3lBxqGrz57A$svfAn+6veHtuvvce+dx9k1FZ+8GXamO8MM0elTLlpwQ', false, 1, true, '1990-01-01', '2023-01-09', '2023-01-09'),
+ ('save', 'baptiste', 'rue dupont', 75000, 'Arnac', 'baptiste@save.fr', '$argon2id$v=19$m=19456,t=2,p=1$x0IxEYRVCwCRVt3sNkETeA$JlNKV1ORQzWEf6mD7F+70Iwwb3GU8vBHId0G55Kj1Yc', false, 1, true, '1990-01-01', '2023-01-09', '2023-01-09'),
+ ('foulon', 'raphael', 'rue dupont', 75000, 'Arnac', 'raphael@foulon.fr', '$argon2id$v=19$m=19456,t=2,p=1$H66tZbWq7npkmuCZ7d0u4g$1pl9ttBn48SwqktvlwM2qA/YGCoEJy+0bGzol9TuZjg', false, 1, true, '1990-01-01', '2023-01-09', '2023-01-09'),
+ ('illien', 'jeremy', 'rue dupont', 75000, 'Arnac', 'jeremy@illien.fr', '$argon2id$v=19$m=19456,t=2,p=1$i8Rox6tnfRoG5BFZTg8cfA$rcvzkFE1hCFMMQMt4XDyVGaQSb7sriIztN0dN3GGe68', false, 1, true, '1990-01-01', '2023-01-09', '2023-01-09');
 
 DROP TABLE IF EXISTS borne;
 CREATE TABLE borne (

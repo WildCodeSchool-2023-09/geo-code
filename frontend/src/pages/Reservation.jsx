@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Lottie from "react-lottie-player";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 import data from "../data/UserDataTest.json";
 
@@ -134,7 +133,6 @@ export default function Reservation() {
                 });
               })}
           </div>
-        </div>
 
         <div className="past-reservation-container">
           <h2>Réservation passés</h2>
@@ -165,6 +163,6 @@ export default function Reservation() {
             })}
         </div>
       </div>
-    </main>
+    </div>
   );
 }

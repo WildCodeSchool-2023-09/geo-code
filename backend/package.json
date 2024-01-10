@@ -8,6 +8,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@node-rs/argon2": "^1.7.1",
     "cors": "^2.8.5",
     "csv-parser": "^3.0.0",
     "dotenv": "^16.3.1",
