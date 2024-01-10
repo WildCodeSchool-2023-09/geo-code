@@ -93,21 +93,6 @@ const add = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
-  const hashingOptions = {
-    type: argon2.argon2id,
-    memoryCost: 19 * 2 ** 10 /* 19 Mio en kio (19 * 1024 kio) */,
-    timeCost: 2,
-    parallelism: 1,
-  };
-
-  // Hachage du mot de passe avec les options spécifiées
-  const hashedPassword = await argon2.hash(password, hashingOptions);
-
-  // Remplacement du mot de passe non haché par le mot de passe haché dans la requête
-  req.body.hashedPassword = hashedPassword;
-
-  // Suppression du mot de passe non haché de la requête par mesure de sécurité
-  delete req.body.password;
 
   try {
     const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
