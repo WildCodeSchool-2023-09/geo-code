@@ -42,7 +42,6 @@ function BornesListe() {
       convertToDistance(cluster.lat, cluster.lng, position.lat, position.lng) <=
         parseInt(research.rayon, 10)
   );
-  console.info(bornesFilters);
 
   useEffect(() => {
     setMax(bornesFilters.length);
@@ -59,7 +58,7 @@ function BornesListe() {
       setPageActuel(pageActuel - display);
     }
   }
-  console.info(max);
+
   return (
     <div className="borneListPage">
       <ScrollToTop />
@@ -74,21 +73,24 @@ function BornesListe() {
         </div>
         <div className="bornesContainer">
           <div className="prevnext">
-            <SecondaryButton
-              btnLink="/#"
-              btnText="Précédent"
+            <button
+              className="secondary-button"
+              type="button"
               onClick={() => {
                 handlePagePrevious(pageActuel);
               }}
-            />
-
-            <SecondaryButton
-              btnLink="/#"
-              btnText="Suivant"
+            >
+              Précédent
+            </button>
+            <button
+              className="secondary-button"
+              type="button"
               onClick={() => {
                 handlePageNext(pageActuel);
               }}
-            />
+            >
+              Suivant
+            </button>
           </div>
           {bornesFilters
             .slice(pageActuel, pageActuel + display)
@@ -110,20 +112,24 @@ function BornesListe() {
               );
             })}
           <div className="prevnext">
-            <SecondaryButton
-              btnLink="/#"
-              btnText="Précédent"
+            <button
+              type="button"
               onClick={() => {
                 handlePagePrevious(pageActuel);
               }}
-            />
-            <SecondaryButton
-              btnLink="/#"
-              btnText="Suivant"
+              className="secondary-button"
+            >
+              Précédent
+            </button>
+            <button
+              type="button"
               onClick={() => {
                 handlePageNext(pageActuel);
               }}
-            />
+              className="secondary-button"
+            >
+              Suivant
+            </button>
           </div>
         </div>
       </div>
