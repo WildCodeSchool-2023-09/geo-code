@@ -27,7 +27,6 @@ function BornesListe() {
   let bornesFilters = [];
   const [max, setMax] = useState(bornes.length);
 
-  console.info(bornes);
   if (research.rayon === "" || research.rayon === "0") {
     research.rayon = "1085";
   }
@@ -42,7 +41,6 @@ function BornesListe() {
       convertToDistance(cluster.lat, cluster.lng, position.lat, position.lng) <=
         parseInt(research.rayon, 10)
   );
-  console.info(bornesFilters);
 
   useEffect(() => {
     setMax(bornesFilters.length);
@@ -59,7 +57,6 @@ function BornesListe() {
       setPageActuel(pageActuel - display);
     }
   }
-  console.info(max);
   return (
     <div className="borneListPage">
       <ScrollToTop />
