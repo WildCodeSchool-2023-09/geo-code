@@ -1,7 +1,7 @@
 import { MapContainer, TileLayer } from "react-leaflet";
 import Filtre from "../components/Filtre";
-import LocationMarker from "../components/LocationMarker";
 import BornesMarker from "../components/BornesMarker";
+import LocationMarker from "../components/LocationMarker";
 import SecondaryButton from "../components/buttons/SecondaryButton";
 import ScrollToTop from "./ResetScrollOnPage";
 import "../scss/root.scss";

@@ -1,16 +1,20 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import convertToDistance from "../services/ConvertToDistance";
 import FilterContext from "../Context/ResearchContext";
 import BorneCardUser from "../components/BorneCardUser";
 import LocationContext from "../Context/locationContext";
+import BornesContext from "../Context/BornesContext";
 import SecondaryButton from "../components/buttons/SecondaryButton";
 import Filtre from "../components/Filtre";
 import "../scss/bornesList.scss";
-import bornes from "../data/BorneUser";
+
 import ScrollToTop from "./ResetScrollOnPage";
 
 function BornesListe() {
   const { research } = useContext(FilterContext);
+  const { bornes } = useContext(BornesContext);
+  const [pageActuel, setPageActuel] = useState(0);
+
   useEffect(() => {
     console.info(
       research
@@ -19,6 +23,40 @@ function BornesListe() {
 
   const { position } = useContext(LocationContext);
 
+  const display = 10;
+  let bornesFilters = [];
+  const [max, setMax] = useState(bornes.length);
+
+  if (research.rayon === "" || research.rayon === "0") {
+    research.rayon = "1085";
+  }
+  bornesFilters = bornes.filter(
+    (cluster) =>
+      cluster.code_postal.slice(0, 2).includes(research.code) &&
+      cluster.n_enseigne.includes(research.enseigne) &&
+      cluster.puiss_max.includes(research.puissance) &&
+      cluster.type_prise.includes(
+        research.prise || research.prise.toLowerCase()
+      ) &&
+      convertToDistance(cluster.lat, cluster.lng, position.lat, position.lng) <=
+        parseInt(research.rayon, 10)
+  );
+
+  useEffect(() => {
+    setMax(bornesFilters.length);
+  }, [bornesFilters]);
+
+  function handlePageNext(slice) {
+    if (!(slice + display > max)) {
+      setPageActuel(pageActuel + display);
+    }
+  }
+
+  function handlePagePrevious(slice) {
+    if (!(slice - display < 0)) {
+      setPageActuel(pageActuel - display);
+    }
+  }
   return (
     <div className="borneListPage">
       <ScrollToTop />
@@ -32,40 +70,65 @@ function BornesListe() {
           <Filtre />
         </div>
         <div className="bornesContainer">
-          {bornes
-            .filter(
-              (borne) =>
-                borne.code.includes(research.code) &&
-                borne.enseigne.includes(research.enseigne) &&
-                borne.tarification.includes(research.tarification) &&
-                borne.puissance.includes(research.puissance) &&
-                borne.prise.includes(research.prise) &&
-                convertToDistance(
-                  borne.lat,
-                  borne.lng,
-                  position.lat,
-                  position.lng
-                ) <= parseInt(research.rayon, 10)
-            )
+          <div className="prevnext">
+            <button
+              className="secondary-button"
+              type="button"
+              onClick={() => {
+                handlePagePrevious(pageActuel);
+              }}
+            >
+              Précédent
+            </button>
+            <button
+              className="secondary-button"
+              type="button"
+              onClick={() => {
+                handlePageNext(pageActuel);
+              }}
+            >
+              Suivant
+            </button>
+          </div>
+          {bornesFilters
+            .slice(pageActuel, pageActuel + display)
             .map((borne) => {
-              console.info(borne);
               return (
-                <div key={borne.index} className="bornecard">
-                  <BorneCardUser
-                    name={borne.names}
-                    lat={borne.lat}
-                    lng={borne.lng}
-                    code={borne.code}
-                    enseigne={borne.enseigne}
-                    tarification={borne.tarification}
-                    puissance={borne.puissance}
-                    disponible={borne.disponible}
-                    pdc={borne.pdc}
-                    prise={borne.prise}
-                  />
+                <div>
+                  <div key={borne.index} className="bornecard">
+                    <BorneCardUser
+                      name={borne.n_station}
+                      lat={borne.lat}
+                      lng={borne.lng}
+                      code={borne.code_postal}
+                      enseigne={borne.n_enseigne}
+                      puissance={borne.puiss_max}
+                      prise={borne.type_prise}
+                    />
+                  </div>
                 </div>
               );
             })}
+          <div className="prevnext">
+            <button
+              type="button"
+              onClick={() => {
+                handlePagePrevious(pageActuel);
+              }}
+              className="secondary-button"
+            >
+              Précédent
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                handlePageNext(pageActuel);
+              }}
+              className="secondary-button"
+            >
+              Suivant
+            </button>
+          </div>
         </div>
       </div>
     </div>

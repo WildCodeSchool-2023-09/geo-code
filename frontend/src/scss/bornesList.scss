@@ -40,7 +40,7 @@
     width: 100%;
     height: auto;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 1.6rem;
 
     .bornecard {
       display: flex;
@@ -52,5 +52,30 @@
 @media screen and (max-width: 390px) {
   .bornesContainer {
     height: 100%;
+  }
+}
+.prevnext {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  .secondary-button {
+    display: flex;
+    padding: 0.6rem 1.2rem;
+    background-color: $color-grey;
+    border-radius: 0.6rem;
+    justify-content: center;
+    width: fit-content;
+    height: fit-content;
+    text-decoration: none;
+    font-family: $font;
+    color: $color-light;
+    text-align: center;
+    font-size: 1rem;
+    transition: transform 0.1s ease-in-out;
+
+    &:hover {
+      transform: scale(0.95);
+      background-color: $color-grey-hover;
+    }
   }
 }

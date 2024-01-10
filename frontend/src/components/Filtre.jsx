@@ -4,14 +4,13 @@ import "../scss/components/Filter.scss";
 
 function Filtre() {
   const { setResearch } = useContext(FilterContext);
-
+  let isActive = "inactive";
   const [valueDefault, setValueDefault] = useState({
     code: "",
     enseigne: "",
     rayon: "",
     puissance: "",
     disponible: "",
-    tarification: "",
     prise: "",
   });
   const handleChange = (e) => {
@@ -19,13 +18,28 @@ function Filtre() {
   };
 
   const selectValue = (e) => {
-    setValueDefault({ ...valueDefault, [e.target.name]: e.target.value });
+    setValueDefault({
+      ...valueDefault,
+      [e.target.name]: `${valueDefault.prise}${e.target.value}`,
+    });
+  };
+
+  const handleToogle = (e) => {
+    if (isActive === "inactive") {
+      e.target.className = "filter_prisetype_buttons_active";
+      isActive = "active";
+    } else {
+      e.target.className = " filter_prisetype_buttons";
+      isActive = "inactive";
+    }
+    return e.target.className;
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setResearch(valueDefault);
   };
+
   return (
     <div>
       <div className="filters_container">
@@ -87,43 +101,43 @@ function Filtre() {
               <option value="Oui">Oui</option>
             </select>
           </div>
-          <div className="separates">
-            <label htmlFor="tarification">Prix</label>
-            <div className="Price">
-              <button
-                type="button"
-                value="Payant"
-                name="tarification"
-                onClick={selectValue}
-              >
-                Payant
-              </button>
-              <button
-                type="button"
-                value="Gratuit"
-                name="tarification"
-                onClick={selectValue}
-              >
-                Gratuit
-              </button>
-              <button
-                type="button"
-                value="Toutes"
-                name="tarification"
-                onClick={selectValue}
-              >
-                Toutes
-              </button>
-            </div>
-          </div>
           <div className="prise_container">
             <label htmlFor="prise">Type de Prise</label>
             <div className="prise_container_content">
               <button
+                id="1"
+                type="button"
+                value="A"
+                name="prise"
+                onClick={(e) => {
+                  handleToogle(e);
+                  selectValue(e);
+                }}
+                className=" filter_prisetype_buttons"
+              >
+                AC
+              </button>
+              <button
+                type="button"
+                value="E"
+                name="prise"
+                onClick={(e) => {
+                  handleToogle(e);
+                  selectValue(e);
+                }}
+                className=" filter_prisetype_buttons"
+              >
+                EF
+              </button>
+              <button
                 type="button"
                 value="1"
                 name="prise"
-                onClick={selectValue}
+                onClick={(e) => {
+                  handleToogle(e);
+                  selectValue(e);
+                }}
+                className=" filter_prisetype_buttons"
               >
                 Type 1
               </button>
@@ -131,7 +145,11 @@ function Filtre() {
                 type="button"
                 value="2"
                 name="prise"
-                onClick={selectValue}
+                onClick={(e) => {
+                  handleToogle(e);
+                  selectValue(e);
+                }}
+                className=" filter_prisetype_buttons"
               >
                 Type 2
               </button>
@@ -139,23 +157,35 @@ function Filtre() {
                 type="button"
                 value="3"
                 name="prise"
-                onClick={selectValue}
+                onClick={(e) => {
+                  handleToogle(e);
+                  selectValue(e);
+                }}
+                className=" filter_prisetype_buttons"
               >
-                Type3
+                Type 3
               </button>
               <button
                 type="button"
-                value="deMO"
+                value="CHA"
                 name="prise"
-                onClick={selectValue}
+                onClick={(e) => {
+                  handleToogle(e);
+                  selectValue(e);
+                }}
+                className=" filter_prisetype_buttons"
               >
-                CHadeMO
+                CHADEMO
               </button>
               <button
                 type="button"
                 value="CCS"
                 name="prise"
-                onClick={selectValue}
+                onClick={(e) => {
+                  handleToogle(e);
+                  selectValue(e);
+                }}
+                className=" filter_prisetype_buttons"
               >
                 Combo CCS
               </button>
