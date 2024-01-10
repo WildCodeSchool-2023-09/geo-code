@@ -40,7 +40,7 @@
     width: 100%;
     height: auto;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 1.6rem;
 
     .bornecard {
       display: flex;
@@ -53,4 +53,9 @@
   .bornesContainer {
     height: 100%;
   }
+}
+.prevnext {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

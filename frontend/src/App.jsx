@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 
 import FilterResearch from "./Context/ResearchContext";
 import LocationContext from "./Context/locationContext";
-
+import BornesContext from "./Context/BornesContext";
 import Navbar from "./components/navbar";
 import NavMobile from "./components/navmobile";
 import Footer from "./components/footer";
@@ -19,7 +19,6 @@ function App() {
     rayon: "1085",
     puissance: "",
     disponible: "",
-    tarification: "",
     prise: "",
   });
 
@@ -29,9 +28,16 @@ function App() {
   );
 
   const [position, setPosition] = useState({ lat: 0, lng: 0 });
+  const [bornes, setBornes] = useState([]);
+
   const positionValue = useMemo(
     () => ({ position, setPosition }),
     [position, setPosition]
+  );
+
+  const bornesValue = useMemo(
+    () => ({ bornes, setBornes }),
+    [bornes, setBornes]
   );
 
   function OnChangePage() {
@@ -67,11 +73,13 @@ function App() {
     <>
       <Navbar navData={navData} />
       <main>
-        <LocationContext.Provider value={positionValue}>
-          <FilterResearch.Provider value={value}>
-            <Outlet onChange={OnChangePage()} />
-          </FilterResearch.Provider>
-        </LocationContext.Provider>
+        <BornesContext.Provider value={bornesValue}>
+          <LocationContext.Provider value={positionValue}>
+            <FilterResearch.Provider value={value}>
+              <Outlet onChange={OnChangePage()} />
+            </FilterResearch.Provider>
+          </LocationContext.Provider>
+        </BornesContext.Provider>
       </main>
       <Footer className="FooterParams" />
       <NavMobile />
