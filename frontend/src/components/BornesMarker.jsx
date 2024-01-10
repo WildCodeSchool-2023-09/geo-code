@@ -58,13 +58,14 @@ function BornesMarker() {
   if (research.rayon === "" || research.rayon === "0") {
     research.rayon = "1085";
   }
+
   const borneFilters = allBornes.filter(
     (cluster) =>
       cluster.code_postal.slice(0, 2).includes(research.code) &&
       cluster.n_enseigne.includes(research.enseigne) &&
       cluster.puiss_max.includes(research.puissance) &&
       cluster.type_prise.includes(
-        research.prise || research.prise.toLowerCase()
+        research.pris || research.prise.toLowerCase()
       ) &&
       convertToDistance(cluster.lat, cluster.lng, position.lat, position.lng) <=
         parseInt(research.rayon, 10)
