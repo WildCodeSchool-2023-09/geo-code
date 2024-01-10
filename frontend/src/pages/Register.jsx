@@ -39,9 +39,8 @@ function Register() {
       .catch((err) => console.error(err));
 
     setTimeout(() => {
-      window.location.href = "/sign-in";
+      window.location.href = "/registerSuccess";
     }, 500);
-    alert("Votre compte à bien été créé. Merci de vous connecter");
   };
 
   return (
