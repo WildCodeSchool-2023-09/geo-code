@@ -1,27 +1,47 @@
 import "../scss/register.scss";
 import { useState } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 
 function Register() {
+  const date = new Date().toISOString();
+  const newDate = date.slice(0, 10);
   const [user, setUser] = useState({
-    lastname: "",
-    firstname: "",
+    nom: "",
+    prenom: "",
     email: "",
     password: "",
     confirm: "",
-    anniversary: "",
-    adress: "",
-    postalcode: "",
-    city: "",
-    phone: "",
-    vehicule: "",
+    anniversaire: "",
+    rue: "",
+    code_postal: "",
+    ville: "",
+    nb_vehicule: "",
     marque: "",
     model: "",
-    prise: "",
+    type_prise: "",
+    inscription: newDate,
+    derniere_maj: newDate,
   });
+  if (user.anniversaire.length !== 0) {
+    user.anniversaire = user.anniversaire.replaceAll("/", "-");
+  }
 
   const handleChange = (event) => {
     setUser({ ...user, [event.target.name]: event.target.value });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    axios
+      .post(`${import.meta.env.VITE_BACKEND_URL}/api/users`, user)
+      .then((response) => console.info(response.data))
+      .catch((err) => console.error(err));
+
+    setTimeout(() => {
+      window.location.href = "/sign-in";
+    }, 500);
+    alert("Votre compte à bien été créé. Merci de vous connecter");
   };
 
   return (
@@ -41,9 +61,9 @@ function Register() {
           </label>
           <input
             className="content_input_placeholder"
-            value={user.lastname}
+            value={user.nom}
             type="text"
-            name="lastname"
+            name="nom"
             id="lastname"
             onChange={handleChange}
             placeholder="Carpenter"
@@ -55,9 +75,9 @@ function Register() {
           </label>
           <input
             className="content_input_placeholder"
-            value={user.firstname}
+            value={user.prenom}
             type="text"
-            name="firstname"
+            name="prenom"
             id="firstname"
             onChange={handleChange}
             placeholder="John"
@@ -111,12 +131,12 @@ function Register() {
           </label>
           <input
             className="content_input_placeholder_space"
-            value={user.anniversary}
+            value={user.anniversaire}
             type="text"
-            name="anniversary"
+            name="anniversaire"
             id="anniversary"
             onChange={handleChange}
-            placeholder="25/12/2023"
+            placeholder="2023-12-25"
           />
         </div>
         <div className="content_input">
@@ -127,7 +147,7 @@ function Register() {
             className="content_input_placeholder"
             value={user.adress}
             type="text"
-            name="adress"
+            name="rue"
             id="adress"
             onChange={handleChange}
             placeholder="Votre adresse"
@@ -139,9 +159,9 @@ function Register() {
           </label>
           <input
             className="content_input_placeholder"
-            value={user.postalcode}
+            value={user.code_postal}
             type="text"
-            name="postalcode"
+            name="code_postal"
             id="postalcode"
             onChange={handleChange}
             placeholder="00000"
@@ -153,28 +173,15 @@ function Register() {
           </label>
           <input
             className="content_input_placeholder"
-            value={user.city}
+            value={user.ville}
             type="text"
-            name="city"
+            name="ville"
             id="city"
             onChange={handleChange}
             placeholder="New York"
           />
         </div>
-        <div className="content_input">
-          <label className="content_input_label" htmlFor="phone">
-            Téléphone
-          </label>
-          <input
-            className="content_input_placeholder"
-            value={user.phone}
-            type="text"
-            name="phone"
-            id="phone"
-            onChange={handleChange}
-            placeholder="+33 00 00 00 00 00"
-          />
-        </div>
+
         <div className="content_input">
           <label className="content_input_label_space" htmlFor="vehicule">
             Véhicule(s)
@@ -183,7 +190,7 @@ function Register() {
             className="content_input_placeholder_space"
             value={user.vehicule}
             type="text"
-            name="vehicule"
+            name="nb_vehicule"
             id="vehicule"
             onChange={handleChange}
             placeholder="Nombre de véhicules"
@@ -255,7 +262,11 @@ function Register() {
       </div>
       <div className="button-form">
         <div>
-          <button className="create_button" type="submit">
+          <button
+            className="create_button"
+            type="submit"
+            onClick={handleSubmit}
+          >
             Créer mon compte
           </button>
         </div>

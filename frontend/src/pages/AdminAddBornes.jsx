@@ -25,7 +25,7 @@ export default function AdminAddBornes() {
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-  const url = "http://localhost:3310/api/uploads";
+  const url = `${import.meta.env.VITE_BACKEND_URL}/api/uploads`;
 
   function Submit(e) {
     e.preventDefault();
