@@ -25,7 +25,7 @@ function Register() {
   };
 
   return (
-    <main className="register-page">
+    <div className="register-page">
       <Link to="/register" />
       <img
         className="logo_register"
@@ -267,7 +267,7 @@ function Register() {
           </Link>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 

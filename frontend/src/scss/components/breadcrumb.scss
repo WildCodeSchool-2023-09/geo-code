@@ -1,0 +1,55 @@
+@import "../color-config.scss";
+
+.breadcrumb {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  text-decoration: none;
+  font-family: $font;
+
+  &_ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 1rem;
+    font-weight: 400;
+    list-style: none;
+    color: $color-black;
+    text-decoration: none;
+    gap: 0.4rem;
+
+    &_li {
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+      padding: 0 0.4rem;
+
+      &_p {
+        color: $color-black;
+        font-size: 1rem;
+        font-weight: 400;
+      }
+      &_a {
+        text-decoration: none;
+        color: $color-black;
+        font-weight: 400;
+        font-size: 1rem;
+      }
+    }
+    &_current {
+      display: flex;
+      align-items: center;
+
+      &_a {
+        text-decoration: none;
+        color: $color-black;
+        font-weight: 600;
+        font-size: 1rem;
+      }
+    }
+  }
+}
