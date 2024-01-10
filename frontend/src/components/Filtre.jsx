@@ -23,7 +23,6 @@ function Filtre() {
       [e.target.name]: `${valueDefault.prise}${e.target.value}`,
     });
   };
-  console.info(valueDefault);
   const handleToogle = (e) => {
     e.target.className = "active";
     setIsActive(isActive);
