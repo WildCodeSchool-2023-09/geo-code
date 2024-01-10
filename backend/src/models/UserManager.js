@@ -75,7 +75,7 @@ class UserManager extends AbstractManager {
                  WHERE token = ?`,
       [nom, prenom, anniversaire, rue, codePostal, ville, derniereMaj, token]
     );
-    console.info(result);
+
     return result;
   }
 
