@@ -27,7 +27,6 @@ function BornesListe() {
   let bornesFilters = [];
   const [max, setMax] = useState(bornes.length);
 
-  console.info(bornes);
   if (research.rayon === "" || research.rayon === "0") {
     research.rayon = "1085";
   }
@@ -58,7 +57,6 @@ function BornesListe() {
       setPageActuel(pageActuel - display);
     }
   }
-
   return (
     <div className="borneListPage">
       <ScrollToTop />
