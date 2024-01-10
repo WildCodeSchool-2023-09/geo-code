@@ -98,6 +98,16 @@ class UserManager extends AbstractManager {
     return result;
   }
 
+  async setLastConnexion(date, email) {
+    const [result] = await this.database.query(
+      `UPDATE user
+             SET connection=?
+             WHERE email = ?`,
+      [date, email]
+    );
+    return result;
+  }
+
   async checkToken(token) {
     const [user] = await this.database.query(
       `SELECT *

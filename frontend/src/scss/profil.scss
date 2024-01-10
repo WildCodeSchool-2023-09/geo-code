@@ -3,7 +3,7 @@
 .profil-main {
   display: flex;
   justify-content: center;
-  padding-top: 5rem;
+  padding: 4rem 1rem;
 
   background-color: $color-white;
 
@@ -13,7 +13,8 @@
   }
 
   .profil-container {
-    width: 70%;
+    width: 100%;
+    max-width: 520px;
     margin-bottom: 8rem;
 
     .general-container {
@@ -74,7 +75,7 @@
       }
 
       .info-container {
-        width: 50%;
+        width: 100%;
         min-width: 300px;
         background-color: $color-light;
         display: flex;

@@ -113,7 +113,7 @@ export default function SignIn() {
 
   if (!isLoggedIn) {
     return (
-      <main className="backgroundImageMain SignInMain">
+      <div className="backgroundImageMain SignInMain">
         <ScrollToTop />
         <div className="SignIn_container ">
           <div className="SignIn_container_title">
@@ -181,7 +181,7 @@ export default function SignIn() {
             <p className="success_container" id="successLog" />
           </form>
         </div>
-      </main>
+      </div>
     );
   }
   return (
