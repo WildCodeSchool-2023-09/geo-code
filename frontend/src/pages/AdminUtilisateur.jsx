@@ -103,19 +103,20 @@ export default function AdminUtilisateur() {
         </div>
 
         <div className="card-list">
-          {data
-            .filter((user) =>
-              `${user.prenom.toLowerCase()} ${user.nom.toLowerCase()}`.includes(
-                searchForm.toLowerCase()
+          {data &&
+            data
+              .filter((user) =>
+                `${user.prenom.toLowerCase()} ${user.nom.toLowerCase()}`.includes(
+                  searchForm.toLowerCase()
+                )
               )
-            )
-            .map((user) => (
-              <UserCard
-                firstname={user.prenom}
-                img={user.avatar || "https://i.imgur.com/5Nc6WY0.png"}
-                lastname={user.nom}
-              />
-            ))}
+              .map((user) => (
+                <UserCard
+                  firstname={user.prenom}
+                  img={user.avatar || "https://i.imgur.com/5Nc6WY0.png"}
+                  lastname={user.nom}
+                />
+              ))}
         </div>
       </div>
     </div>

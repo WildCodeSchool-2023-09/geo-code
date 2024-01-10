@@ -107,13 +107,14 @@ export default function AdminBorne() {
 
       <div className="card-container">
         <div className="card-list">
-          {data
-            .filter((borne) =>
-              borne.n_station.toLowerCase().includes(searchForm.toLowerCase())
-            )
-            .map((borne) => (
-              <BorneCard name={borne.n_station} adresse={borne.ad_station} />
-            ))}
+          {data &&
+            data
+              .filter((borne) =>
+                borne.n_station.toLowerCase().includes(searchForm.toLowerCase())
+              )
+              .map((borne) => (
+                <BorneCard name={borne.n_station} adresse={borne.ad_station} />
+              ))}
         </div>
       </div>
     </div>
