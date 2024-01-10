@@ -11,7 +11,7 @@ CREATE TABLE user (
 	ville VARCHAR(255) NOT NULL,
 	email VARCHAR(255) NOT NULL,
 	password VARCHAR(300) NOT NULL,
-	connection BOOLEAN NOT NULL,
+	connection DATE NULL,
 	nb_vehicule int NOT NULL,
 	admin BOOLEAN NOT NULL,
 	anniversaire DATE NOT NULL,

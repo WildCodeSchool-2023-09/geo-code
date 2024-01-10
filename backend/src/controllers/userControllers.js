@@ -113,7 +113,7 @@ const login = async (req, res, next) => {
     const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
     console.info(`Nouvelle requête depuis : ${ip}`);
     const user = await tables.user.signIn(email);
-
+    const ActualDate = new Date();
     if (user.length === 1) {
       const verified = await argon2.verify(user[0].password, password);
 
@@ -126,6 +126,7 @@ const login = async (req, res, next) => {
           process.env.JWT_SECRET,
           { expiresIn: "1h" }
         );
+
         if (user[0].admin === 1) {
           res.status(200).send({
             message: "Authentification réussie",
@@ -133,6 +134,7 @@ const login = async (req, res, next) => {
             admin: true,
           });
           await tables.user.saveToken(tokenUser, email);
+          await tables.user.setLastConnexion(ActualDate, email);
         } else {
           res.status(200).send({
             message: "Authentification réussie",
@@ -140,6 +142,7 @@ const login = async (req, res, next) => {
             admin: false,
           });
           await tables.user.saveToken(tokenUser, email);
+          await tables.user.setLastConnexion(ActualDate, email);
         }
       } else {
         res.status(401).send({ message: "Mot de passe incorrect" });

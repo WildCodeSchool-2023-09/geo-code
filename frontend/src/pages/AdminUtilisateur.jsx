@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Lottie from "react-lottie-player";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 import "../scss/admin-utilisateur.scss";
 
 import UserCard from "../components/UserCard";
 import ScrollToTop from "./ResetScrollOnPage";
 import mailError from "../assets/LottieFiles/EmailError.json";
+import Breadcrumb from "../components/breadcrumb";
 
 export default function AdminUtilisateur() {
   const [isLoading, setIsLoading] = useState(true);
@@ -79,42 +79,45 @@ export default function AdminUtilisateur() {
           </p>
         </div>
       </section>
-    ); // or render a login component
+    );
   }
+  const arianfil = [{ name: "Admin", link: "/admin" }];
   return (
-    <main className="admin-utilisateur backgroundImageMain">
-      <ScrollToTop />
-      <Link to="/admin">Retour</Link>
-      <h1>Liste des Utilisateurs</h1>
-      <div className="userSearch">
-        <form onSubmit={updateForm}>
-          <div className="search-bar">
-            <div className="search-icon" />
-            <input
-              className="search-input"
-              type="text"
-              placeholder="Recherche"
-            />
-          </div>
-          <input className="search-button" type="submit" value="Rechercher" />
-        </form>
-      </div>
+    <div className="backgroundImageMain">
+      <div className="admin-utilisateur">
+        <Breadcrumb data={arianfil} currentname="Utilisateurs" />
+        <ScrollToTop />
+        <h1>Liste des Utilisateurs</h1>
+        <div className="userSearch">
+          <form onSubmit={updateForm}>
+            <div className="search-bar">
+              <div className="search-icon" />
+              <input
+                className="search-input"
+                type="text"
+                placeholder="Recherche"
+              />
+            </div>
+            <input className="search-button" type="submit" value="Rechercher" />
+          </form>
+        </div>
 
-      <div className="card-list">
-        {data
-          .filter((user) =>
-            `${user.prenom.toLowerCase()} ${user.nom.toLowerCase()}`.includes(
-              searchForm.toLowerCase()
+        <div className="card-list">
+          {data
+            .filter((user) =>
+              `${user.prenom.toLowerCase()} ${user.nom.toLowerCase()}`.includes(
+                searchForm.toLowerCase()
+              )
             )
-          )
-          .map((user) => (
-            <UserCard
-              firstname={user.prenom}
-              img={user.avatar || "https://i.imgur.com/5Nc6WY0.png"}
-              lastname={user.nom}
-            />
-          ))}
+            .map((user) => (
+              <UserCard
+                firstname={user.prenom}
+                img={user.avatar || "https://i.imgur.com/5Nc6WY0.png"}
+                lastname={user.nom}
+              />
+            ))}
+        </div>
       </div>
-    </main>
+    </div>
   );
 }

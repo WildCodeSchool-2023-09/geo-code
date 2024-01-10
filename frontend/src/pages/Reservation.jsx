@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Lottie from "react-lottie-player";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 import data from "../data/UserDataTest.json";
 
@@ -71,32 +70,33 @@ export default function Reservation() {
     );
   }
   return (
-    <main className="reservation-main">
-      <ScrollToTop />
-      <div className="reservation-container">
-        <Link to="/profil">Retour sur le profil</Link>
-        <div className="info-container">
-          <img src={data[0].img} alt="" />
-          <h1>
-            {data[0].firstname} {data[0].lastname}
-          </h1>
-        </div>
-        <div className="next-reservation-container">
-          <h2>Réservation à venir</h2>
-          <div className="reservation_card">
-            <p className="nameborne">Borne Paris 2</p>
-            <p className="date">30/12/2023</p>
-            <div className="buttons-container">
-              <button type="button">Modifier la réservation</button>
-              <button type="button">Annuler la réservation</button>
+    <div className="backgroundImageMain">
+      <div className="reservation-main">
+        <ScrollToTop />
+        <div className="reservation-container">
+          <div className="info-container">
+            <img src={data[0].img} alt="" />
+            <h1>
+              {data[0].firstname} {data[0].lastname}
+            </h1>
+          </div>
+          <div className="next-reservation-container">
+            <h2>Réservation à venir</h2>
+            <div className="reservation_card">
+              <p className="nameborne">Borne Paris 2</p>
+              <p className="date">30/12/2023</p>
+              <div className="buttons-container">
+                <button type="button">Modifier la réservation</button>
+                <button type="button">Annuler la réservation</button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="past-reservation-container">
-          <h2>Réservation passés</h2>
+          <div className="past-reservation-container">
+            <h2>Réservation passés</h2>
+          </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

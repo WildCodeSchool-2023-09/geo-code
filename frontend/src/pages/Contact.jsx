@@ -154,7 +154,7 @@ export default function Contact() {
   };
 
   return (
-    <main className="backgroundImageMain Contact_Container">
+    <div className="backgroundImageMain Contact_Container">
       <ScrollToTop />
       <div className="contact_title">
         <h1>Contactez Nous</h1>
@@ -274,6 +274,6 @@ export default function Contact() {
         <p className="error_container" id="errorSubject" />
         <p className="error_container" id="errorMessage" />
       </div>
-    </main>
+    </div>
   );
 }

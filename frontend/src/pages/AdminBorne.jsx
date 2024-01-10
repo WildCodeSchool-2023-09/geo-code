@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Lottie from "react-lottie-player";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import "../scss/admin-borne.scss";
+import Breadcrumb from "../components/breadcrumb";
 
 import mailError from "../assets/LottieFiles/EmailError.json";
 import BorneCard from "../components/BorneCard";
@@ -83,10 +83,13 @@ export default function AdminBorne() {
       </section>
     ); // or render a login component
   }
+
+  const arianfil = [{ name: "Admin", link: "/admin" }];
+
   return (
-    <main className="admin-borne backgroundImageMain">
+    <div className="admin-borne backgroundImageMain">
       <ScrollToTop />
-      <Link to="/admin">Retour</Link>
+      <Breadcrumb data={arianfil} currentname="Liste des Bornes" />
       <h1>Liste des Bornes</h1>
       <div className="borneSearch">
         <form onSubmit={updateForm}>
@@ -113,6 +116,6 @@ export default function AdminBorne() {
             ))}
         </div>
       </div>
-    </main>
+    </div>
   );
 }
