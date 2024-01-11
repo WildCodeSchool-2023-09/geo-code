@@ -87,7 +87,7 @@ export default function AdminPanel() {
     const dateOfThisDay = new Date();
     dateOfThisDay.setDate(dateOfThisDay.getDate() - 8);
 
-    if (reservationDate >= dateOfThisDay) {
+    if (reservationDate >= dateOfThisDay && reservationDate <= new Date()) {
       return reservations;
     }
 
