@@ -111,29 +111,22 @@ export default function SignIn() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem("UserToken") !== null) {
-      axios
-        .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
-          token: localStorage.getItem("UserToken"),
-        })
-        .then((res) => {
-          if (res.data.message === "OK") {
-            console.info("Connexion Approuvée");
-            setIsLoggedIn(true);
-          } else {
-            setIsLoggedIn(false);
-            setTimeout(() => {
-              window.location.href = "/sign-in";
-            }, 3800);
-          }
-          setIsLoading(false);
-        });
-    } else {
-      setIsLoading(false);
-      setTimeout(() => {
-        window.location.href = "/sign-in";
-      }, 3800);
-    }
+    axios
+      .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, "hello", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        if (res.data.message === "OK") {
+          console.info("Connexion Approuvée");
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+          setTimeout(() => {
+            window.location.href = "/sign-in";
+          }, 3800);
+        }
+        setIsLoading(false);
+      });
   }, []);
 
   if (isLoading) {

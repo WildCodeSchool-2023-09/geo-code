@@ -22,35 +22,28 @@ export default function AdminBorne() {
   }
 
   useEffect(() => {
-    if (localStorage.getItem("UserToken") !== null) {
-      axios
-        .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
-          token: localStorage.getItem("UserToken"),
-        })
-        .then((res) => {
-          if (res.data.message === "OK" && res.data.admin === true) {
-            setIsLoggedIn(true);
-            setIsAdmin(true);
-          } else {
-            setIsAdmin(false);
-            setTimeout(() => {
-              window.location.href = "/";
-            }, 3800);
-          }
-          setIsLoading(false);
-        });
+    axios
+      .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, "hello", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.info(res.data);
+        if (res.data.message === "OK" && res.data.admin === true) {
+          setIsLoggedIn(true);
+          setIsAdmin(true);
+        } else {
+          setIsLoggedIn(false);
+          setIsAdmin(false);
+          setTimeout(() => {
+            window.location.href = "/";
+          }, 3800);
+        }
+        setIsLoading(false);
+      });
 
-      axios
-        .get(`${import.meta.env.VITE_BACKEND_URL}/api/bornes`)
-        .then((res) => {
-          setData(res.data);
-        });
-    } else {
-      setTimeout(() => {
-        window.location.href = "/sign-in";
-      }, 3800);
-      setIsLoading(false);
-    }
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/bornes`).then((res) => {
+      setData(res.data);
+    });
   }, []);
 
   if (isLoading) {

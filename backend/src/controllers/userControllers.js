@@ -111,19 +111,27 @@ const login = async (req, res, next) => {
         );
 
         if (user[0].admin === 1) {
+          res.cookie("token", tokenUser, {
+            httpOnly: true,
+            maxAge: 3600000,
+          });
           res.status(200).send({
             message: "Authentification réussie",
-            token: tokenUser,
             admin: true,
           });
+
           await tables.user.saveToken(tokenUser, email);
           await tables.user.setLastConnexion(ActualDate, email);
         } else {
+          res.cookie("token", tokenUser, {
+            httpOnly: true,
+            maxAge: 3600000,
+          });
           res.status(200).send({
             message: "Authentification réussie",
-            token: tokenUser,
             admin: false,
           });
+
           await tables.user.saveToken(tokenUser, email);
           await tables.user.setLastConnexion(ActualDate, email);
         }
@@ -141,7 +149,8 @@ const login = async (req, res, next) => {
 };
 
 const checktoken = async (req, res, next) => {
-  const { token } = req.body;
+  const { token } = req.cookies;
+  console.info(req);
 
   try {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
@@ -154,17 +163,23 @@ const checktoken = async (req, res, next) => {
       checkUserToken[0].id === userId &&
       checkUserToken[0].admin === 1
     ) {
-      res.status(200).send({ message: "OK", admin: true });
+      res.status(200).send({
+        message: "OK",
+        admin: true,
+      });
     } else if (
       checkUserToken.length === 1 &&
       checkUserToken[0].token === token &&
       checkUserToken[0].id === userId &&
       checkUserToken[0].admin === 0
     ) {
-      res.status(200).send({ message: "OK", admin: false });
-    } else res.status(200).send({ message: "ErrorElse" });
+      res.status(200).send({
+        message: "OK",
+        admin: false,
+      });
+    } else res.status(200).send({ message: "Error" });
   } catch (err) {
-    res.status(200).send({ message: "ErrorCatch" });
+    res.status(200).send({ message: err });
     next(err);
   }
 };
