@@ -47,7 +47,7 @@ router.post("/reservations", reservationControllers.browse);
 
 router.get("/reservations", reservationControllers.readAll);
 
-router.post("/borneinfo", borneControllers.read);
+router.get("/borneinfo/:id", borneControllers.read);
 
 // Route to get a list of marque
 router.get("/marques", marqueControllers.browse);
