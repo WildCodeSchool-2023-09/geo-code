@@ -11,6 +11,7 @@ import mailError from "../assets/LottieFiles/EmailError.json";
 import PrimaryButton from "../components/buttons/PrimaryButton";
 import ScrollToTop from "./ResetScrollOnPage";
 import ReservationCard from "../components/ReservationCard";
+import PastReservationCard from "../components/PastReservationCard";
 
 export default function Reservation() {
   const [isLoading, setIsLoading] = useState(true);
@@ -120,6 +121,7 @@ export default function Reservation() {
                     return (
                       <ReservationCard
                         key={r.id}
+                        id={r.id}
                         borneId={r.borne_id}
                         date={r.date_reservation}
                       />
@@ -147,9 +149,8 @@ export default function Reservation() {
 
                 if (reservationDate < new Date()) {
                   return (
-                    <ReservationCard
+                    <PastReservationCard
                       key={r.id}
-                      id={r.id}
                       borneId={r.borne_id}
                       date={r.date_reservation}
                     />
