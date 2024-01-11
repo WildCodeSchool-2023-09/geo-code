@@ -30,7 +30,6 @@ export default function Reservation() {
         })
         .then((res) => {
           if (res.data.message === "OK") {
-            console.info("Connexion Approuvée");
             setIsLoggedIn(true);
 
             axios
@@ -52,9 +51,6 @@ export default function Reservation() {
               });
           } else {
             setIsLoggedIn(false);
-            console.info(
-              "Vous devez vous connecter pour acceder à cette page !"
-            );
             setTimeout(() => {
               window.location.href = "/sign-in";
             }, 3800);
@@ -62,7 +58,6 @@ export default function Reservation() {
           setIsLoading(false);
         });
     } else {
-      console.info("Connexion Expirée ! Reconnectez-vous");
       setTimeout(() => {
         window.location.href = "/sign-in";
       }, 3800);

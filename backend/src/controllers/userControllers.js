@@ -95,8 +95,6 @@ const login = async (req, res, next) => {
   const { email, password } = req.body;
 
   try {
-    const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
-    console.info(`Nouvelle requête depuis : ${ip}`);
     const user = await tables.user.signIn(email);
     const ActualDate = new Date();
     if (user.length === 1) {
@@ -144,14 +142,12 @@ const login = async (req, res, next) => {
 
 const checktoken = async (req, res, next) => {
   const { token } = req.body;
-  console.info("checkencours");
 
   try {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
     const { userId } = decodedToken;
     const checkUserToken = await tables.user.checkToken(token);
-    console.info(checkUserToken);
     if (
       checkUserToken.length === 1 &&
       checkUserToken[0].token === token &&
@@ -159,7 +155,6 @@ const checktoken = async (req, res, next) => {
       checkUserToken[0].admin === 1
     ) {
       res.status(200).send({ message: "OK", admin: true });
-      console.info(checkUserToken[0].admin, "admin");
     } else if (
       checkUserToken.length === 1 &&
       checkUserToken[0].token === token &&
@@ -167,7 +162,6 @@ const checktoken = async (req, res, next) => {
       checkUserToken[0].admin === 0
     ) {
       res.status(200).send({ message: "OK", admin: false });
-      console.info(checkUserToken[0].admin, "Not an admin");
     } else res.status(200).send({ message: "ErrorElse" });
   } catch (err) {
     res.status(200).send({ message: "ErrorCatch" });

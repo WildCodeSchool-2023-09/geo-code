@@ -45,10 +45,9 @@ router.post("/edituser", userControllers.edit);
 // Route to get a list of reservations
 router.post("/reservations", reservationControllers.browse);
 
-router.post("/borneinfo", borneControllers.read);
+router.get("/reservations", reservationControllers.readAll);
 
-// Route to get a specific users by ID
-router.get("/reservations/:id", reservationControllers.read);
+router.post("/borneinfo", borneControllers.read);
 
 // Route to get a list of marque
 router.get("/marques", marqueControllers.browse);

@@ -19,7 +19,6 @@ export default function AdminAddBornes() {
 
   const onDrop = useCallback(
     (acceptedFile) => {
-      console.info(acceptedFile[0]);
       setFile(acceptedFile[0]);
     },
     [file]
@@ -38,12 +37,7 @@ export default function AdminAddBornes() {
     };
     formData.append("file", file);
     formData.append("fileName", file.name);
-    axios
-      .post(url, formData, config)
-      .then((response) => {
-        console.info(response.data);
-      })
-      .catch((err) => console.info(err));
+    axios.post(url, formData, config).catch((err) => console.error(err));
   }
 
   useEffect(() => {
@@ -54,14 +48,10 @@ export default function AdminAddBornes() {
         })
         .then((res) => {
           if (res.data.message === "OK" && res.data.admin === true) {
-            console.info("Connexion Approuvée");
             setIsLoggedIn(true);
             setIsAdmin(true);
           } else {
             setIsAdmin(false);
-            console.info(
-              "Vous n'avez pas les droits nécéssaire ! Redirection vers l'accueil"
-            );
             setTimeout(() => {
               window.location.href = "/";
             }, 3800);
@@ -69,7 +59,6 @@ export default function AdminAddBornes() {
           setIsLoading(false);
         });
     } else {
-      console.info("Connexion Expirée ! Reconnectez-vous");
       setTimeout(() => {
         window.location.href = "/sign-in";
       }, 3800);
