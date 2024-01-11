@@ -175,6 +175,15 @@ const checktoken = async (req, res, next) => {
     next(err);
   }
 };
+
+const logout = async (req, res, next) => {
+  try {
+    res.clearCookie("token");
+    res.status(200).send({ message: "OK" });
+  } catch (err) {
+    next(err);
+  }
+};
 // The D of BREAD - Destroy (Delete) operation
 // This operation is not yet implemented
 
@@ -239,4 +248,5 @@ module.exports = {
   checktoken,
   userDelete,
   takeData,
+  logout,
 };

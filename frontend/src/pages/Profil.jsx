@@ -41,7 +41,7 @@ export default function Profil() {
       });
 
     axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/api/takedata`, "hello", {
+      .post(`${import.meta.env.VITE_BACKEND_URL}/logout`, "hello", {
         withCredentials: true,
       })
       .then((res) => {
