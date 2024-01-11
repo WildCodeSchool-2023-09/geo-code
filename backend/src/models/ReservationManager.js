@@ -44,7 +44,7 @@ class ReservationManager extends AbstractManager {
   async readAll() {
     // Execute the SQL SELECT query to retrieve all items from the "item" table
     const [rows] = await this.database.query(`select *
-                                                  from ${this.table}`);
+                                                  from reservation`);
 
     // Return the array of items
     return rows;

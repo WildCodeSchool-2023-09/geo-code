@@ -29,14 +29,10 @@ export default function AdminBorne() {
         })
         .then((res) => {
           if (res.data.message === "OK" && res.data.admin === true) {
-            console.info("Connexion Approuvée");
             setIsLoggedIn(true);
             setIsAdmin(true);
           } else {
             setIsAdmin(false);
-            console.info(
-              "Vous n'avez pas les droits nécéssaire ! Redirection vers l'accueil"
-            );
             setTimeout(() => {
               window.location.href = "/";
             }, 3800);
@@ -50,7 +46,6 @@ export default function AdminBorne() {
           setData(res.data);
         });
     } else {
-      console.info("Connexion Expirée ! Reconnectez-vous");
       setTimeout(() => {
         window.location.href = "/sign-in";
       }, 3800);

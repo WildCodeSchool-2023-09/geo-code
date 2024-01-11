@@ -31,13 +31,9 @@ export default function Profil() {
         })
         .then((res) => {
           if (res.data.message === "OK") {
-            console.info("Connexion Approuvée");
             setIsLoggedIn(true);
           } else {
             setIsLoggedIn(false);
-            console.info(
-              "Vous devez vous connecter pour acceder à cette page !"
-            );
             setTimeout(() => {
               window.location.href = "/sign-in";
             }, 3800);
@@ -59,7 +55,6 @@ export default function Profil() {
           setVille(res.data[0].ville);
         });
     } else {
-      console.info("Connexion Expirée ! Reconnectez-vous");
       setTimeout(() => {
         window.location.href = "/sign-in";
       }, 3800);
@@ -81,25 +76,17 @@ export default function Profil() {
       new Date().getDay() < 10 ? `0${new Date().getDay()}` : new Date().getDay()
     }`;
 
-    axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/api/edituser`, {
-        token: localStorage.getItem("UserToken"),
-        nom: lastname,
-        prenom: firstname,
-        anniversaire: birthday,
-        email,
-        rue: adresse,
-        codePostal,
-        ville,
-        derniereMaj: date,
-      })
-      .then((res) => {
-        if (res.data.message === "user updated") {
-          console.info("Modification effectuée");
-        } else {
-          console.info(res.data.message);
-        }
-      });
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/edituser`, {
+      token: localStorage.getItem("UserToken"),
+      nom: lastname,
+      prenom: firstname,
+      anniversaire: birthday,
+      email,
+      rue: adresse,
+      codePostal,
+      ville,
+      derniereMaj: date,
+    });
   };
 
   if (!isLoggedIn) {

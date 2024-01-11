@@ -26,12 +26,8 @@ export default function AdminPanel() {
           if (res.data.message === "OK" && res.data.admin === true) {
             setIsLoggedIn(true);
             setIsAdmin(true);
-            console.info("Connexion Approuvée");
           } else {
             setIsAdmin(false);
-            console.info(
-              "Vous n'avez pas les droits nécéssaire ! Redirection vers l'accueil"
-            );
             setTimeout(() => {
               window.location.href = "/";
             }, 3800);
@@ -55,7 +51,6 @@ export default function AdminPanel() {
           setReservationsData(res.data);
         });
     } else {
-      console.info("Connexion Expirée ! Reconnectez-vous");
       setTimeout(() => {
         window.location.href = "/sign-in";
       }, 3800);

@@ -45,12 +45,15 @@ const checkListId = async (req, res, next) => {
   }
 };
 
-const read = async (req, res, next) => {
+const readAll = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const [list] = await tables.list.readList(id);
-    res.status(200).send(list);
+    // Fetch all items from the database
+    const modeles = await tables.modele.readAll();
+
+    // Respond with the items in JSON format
+    res.json(modeles);
   } catch (err) {
+    // Pass any errors to the error-handling middleware
     next(err);
   }
 };
@@ -97,7 +100,7 @@ const destroyReservation = async (req, res, next) => {
 module.exports = {
   browse,
   checkListId,
-  read,
+  readAll,
   edit,
   destroyReservation,
 };

@@ -143,8 +143,7 @@ export default function Contact() {
           message: escapeHtml(details.message),
         }
       )
-      .then((response) => {
-        console.info(response);
+      .then(() => {
         window.location = "/email-sent";
       })
       .catch((error) => {
