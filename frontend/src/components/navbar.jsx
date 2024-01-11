@@ -21,11 +21,9 @@ export default function Navbar({ navData }) {
         })
         .then((res) => {
           if (res.data.message === "OK" && res.data.admin === true) {
-            console.info("Connexion Approuvée");
             setIsAdmin(true);
             setIsConnected(true);
           } else if (res.data.message === "OK" && res.data.admin === false) {
-            console.info("Connexion Approuvée");
             setIsAdmin(false);
             setIsConnected(true);
           }

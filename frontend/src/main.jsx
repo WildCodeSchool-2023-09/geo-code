@@ -24,6 +24,7 @@ import AdminPanel from "./pages/AdminPanel";
 import AdminUtilisateur from "./pages/AdminUtilisateur";
 import AdminBorne from "./pages/AdminBorne";
 import AdminAddBornes from "./pages/AdminAddBornes";
+import RegisterSuccess from "./pages/Auth/registerSuccess";
 
 const router = createBrowserRouter([
   {
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/registerSuccess",
+        element: <RegisterSuccess />,
       },
     ],
   },

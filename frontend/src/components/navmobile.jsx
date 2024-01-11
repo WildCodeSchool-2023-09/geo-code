@@ -16,10 +16,8 @@ export default function navmobile() {
         })
         .then((res) => {
           if (res.data.message === "OK" && res.data.admin === true) {
-            console.info("Connexion Approuvée");
             setIsConnected(true);
           } else if (res.data.message === "OK" && res.data.admin === false) {
-            console.info("Connexion Approuvée");
             setIsConnected(true);
           }
         });

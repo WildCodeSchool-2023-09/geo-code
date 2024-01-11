@@ -37,7 +37,7 @@ function BornesMarker() {
     axios
       .get(`${API_URL}/bornes`)
       .then((res) => setBornes(res.data))
-      .catch((error) => console.info(error));
+      .catch((error) => console.error(error));
   }, []);
 
   // transformation en geojson pour pouvoir faire le cluster
@@ -60,7 +60,7 @@ function BornesMarker() {
   }
   let borneFilters = [];
 
-  if (research.prise.length === 0) {
+  if (research.prise === "") {
     borneFilters = allBornes.filter(
       (cluster) =>
         cluster.code_postal.slice(0, 2).includes(research.code) &&

@@ -1,5 +1,6 @@
 const express = require("express");
 const multer = require("multer");
+const { hashPassword } = require("./services/auth");
 
 const upload = multer({ dest: "public/uploads/" });
 const router = express.Router();
@@ -36,19 +37,17 @@ router.get("/users", userControllers.browse);
 router.get("/users/:id", userControllers.read);
 
 // Route to add a new users
-router.post("/users", userControllers.add);
+router.post("/users", hashPassword, userControllers.add);
 
 // Route to edit a user
 router.post("/edituser", userControllers.edit);
 
 // Route to get a list of reservations
-router.get("/reservations", reservationControllers.browse);
+router.post("/reservations", reservationControllers.browse);
 
-// Route to get a specific users by ID
-router.get("/reservations/:id", reservationControllers.read);
+router.get("/reservations", reservationControllers.readAll);
 
-// Route to add a new reservations
-router.post("/reservations", reservationControllers.add);
+router.post("/borneinfo", borneControllers.read);
 
 // Route to get a list of marque
 router.get("/marques", marqueControllers.browse);
@@ -89,8 +88,7 @@ router.post("/tarifications", tarificationControllers.add);
 // Route to get a list of bornes
 router.get("/bornes", borneControllers.browse);
 
-// Route to get a specific bornes by ID
-router.get("/bornes/:id", borneControllers.read);
+router.post("/deletereservation", reservationControllers.destroyReservation);
 
 // Route pour ajouter le fichier csv
 router.post("/uploads", upload.single("file"), borneControllers.add);

@@ -2,66 +2,105 @@
 const tables = require("../tables");
 
 // The B of BREAD - Browse (Read All) operation
+
 const browse = async (req, res, next) => {
   try {
-    // Fetch all items from the database
-    const reservations = await tables.reservation.readAll();
+    const data = [];
+    const { token } = req.body;
+    const user = await tables.user.checkToken(token);
+    const vehicules = await tables.vehicule.checkVehicule(user[0].id);
+    const vehiculeMap = vehicules.map(async (vehicule) => {
+      const reservation = await tables.reservation.checkReservationForDelete(
+        vehicule.id
+      );
+      data.push(reservation);
+    });
 
-    // Respond with the items in JSON format
-    res.json(reservations);
+    Promise.all(vehiculeMap).then(() => {
+      res.json(data);
+    });
   } catch (err) {
-    // Pass any errors to the error-handling middleware
     next(err);
   }
 };
 
-// The R of BREAD - Read operation
-const read = async (req, res, next) => {
+const checkListId = async (req, res, next) => {
   try {
-    // Fetch a specific item from the database based on the provided ID
-    const reservation = await tables.reservation.read(req.params.id);
+    const { token, listId } = req.body;
 
-    // If the item is not found, respond with HTTP 404 (Not Found)
-    // Otherwise, respond with the item in JSON format
-    if (reservation == null) {
-      res.sendStatus(404);
+    const user = await tables.user.checkToken(token);
+    const result = await tables.list.checkListId(listId);
+
+    if (result.length === 0) {
+      res.status(200).send({ message: "List not found" });
+    } else if (user.length === 0) {
+      res.status(200).send({ message: "User not found" });
+    } else if (result[0].user_id === user[0].id) {
+      res.status(200).send({ message: "User Correct" });
     } else {
-      res.json(reservation);
+      res.status(200).send({ message: "User Incorrect" });
     }
   } catch (err) {
-    // Pass any errors to the error-handling middleware
     next(err);
   }
 };
 
-// The E of BREAD - Edit (Update) operation
-// This operation is not yet implemented
-
-// The A of BREAD - Add (Create) operation
-const add = async (req, res, next) => {
-  // Extract the item data from the request body
-  const reservation = req.body;
-
+const readAll = async (req, res, next) => {
   try {
-    // Insert the item into the database
-    const insertId = await tables.reservation.create(reservation);
+    // Fetch all items from the database
+    const modeles = await tables.modele.readAll();
 
-    // Respond with HTTP 201 (Created) and the ID of the newly inserted item
-    res.status(201).json({ insertId });
+    // Respond with the items in JSON format
+    res.json(modeles);
   } catch (err) {
     // Pass any errors to the error-handling middleware
     next(err);
   }
 };
 
-// The D of BREAD - Destroy (Delete) operation
-// This operation is not yet implemented
+const edit = async (req, res, next) => {
+  try {
+    const { token, listId, listName, listDescription } = req.body;
+    const user = await tables.user.checkToken(token);
+    const result = await tables.list.checkListId(listId);
+
+    if (result.length === 0) {
+      res.status(200).send({
+        message: "Une erreur est survenu veuillez réessayer plus tard",
+      });
+    } else if (user.length === 0) {
+      res.status(200).send({
+        message: "Une erreur est survenu veuillez réessayer plus tard",
+      });
+    } else if (result[0].user_id === user[0].id) {
+      await tables.list.editList(listId, listName, listDescription);
+      res.status(200).send({ message: "Modification réussie" });
+    } else {
+      res.status(200).send({
+        message: "Une erreur est survenu veuillez réessayer plus tard",
+      });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+const destroyReservation = async (req, res, next) => {
+  try {
+    const { id } = req.body;
+    await tables.reservation.deleteReservation(id);
+
+    res.status(200).send({ message: "Reservation supprimé" });
+  } catch (err) {
+    next(err);
+  }
+};
 
 // Ready to export the controller functions
 module.exports = {
   browse,
-  read,
-  // edit,
-  add,
-  // destroy,
+  checkListId,
+  readAll,
+  edit,
+  destroyReservation,
 };

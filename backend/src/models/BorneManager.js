@@ -71,7 +71,6 @@ class BorneManager extends AbstractManager {
         );
       })
       .on("end", () => {
-        console.info("Bornes add");
         return true;
       });
 

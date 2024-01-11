@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Lottie from "react-lottie-player";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import "../scss/admin-borne.scss";
+import Breadcrumb from "../components/breadcrumb";
 
 import mailError from "../assets/LottieFiles/EmailError.json";
 import BorneCard from "../components/BorneCard";
@@ -29,14 +29,10 @@ export default function AdminBorne() {
         })
         .then((res) => {
           if (res.data.message === "OK" && res.data.admin === true) {
-            console.info("Connexion Approuvée");
             setIsLoggedIn(true);
             setIsAdmin(true);
           } else {
             setIsAdmin(false);
-            console.info(
-              "Vous n'avez pas les droits nécéssaire ! Redirection vers l'accueil"
-            );
             setTimeout(() => {
               window.location.href = "/";
             }, 3800);
@@ -50,7 +46,6 @@ export default function AdminBorne() {
           setData(res.data);
         });
     } else {
-      console.info("Connexion Expirée ! Reconnectez-vous");
       setTimeout(() => {
         window.location.href = "/sign-in";
       }, 3800);
@@ -83,10 +78,13 @@ export default function AdminBorne() {
       </section>
     ); // or render a login component
   }
+
+  const arianfil = [{ name: "Admin", link: "/admin" }];
+
   return (
-    <main className="admin-borne backgroundImageMain">
+    <div className="admin-borne backgroundImageMain">
       <ScrollToTop />
-      <Link to="/admin">Retour</Link>
+      <Breadcrumb data={arianfil} currentname="Liste des Bornes" />
       <h1>Liste des Bornes</h1>
       <div className="borneSearch">
         <form onSubmit={updateForm}>
@@ -104,15 +102,16 @@ export default function AdminBorne() {
 
       <div className="card-container">
         <div className="card-list">
-          {data
-            .filter((borne) =>
-              borne.n_station.toLowerCase().includes(searchForm.toLowerCase())
-            )
-            .map((borne) => (
-              <BorneCard name={borne.n_station} adresse={borne.ad_station} />
-            ))}
+          {data &&
+            data
+              .filter((borne) =>
+                borne.n_station.toLowerCase().includes(searchForm.toLowerCase())
+              )
+              .map((borne) => (
+                <BorneCard name={borne.n_station} adresse={borne.ad_station} />
+              ))}
         </div>
       </div>
-    </main>
+    </div>
   );
 }

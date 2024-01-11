@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const argon2 = require("@node-rs/argon2");
 // Import access to database tables
 const tables = require("../tables");
 
@@ -78,7 +79,6 @@ const edit = async (req, res, next) => {
 const add = async (req, res, next) => {
   // Extract the item data from the request body
   const user = req.body;
-
   try {
     // Insert the item into the database
     const insertId = await tables.user.create(user);
@@ -92,18 +92,24 @@ const add = async (req, res, next) => {
 };
 
 const login = async (req, res, next) => {
+  const { email, password } = req.body;
+
   try {
-    const { email, password } = req.body;
-    const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
-    console.info(`Nouvelle requête depuis : ${ip}`);
     const user = await tables.user.signIn(email);
+    const ActualDate = new Date();
     if (user.length === 1) {
-      if (user[0].password === password) {
+      const verified = await argon2.verify(user[0].password, password);
+
+      if (verified) {
+        // Respond with the user and a signed token in JSON format (but without the hashed password)
+        delete user.password;
+
         const tokenUser = jwt.sign(
           { email: user[0].email, userId: user[0].id },
           process.env.JWT_SECRET,
           { expiresIn: "1h" }
         );
+
         if (user[0].admin === 1) {
           res.status(200).send({
             message: "Authentification réussie",
@@ -111,6 +117,7 @@ const login = async (req, res, next) => {
             admin: true,
           });
           await tables.user.saveToken(tokenUser, email);
+          await tables.user.setLastConnexion(ActualDate, email);
         } else {
           res.status(200).send({
             message: "Authentification réussie",
@@ -118,6 +125,7 @@ const login = async (req, res, next) => {
             admin: false,
           });
           await tables.user.saveToken(tokenUser, email);
+          await tables.user.setLastConnexion(ActualDate, email);
         }
       } else {
         res.status(401).send({ message: "Mot de passe incorrect" });
@@ -134,14 +142,12 @@ const login = async (req, res, next) => {
 
 const checktoken = async (req, res, next) => {
   const { token } = req.body;
-  console.info("checkencours");
 
   try {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
     const { userId } = decodedToken;
     const checkUserToken = await tables.user.checkToken(token);
-    console.info(checkUserToken);
     if (
       checkUserToken.length === 1 &&
       checkUserToken[0].token === token &&
@@ -149,7 +155,6 @@ const checktoken = async (req, res, next) => {
       checkUserToken[0].admin === 1
     ) {
       res.status(200).send({ message: "OK", admin: true });
-      console.info(checkUserToken[0].admin, "admin");
     } else if (
       checkUserToken.length === 1 &&
       checkUserToken[0].token === token &&
@@ -157,7 +162,6 @@ const checktoken = async (req, res, next) => {
       checkUserToken[0].admin === 0
     ) {
       res.status(200).send({ message: "OK", admin: false });
-      console.info(checkUserToken[0].admin, "Not an admin");
     } else res.status(200).send({ message: "ErrorElse" });
   } catch (err) {
     res.status(200).send({ message: "ErrorCatch" });

@@ -8,6 +8,7 @@ import "../scss/admin-add-bornes.scss";
 import { useDropzone } from "react-dropzone";
 import ScrollToTop from "./ResetScrollOnPage";
 import mailError from "../assets/LottieFiles/EmailError.json";
+import Breadcrumb from "../components/breadcrumb";
 
 export default function AdminAddBornes() {
   const [isAdmin, setIsAdmin] = useState();
@@ -18,14 +19,13 @@ export default function AdminAddBornes() {
 
   const onDrop = useCallback(
     (acceptedFile) => {
-      console.info(acceptedFile[0]);
       setFile(acceptedFile[0]);
     },
     [file]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-  const url = "http://localhost:3310/api/uploads";
+  const url = `${import.meta.env.VITE_BACKEND_URL}/api/uploads`;
 
   function Submit(e) {
     e.preventDefault();
@@ -37,12 +37,7 @@ export default function AdminAddBornes() {
     };
     formData.append("file", file);
     formData.append("fileName", file.name);
-    axios
-      .post(url, formData, config)
-      .then((response) => {
-        console.info(response.data);
-      })
-      .catch((err) => console.info(err));
+    axios.post(url, formData, config).catch((err) => console.error(err));
   }
 
   useEffect(() => {
@@ -53,14 +48,10 @@ export default function AdminAddBornes() {
         })
         .then((res) => {
           if (res.data.message === "OK" && res.data.admin === true) {
-            console.info("Connexion Approuvée");
             setIsLoggedIn(true);
             setIsAdmin(true);
           } else {
             setIsAdmin(false);
-            console.info(
-              "Vous n'avez pas les droits nécéssaire ! Redirection vers l'accueil"
-            );
             setTimeout(() => {
               window.location.href = "/";
             }, 3800);
@@ -68,7 +59,6 @@ export default function AdminAddBornes() {
           setIsLoading(false);
         });
     } else {
-      console.info("Connexion Expirée ! Reconnectez-vous");
       setTimeout(() => {
         window.location.href = "/sign-in";
       }, 3800);
@@ -101,41 +91,50 @@ export default function AdminAddBornes() {
       </section>
     );
   }
+
+  const arianfil = [{ name: "Admin", link: "/admin" }];
+
   return (
-    <main className="add-bornes-main backgroundImageMain">
-      <ScrollToTop />
-      <Link to="/admin">Retour</Link>
-      <div className="upload-card">
-        <h1>Ajouter des Bornes</h1>
-        <div className="upload">
-          {isDragActive ? (
-            <p className="upload_text">Relacher le fichier pour l'ajouter </p>
-          ) : (
-            <p className="upload_text">
-              Drag 'n' drop ou Cliquez <br />
-              pour sélectionner un fichier
-            </p>
-          )}
-          <div className="upload_DragDrop" {...getRootProps()}>
-            <input {...getInputProps()} />
+    <div className="backgroundImageMain">
+      <div className="add_bornes_page">
+        <ScrollToTop />
+        <Breadcrumb data={arianfil} currentname="Ajouter une borne" />
+        <div className="add_bornes_page_container">
+          <div className="upload-card">
+            <h1>Ajouter des Bornes</h1>
+            <div className="upload">
+              {isDragActive ? (
+                <p className="upload_text">
+                  Relacher le fichier pour l'ajouter{" "}
+                </p>
+              ) : (
+                <p className="upload_text">
+                  Drag 'n' drop ou Cliquez <br />
+                  pour sélectionner un fichier
+                </p>
+              )}
+              <div className="upload_DragDrop" {...getRootProps()}>
+                <input {...getInputProps()} />
+              </div>
+            </div>
+            <div className="buttons-container">
+              <button
+                type="submit"
+                className="buttons-container_blue"
+                onClick={Submit}
+              >
+                Charger le CSV
+              </button>
+
+              <Link to="/admin">
+                <button type="button" className="buttons-container_dark">
+                  Annuler
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
-        <div className="buttons-container">
-          <button
-            type="submit"
-            className="buttons-container_blue"
-            onClick={Submit}
-          >
-            Charger le CSV
-          </button>
-
-          <Link to="/admin">
-            <button type="button" className="buttons-container_dark">
-              Annuler
-            </button>
-          </Link>
-        </div>
       </div>
-    </main>
+    </div>
   );
 }

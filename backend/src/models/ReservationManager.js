@@ -44,7 +44,7 @@ class ReservationManager extends AbstractManager {
   async readAll() {
     // Execute the SQL SELECT query to retrieve all items from the "item" table
     const [rows] = await this.database.query(`select *
-                                                  from ${this.table}`);
+                                                  from reservation`);
 
     // Return the array of items
     return rows;
@@ -52,7 +52,16 @@ class ReservationManager extends AbstractManager {
 
   async checkReservationForDelete(vehiculeId) {
     const [rows] = await this.database.query(
-      `SELECT * FROM reservation WHERE vehicule_id = ?`,
+      `SELECT id, borne_id, DATE_FORMAT(date_reservation, "%Y-%m-%d") as date_reservation, heure, heure_fin FROM reservation WHERE vehicule_id = ?`,
+      [vehiculeId]
+    );
+
+    return rows;
+  }
+
+  async deleteReservation(vehiculeId) {
+    const [rows] = await this.database.query(
+      `DELETE FROM reservation WHERE id = ?`,
       [vehiculeId]
     );
 

@@ -66,7 +66,6 @@ export default function SignIn() {
           password: escapeHtml(details.password),
         });
 
-        console.info(response.data.message);
         document.getElementById("successLog").innerText =
           "Authentification en cours...";
 
@@ -92,7 +91,6 @@ export default function SignIn() {
         })
         .then((res) => {
           if (res.data.message === "OK") {
-            console.info("Connexion Approuvée");
             setIsLoggedIn(true);
             setTimeout(() => {
               window.location.href = "/profil";
@@ -113,7 +111,7 @@ export default function SignIn() {
 
   if (!isLoggedIn) {
     return (
-      <main className="backgroundImageMain SignInMain">
+      <div className="backgroundImageMain SignInMain">
         <ScrollToTop />
         <div className="SignIn_container ">
           <div className="SignIn_container_title">
@@ -155,7 +153,7 @@ export default function SignIn() {
               <SecondaryButton
                 className="signUp"
                 btnText="Créer un compte"
-                btnLink="/sign-up"
+                btnLink="/register"
               />
               <button
                 type="button"
@@ -181,7 +179,7 @@ export default function SignIn() {
             <p className="success_container" id="successLog" />
           </form>
         </div>
-      </main>
+      </div>
     );
   }
   return (
