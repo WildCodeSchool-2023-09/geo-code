@@ -30,16 +30,9 @@ const read = async (req, res, next) => {
 
 // The E of BREAD - Edit (Update) operation
 const edit = async (req, res, next) => {
-  const {
-    token,
-    prenom,
-    nom,
-    anniversaire,
-    rue,
-    codePostal,
-    ville,
-    derniereMaj,
-  } = req.body;
+  const { token } = req.cookies;
+  const { prenom, nom, anniversaire, rue, codePostal, ville, derniereMaj } =
+    req.body;
 
   try {
     const birthday = new Date(anniversaire);
@@ -150,7 +143,6 @@ const login = async (req, res, next) => {
 
 const checktoken = async (req, res, next) => {
   const { token } = req.cookies;
-  console.info(req);
 
   try {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
@@ -188,7 +180,8 @@ const checktoken = async (req, res, next) => {
 
 const userDelete = async (req, res, next) => {
   try {
-    const { email, password, token } = req.body;
+    const { token } = req.cookies;
+    const { email, password } = req.body;
     const user = await tables.user.signIn(email);
 
     if (user.length === 1) {
@@ -224,7 +217,7 @@ const userDelete = async (req, res, next) => {
 
 const takeData = async (req, res, next) => {
   try {
-    const { token } = req.body;
+    const { token } = req.cookies;
     const userData = await tables.user.takeData(token);
     if (userData.length === 1) {
       res.status(200).send(userData);

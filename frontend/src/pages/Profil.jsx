@@ -41,8 +41,8 @@ export default function Profil() {
       });
 
     axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/api/takedata`, {
-        token: localStorage.getItem("UserToken"),
+      .post(`${import.meta.env.VITE_BACKEND_URL}/api/takedata`, "hello", {
+        withCredentials: true,
       })
       .then((res) => {
         setLastname(res.data[0].nom);
@@ -54,6 +54,25 @@ export default function Profil() {
         setVille(res.data[0].ville);
       });
   }, []);
+
+  function Deconnexion() {
+    axios
+      .post(`${import.meta.env.VITE_BACKEND_URL}/api/logout`, "hello", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        if (res.data.message === "OK") {
+          console.info("Déconnexion Approuvée");
+          setIsLoggedIn(false);
+          setTimeout(() => {
+            window.location.href = "/sign-in";
+          }, 500);
+        } else {
+          setIsLoggedIn(true);
+        }
+        setIsLoading(false);
+      });
+  }
 
   if (isLoading) {
     return null;
@@ -69,17 +88,20 @@ export default function Profil() {
       new Date().getDay() < 10 ? `0${new Date().getDay()}` : new Date().getDay()
     }`;
 
-    axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/edituser`, {
-      token: localStorage.getItem("UserToken"),
-      nom: lastname,
-      prenom: firstname,
-      anniversaire: birthday,
-      email,
-      rue: adresse,
-      codePostal,
-      ville,
-      derniereMaj: date,
-    });
+    axios.post(
+      `${import.meta.env.VITE_BACKEND_URL}/api/edituser`,
+      {
+        nom: lastname,
+        prenom: firstname,
+        anniversaire: birthday,
+        email,
+        rue: adresse,
+        codePostal,
+        ville,
+        derniereMaj: date,
+      },
+      { withCredentials: true }
+    );
   };
 
   if (!isLoggedIn) {
@@ -208,8 +230,7 @@ export default function Profil() {
               type="button"
               id="LogOut"
               onClick={() => {
-                localStorage.removeItem("UserToken");
-                window.location.href = "/sign-in";
+                Deconnexion();
               }}
             >
               Déconnexion

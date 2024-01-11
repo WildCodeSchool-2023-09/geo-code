@@ -33,8 +33,8 @@ export default function Reservation() {
           setIsLoggedIn(true);
 
           axios
-            .post(`${import.meta.env.VITE_BACKEND_URL}/api/takedata`, {
-              token: localStorage.getItem("UserToken"),
+            .post(`${import.meta.env.VITE_BACKEND_URL}/api/takedata`, "hello", {
+              withCredentials: true,
             })
             .then((resp) => {
               setLastname(resp.data[0].nom);
@@ -43,9 +43,13 @@ export default function Reservation() {
             });
 
           axios
-            .post(`${import.meta.env.VITE_BACKEND_URL}/api/reservations`, {
-              token: localStorage.getItem("UserToken"),
-            })
+            .post(
+              `${import.meta.env.VITE_BACKEND_URL}/api/reservations`,
+              "hello",
+              {
+                withCredentials: true,
+              }
+            )
             .then((respo) => {
               setReservation(respo.data);
             });

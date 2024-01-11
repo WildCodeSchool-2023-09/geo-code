@@ -59,11 +59,14 @@ export default function SignIn() {
         document.getElementById("errorEmail").innerText = "";
         document.getElementById("errorLog").innerText = "";
         document.getElementById("email").classList.remove("errorOnPlaceholder");
-        const response = await axios.post("http://localhost:3310/api/delete", {
-          email: escapeHtml(details.email),
-          password: escapeHtml(details.password),
-          token: localStorage.getItem("UserToken"),
-        });
+        const response = await axios.post(
+          "http://localhost:3310/api/delete",
+          {
+            email: escapeHtml(details.email),
+            password: escapeHtml(details.password),
+          },
+          { withCredentials: true }
+        );
 
         if (response.data.message === "Compte supprimé") {
           document.getElementById("errorLog").innerText = "";
@@ -71,7 +74,6 @@ export default function SignIn() {
             "Supression en cours...";
           setTimeout(() => {
             window.location.href = "/account-deleted";
-            localStorage.removeItem("UserToken");
           }, 3800);
         } else if (response.data.message === "Token incorrect") {
           document.getElementById("successLog").innerText = "";

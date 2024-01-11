@@ -22,7 +22,6 @@ export default function AdminPanel() {
         withCredentials: true,
       })
       .then((res) => {
-        console.info(res.data);
         if (res.data.message === "OK" && res.data.admin === true) {
           setIsLoggedIn(true);
           setIsAdmin(true);
