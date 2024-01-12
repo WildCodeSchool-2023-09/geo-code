@@ -1,6 +1,7 @@
 // Load the express module to create a web application
 
 const express = require("express");
+const path = require("path");
 
 const app = express();
 
@@ -118,8 +119,6 @@ app.get("*", (req, res) => {
 /** ************************************************************************* */
 // Test Antho prod
 /** ************************************************************************* */
-
-const path = require("path");
 
 app.user("*", (req, res) => {
   if (req.oriinalUrl.includes("assets")) {
