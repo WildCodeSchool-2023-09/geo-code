@@ -12,9 +12,7 @@ export default function PastReservationCard({ borneId, date }) {
 
   useEffect(() => {
     axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/api/borneinfo`, {
-        id: borneId,
-      })
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/borneinfo/${borneId}`)
       .then((res) => {
         setBorneInfo(res.data);
       })

@@ -49,7 +49,7 @@ const checkListId = async (req, res, next) => {
 const readAll = async (req, res, next) => {
   try {
     // Fetch all items from the database
-    const modeles = await tables.modele.readAll();
+    const modeles = await tables.reservation.readAll();
 
     // Respond with the items in JSON format
     res.json(modeles);
