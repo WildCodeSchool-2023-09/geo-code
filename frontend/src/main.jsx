@@ -100,7 +100,7 @@ const router = createBrowserRouter([
         element: <DeleteAccount />,
       },
       {
-        path: "/register",
+        path: "/sign-up",
         element: <Register />,
       },
       {
