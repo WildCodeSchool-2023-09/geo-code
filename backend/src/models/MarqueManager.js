@@ -9,16 +9,26 @@ class MarqueManager extends AbstractManager {
 
   // The C of CRUD - Create operation
 
-  async create(marque) {
+  async create(newMarques) {
     // Execute the SQL INSERT query to add a new item to the "item" table
-    const [result] = await this.database.query(
-      `insert into ${this.table} (name)
-             values (?)`,
-      [marque.name]
+    await this.database.query(`ALTER TABLE modele DROP FOREIGN KEY modele_fk0`);
+
+    this.database.query(`TRUNCATE TABLE marque`);
+
+    this.database.query(
+      `ALTER TABLE modele ADD CONSTRAINT modele_fk0 FOREIGN KEY (marque_id) REFERENCES marque(id);`
     );
 
+    newMarques.map((element) => {
+      this.database.query(
+        `insert into ${this.table} (name)
+           values (?)`,
+        [element]
+      );
+      return true;
+    });
+
     // Return the ID of the newly inserted item
-    return result.insertId;
   }
 
   // The Rs of CRUD - Read operations

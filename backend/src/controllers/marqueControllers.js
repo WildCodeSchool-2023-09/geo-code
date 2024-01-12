@@ -41,10 +41,13 @@ const read = async (req, res, next) => {
 const add = async (req, res, next) => {
   // Extract the item data from the request body
   const marque = req.body;
+  const marques = [];
+  marque.forEach((item) => marques.push(item.make));
+  const newMarques = [...new Set(marques)];
 
   try {
     // Insert the item into the database
-    const insertId = await tables.marque.create(marque);
+    const insertId = await tables.marque.create(newMarques);
 
     // Respond with HTTP 201 (Created) and the ID of the newly inserted item
     res.status(201).json({ insertId });
