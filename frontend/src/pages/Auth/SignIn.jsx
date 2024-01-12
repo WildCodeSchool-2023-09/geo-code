@@ -60,7 +60,7 @@ export default function SignIn() {
         document.getElementById("email").classList.remove("errorOnPlaceholder");
 
         const response = await axios.post(
-          "http://localhost:3310/api/login",
+          `${import.meta.env.VITE_BACKEND_URL}/api/login`,
           {
             email: escapeHtml(details.email),
             password: escapeHtml(details.password),
