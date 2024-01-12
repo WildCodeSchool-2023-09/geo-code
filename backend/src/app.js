@@ -118,6 +118,7 @@ app.get("*", (req, res) => {
 // Test Antho prod
 /** ************************************************************************* */
 
+/*
 app.user("*", (req, res) => {
   if (req.originalUrl.includes("assets")) {
     res.sendFile(
@@ -127,6 +128,7 @@ app.user("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "../../frontend/dist/index.html"));
   }
 });
+*/
 
 /* ************************************************************************* */
 
