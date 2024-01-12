@@ -109,8 +109,26 @@ app.use(express.static(reactBuildPath));
 
 // Redirect unhandled requests to the react index file
 
+/*
 app.get("*", (req, res) => {
-  res.sendFile(`${reactBuildPath}/index.html`);
+ res.sendFile(`${reactBuildPath}/index.html`);
+});
+*/
+
+/** ************************************************************************* */
+// Test Antho prod
+/** ************************************************************************* */
+
+const path = require("path");
+
+app.user("*", (req, res) => {
+  if (req.oriinalUrl.includes("assets")) {
+    res.sendFile(
+      path.resolve(__dirname, `../../frontend/dist/${req.originalUrl}`)
+    );
+  } else {
+    res.sendFile(path.resolve(__dirname, "../../frontend/dist/index.html"));
+  }
 });
 
 /* ************************************************************************* */
