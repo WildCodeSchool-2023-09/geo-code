@@ -18,7 +18,7 @@ export default function AdminPanel() {
 
   useEffect(() => {
     axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, "hello", {
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
         withCredentials: true,
       })
       .then((res) => {

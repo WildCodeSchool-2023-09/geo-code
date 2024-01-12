@@ -23,7 +23,7 @@ export default function AdminUtilisateur() {
 
   useEffect(() => {
     axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, "hello", {
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -102,6 +102,7 @@ export default function AdminUtilisateur() {
               )
               .map((user) => (
                 <UserCard
+                  key={user.id}
                   firstname={user.prenom}
                   img={user.avatar || "https://i.imgur.com/5Nc6WY0.png"}
                   lastname={user.nom}

@@ -15,17 +15,20 @@ export default function Navbar({ navData }) {
 
   useEffect(() => {
     axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, "hello", {
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
         withCredentials: true,
       })
 
       .then((res) => {
         if (res.data.message === "OK" && res.data.admin === true) {
-          setIsAdmin(res.data.admin);
+          setIsAdmin(true);
+          setIsConnected(true);
+        } else if (res.data.message === "OK" && res.data.admin === false) {
+          setIsAdmin(false);
           setIsConnected(true);
         } else {
-          setIsAdmin(res.data.admin);
-          setIsConnected(true);
+          setIsAdmin(false);
+          setIsConnected(false);
         }
       });
     setIsConnected(false);

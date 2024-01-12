@@ -87,7 +87,7 @@ export default function SignIn() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
     axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, "hello", {
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
         withCredentials: true,
       })
 

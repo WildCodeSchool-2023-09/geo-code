@@ -10,7 +10,7 @@ export default function navmobile() {
 
   useEffect(() => {
     axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, "hello", {
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
         withCredentials: true,
       })
 
