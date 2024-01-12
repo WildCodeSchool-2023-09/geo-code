@@ -120,7 +120,7 @@ app.get("*", (req, res) => {
 // Test Antho prod
 /** ************************************************************************* */
 
-app.user("*", (req, res) => {
+app.use("*", (req, res) => {
   if (req.originalUrl.includes("assets")) {
     res.sendFile(
       path.resolve(__dirname, `../../frontend/dist/${req.originalUrl}`)
