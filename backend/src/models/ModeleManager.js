@@ -11,14 +11,21 @@ class ModeleManager extends AbstractManager {
 
   async create(modele) {
     // Execute the SQL INSERT query to add a new item to the "item" table
-    const [result] = await this.database.query(
-      `insert into ${this.table} (name, marque_id, type_prise)
+
+    modele.map(async (element) => {
+      const [id] = await this.database.query(
+        `select id from marque where name="${element.make}"`
+      );
+
+      this.database.query(
+        `insert into ${this.table} (name,marque_id, type_prise)
              values (?, ?, ?)`,
-      [modele.title]
-    );
+        [element.model, id[0].id, element.atvtype]
+      );
+      return true;
+    });
 
     // Return the ID of the newly inserted item
-    return result.insertId;
   }
 
   // The Rs of CRUD - Read operations

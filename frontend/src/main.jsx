@@ -18,13 +18,16 @@ import BornesListe from "./pages/BornesListe";
 import SignIn from "./pages/Auth/SignIn";
 import SuccessAuth from "./pages/Auth/SuccessAuth";
 import DeleteAccount from "./pages/Account/DeleteAccount";
-import Register from "./pages/Register";
+import SignUp from "./pages/Register";
 
 import AdminPanel from "./pages/AdminPanel";
 import AdminUtilisateur from "./pages/AdminUtilisateur";
 import AdminBorne from "./pages/AdminBorne";
 import AdminAddBornes from "./pages/AdminAddBornes";
+import AdminAddVehicule from "./pages/AdminAddVehicule";
 import RegisterSuccess from "./pages/Auth/registerSuccess";
+import AddBornesSuccess from "./pages/Account/addBornesSuccess";
+import AddVehicule from "./pages/Account/addVehicule";
 
 const router = createBrowserRouter([
   {
@@ -101,11 +104,23 @@ const router = createBrowserRouter([
       },
       {
         path: "/sign-up",
-        element: <Register />,
+        element: <SignUp />,
       },
       {
         path: "/registerSuccess",
         element: <RegisterSuccess />,
+      },
+      {
+        path: "/addBornesSuccess",
+        element: <AddBornesSuccess />,
+      },
+      {
+        path: "/adminAddVehicule",
+        element: <AdminAddVehicule />,
+      },
+      {
+        path: "/addVehicule",
+        element: <AddVehicule />,
       },
     ],
   },

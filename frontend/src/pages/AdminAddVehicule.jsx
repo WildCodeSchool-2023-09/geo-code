@@ -1,46 +1,45 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import Lottie from "react-lottie-player";
 import axios from "axios";
 import { Link } from "react-router-dom";
-/* eslint-disable react/jsx-props-no-spreading */
-// Le composant dropzone a besoin des prop spreading pour fonctionner. Vu avec SAM
-import "../scss/admin-add-bornes.scss";
-import { useDropzone } from "react-dropzone";
+import "../scss/admin-add-vehicule.scss";
 import ScrollToTop from "./ResetScrollOnPage";
 import mailError from "../assets/LottieFiles/EmailError.json";
 import Breadcrumb from "../components/breadcrumb";
 
-export default function AdminAddBornes() {
+export default function AdminAddVehicule() {
   const [isAdmin, setIsAdmin] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [vehiculeData, setVehiculeData] = useState([]);
+  const urlmarques = `${import.meta.env.VITE_BACKEND_URL}/api/marques`;
+  const urlmodeles = `${import.meta.env.VITE_BACKEND_URL}/api/modeles`;
 
-  const [file, setFile] = useState({});
+  async function Submit() {
+    try {
+      await axios
+        .get(
+          `https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/all-vehicles-model/records?group_by=id%2Cmake%2C%20model%2Catvtype&limit=20000&offset=0&refine=fueltype%3AElectricity`
+        )
+        .then((res) => setVehiculeData(res.data.results))
+        .catch((err) => console.error(err));
 
-  const onDrop = useCallback(
-    (acceptedFile) => {
-      setFile(acceptedFile[0]);
-    },
-    [file]
-  );
+      await axios
+        .post(urlmarques, vehiculeData)
+        .then((res) => console.info(res))
+        .catch((err) => console.error(err));
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-  const url = `${import.meta.env.VITE_BACKEND_URL}/api/uploads`;
+      await axios
+        .post(urlmodeles, vehiculeData)
+        .then((res) => console.info(res))
+        .catch((err) => console.error(err));
+    } catch {
+      console.error("error");
+    }
 
-  function Submit(e) {
-    e.preventDefault();
-    const formData = new FormData();
-    const config = {
-      Headers: {
-        "content-type": "multipart/form-data",
-      },
-    };
-    formData.append("file", file);
-    formData.append("fileName", file.name);
-    axios.post(url, formData, config).catch((err) => console.error(err));
     setTimeout(() => {
-      window.location.href = "/addBornesSuccess";
-    }, 500);
+      window.location.href = "/addVehicule";
+    }, 3500);
   }
 
   useEffect(() => {
@@ -62,6 +61,10 @@ export default function AdminAddBornes() {
         setIsLoading(false);
       });
   }, []);
+
+  if (isLoading) {
+    return null;
+  }
 
   if (isLoading) {
     return null;
@@ -93,34 +96,21 @@ export default function AdminAddBornes() {
 
   return (
     <div className="backgroundImageMain">
-      <div className="add_bornes_page">
+      <div className="add_vehicule_page">
         <ScrollToTop />
-        <Breadcrumb data={arianfil} currentname="Ajouter une borne" />
-        <div className="add_bornes_page_container">
+        <Breadcrumb
+          data={arianfil}
+          currentname="Mise à jour de la base de donnée véhicule"
+        />
+        <div className="add_vehicule_page_container">
           <div className="upload-card">
-            <h1>Ajouter des Bornes</h1>
-            <div className="upload">
-              {isDragActive ? (
-                <p className="upload_text">
-                  Relacher le fichier pour l'ajouter{" "}
-                </p>
-              ) : (
-                <p className="upload_text">
-                  Drag 'n' drop ou Cliquez <br />
-                  pour sélectionner un fichier
-                </p>
-              )}
-              <div className="upload_DragDrop" {...getRootProps()}>
-                <input {...getInputProps()} />
-              </div>
-            </div>
             <div className="buttons-container">
               <button
                 type="submit"
                 className="buttons-container_blue"
                 onClick={Submit}
               >
-                Charger le CSV
+                Mettre à jour la base de donnée des véhicules
               </button>
 
               <Link to="/admin">

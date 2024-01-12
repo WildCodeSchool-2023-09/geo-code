@@ -150,7 +150,7 @@ export default function SignIn() {
               <SecondaryButton
                 className="signUp"
                 btnText="Créer un compte"
-                btnLink="/register"
+                btnLink="/sign-up"
               />
               <button
                 type="button"
