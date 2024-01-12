@@ -119,7 +119,7 @@ app.get("*", (req, res) => {
 /** ************************************************************************* */
 
 app.user("*", (req, res) => {
-  if (req.oriinalUrl.includes("assets")) {
+  if (req.originalUrl.includes("assets")) {
     res.sendFile(
       path.resolve(__dirname, `../../frontend/dist/${req.originalUrl}`)
     );
