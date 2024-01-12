@@ -13,9 +13,6 @@
     box-sizing: border-box;
     right: 0;
     transition: 0.2s;
-    &:hover {
-      transform: scale(0.9);
-    }
 
     :checked ~ ul {
       right: 0;

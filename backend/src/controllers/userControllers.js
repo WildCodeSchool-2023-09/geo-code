@@ -30,16 +30,9 @@ const read = async (req, res, next) => {
 
 // The E of BREAD - Edit (Update) operation
 const edit = async (req, res, next) => {
-  const {
-    token,
-    prenom,
-    nom,
-    anniversaire,
-    rue,
-    codePostal,
-    ville,
-    derniereMaj,
-  } = req.body;
+  const { token } = req.cookies;
+  const { prenom, nom, anniversaire, rue, codePostal, ville, derniereMaj } =
+    req.body;
 
   try {
     const birthday = new Date(anniversaire);
@@ -111,19 +104,27 @@ const login = async (req, res, next) => {
         );
 
         if (user[0].admin === 1) {
+          res.cookie("token", tokenUser, {
+            httpOnly: true,
+            maxAge: 3600000,
+          });
           res.status(200).send({
             message: "Authentification réussie",
-            token: tokenUser,
             admin: true,
           });
+
           await tables.user.saveToken(tokenUser, email);
           await tables.user.setLastConnexion(ActualDate, email);
         } else {
+          res.cookie("token", tokenUser, {
+            httpOnly: true,
+            maxAge: 3600000,
+          });
           res.status(200).send({
             message: "Authentification réussie",
-            token: tokenUser,
             admin: false,
           });
+
           await tables.user.saveToken(tokenUser, email);
           await tables.user.setLastConnexion(ActualDate, email);
         }
@@ -141,7 +142,7 @@ const login = async (req, res, next) => {
 };
 
 const checktoken = async (req, res, next) => {
-  const { token } = req.body;
+  const { token } = req.cookies;
 
   try {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
@@ -154,17 +155,32 @@ const checktoken = async (req, res, next) => {
       checkUserToken[0].id === userId &&
       checkUserToken[0].admin === 1
     ) {
-      res.status(200).send({ message: "OK", admin: true });
+      res.status(200).send({
+        message: "OK",
+        admin: true,
+      });
     } else if (
       checkUserToken.length === 1 &&
       checkUserToken[0].token === token &&
       checkUserToken[0].id === userId &&
       checkUserToken[0].admin === 0
     ) {
-      res.status(200).send({ message: "OK", admin: false });
-    } else res.status(200).send({ message: "ErrorElse" });
+      res.status(200).send({
+        message: "OK",
+        admin: false,
+      });
+    } else res.status(200).send({ message: "Error" });
   } catch (err) {
-    res.status(200).send({ message: "ErrorCatch" });
+    res.status(200).send({ message: err });
+    next(err);
+  }
+};
+
+const logout = async (req, res, next) => {
+  try {
+    res.clearCookie("token");
+    res.status(200).send({ message: "OK" });
+  } catch (err) {
     next(err);
   }
 };
@@ -173,7 +189,8 @@ const checktoken = async (req, res, next) => {
 
 const userDelete = async (req, res, next) => {
   try {
-    const { email, password, token } = req.body;
+    const { token } = req.cookies;
+    const { email, password } = req.body;
     const user = await tables.user.signIn(email);
 
     if (user.length === 1) {
@@ -209,7 +226,7 @@ const userDelete = async (req, res, next) => {
 
 const takeData = async (req, res, next) => {
   try {
-    const { token } = req.body;
+    const { token } = req.cookies;
     const userData = await tables.user.takeData(token);
     if (userData.length === 1) {
       res.status(200).send(userData);
@@ -231,4 +248,5 @@ module.exports = {
   checktoken,
   userDelete,
   takeData,
+  logout,
 };

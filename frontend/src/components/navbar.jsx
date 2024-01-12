@@ -14,21 +14,21 @@ export default function Navbar({ navData }) {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem("UserToken") !== null) {
-      axios
-        .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
-          token: localStorage.getItem("UserToken"),
-        })
-        .then((res) => {
-          if (res.data.message === "OK" && res.data.admin === true) {
-            setIsAdmin(true);
-            setIsConnected(true);
-          } else if (res.data.message === "OK" && res.data.admin === false) {
-            setIsAdmin(false);
-            setIsConnected(true);
-          }
-        });
-    }
+    axios
+      .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, "hello", {
+        withCredentials: true,
+      })
+
+      .then((res) => {
+        if (res.data.message === "OK" && res.data.admin === true) {
+          setIsAdmin(res.data.admin);
+          setIsConnected(true);
+        } else {
+          setIsAdmin(res.data.admin);
+          setIsConnected(true);
+        }
+      });
+    setIsConnected(false);
   }, []);
 
   return (

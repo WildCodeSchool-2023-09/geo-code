@@ -24,46 +24,43 @@ export default function Reservation() {
   const [reservation, setReservation] = useState();
 
   useEffect(() => {
-    if (localStorage.getItem("UserToken") !== null) {
-      axios
-        .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
-          token: localStorage.getItem("UserToken"),
-        })
-        .then((res) => {
-          if (res.data.message === "OK") {
-            setIsLoggedIn(true);
+    axios
+      .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, "hello", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        if (res.data.message === "OK") {
+          setIsLoggedIn(true);
 
-            axios
-              .post(`${import.meta.env.VITE_BACKEND_URL}/api/takedata`, {
-                token: localStorage.getItem("UserToken"),
-              })
-              .then((resp) => {
-                setLastname(resp.data[0].nom);
-                setFirstname(resp.data[0].prenom);
-                setAvatar(data[0].img);
-              });
+          axios
+            .post(`${import.meta.env.VITE_BACKEND_URL}/api/takedata`, "hello", {
+              withCredentials: true,
+            })
+            .then((resp) => {
+              setLastname(resp.data[0].nom);
+              setFirstname(resp.data[0].prenom);
+              setAvatar(data[0].img);
+            });
 
-            axios
-              .post(`${import.meta.env.VITE_BACKEND_URL}/api/reservations`, {
-                token: localStorage.getItem("UserToken"),
-              })
-              .then((respo) => {
-                setReservation(respo.data);
-              });
-          } else {
-            setIsLoggedIn(false);
-            setTimeout(() => {
-              window.location.href = "/sign-in";
-            }, 3800);
-          }
-          setIsLoading(false);
-        });
-    } else {
-      setTimeout(() => {
-        window.location.href = "/sign-in";
-      }, 3800);
-      setIsLoading(false);
-    }
+          axios
+            .post(
+              `${import.meta.env.VITE_BACKEND_URL}/api/reservations`,
+              "hello",
+              {
+                withCredentials: true,
+              }
+            )
+            .then((respo) => {
+              setReservation(respo.data);
+            });
+        } else {
+          setIsLoggedIn(false);
+          setTimeout(() => {
+            window.location.href = "/sign-in";
+          }, 3800);
+        }
+        setIsLoading(false);
+      });
   }, []);
 
   if (isLoading) {

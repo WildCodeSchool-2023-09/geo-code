@@ -9,20 +9,19 @@ export default function navmobile() {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem("UserToken") !== null) {
-      axios
-        .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
-          token: localStorage.getItem("UserToken"),
-        })
-        .then((res) => {
-          if (res.data.message === "OK" && res.data.admin === true) {
-            setIsConnected(true);
-          } else if (res.data.message === "OK" && res.data.admin === false) {
-            setIsConnected(true);
-          }
-        });
-    }
+    axios
+      .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, "hello", {
+        withCredentials: true,
+      })
+
+      .then((res) => {
+        if (res.data.message === "OK") {
+          setIsConnected(true);
+        }
+        setIsConnected(false);
+      });
   }, []);
+
   return (
     <div className="TAB">
       <svg
