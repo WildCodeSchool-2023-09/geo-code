@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Lottie from "react-lottie-player";
 
 import "../../scss/auth/SignInPage.scss";
 import ScrollToTop from "../ResetScrollOnPage";
 import SecondaryButton from "../../components/buttons/SecondaryButton";
-import LogInProgress from "../../assets/LottieFiles/LogIn.json";
 
 export default function SignIn() {
   const [details, setDetails] = useState({
@@ -61,19 +59,24 @@ export default function SignIn() {
         document.getElementById("errorLog").innerText = "";
         document.getElementById("email").classList.remove("errorOnPlaceholder");
 
-        const response = await axios.post("http://localhost:3310/api/login", {
-          email: escapeHtml(details.email),
-          password: escapeHtml(details.password),
-        });
+        const response = await axios.post(
+          "http://localhost:3310/api/login",
+          {
+            email: escapeHtml(details.email),
+            password: escapeHtml(details.password),
+          },
+          { withCredentials: true }
+        );
 
         document.getElementById("successLog").innerText =
           "Authentification en cours...";
 
         localStorage.setItem("UserToken", response.data.token);
+        console.info(response.data);
 
         setTimeout(() => {
           window.location.href = "/success-auth";
-        }, 500);
+        }, 1000);
       }
     } catch (error) {
       document.getElementById("errorLog").innerText =
@@ -82,27 +85,21 @@ export default function SignIn() {
   };
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   useEffect(() => {
-    if (localStorage.getItem("UserToken") !== null) {
-      axios
-        .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
-          token: localStorage.getItem("UserToken"),
-        })
-        .then((res) => {
-          if (res.data.message === "OK") {
-            setIsLoggedIn(true);
-            setTimeout(() => {
-              window.location.href = "/profil";
-            }, 3800);
-          } else {
-            setIsLoggedIn(false);
-          }
-          setIsLoading(false);
-        });
-    } else {
-      setIsLoading(false);
-    }
+    axios
+      .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, "hello", {
+        withCredentials: true,
+      })
+
+      .then((res) => {
+        if (res.data.message === "OK") {
+          setIsLoggedIn(true);
+          window.location.href = "/profil";
+        } else {
+          setIsLoggedIn(false);
+        }
+        setIsLoading(false);
+      });
   }, []);
 
   if (isLoading) {
@@ -182,19 +179,5 @@ export default function SignIn() {
       </div>
     );
   }
-  return (
-    <section>
-      <div className="containererror">
-        <div className="containererror">
-          <Lottie
-            loop
-            animationData={LogInProgress}
-            play
-            style={{ width: 120, height: 120 }}
-          />
-          <h1>Vous êtes déjà connecté(e)</h1>
-        </div>
-      </div>
-    </section>
-  );
+  return null;
 }

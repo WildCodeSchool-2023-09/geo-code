@@ -6,7 +6,7 @@ const tables = require("../tables");
 const browse = async (req, res, next) => {
   try {
     const data = [];
-    const { token } = req.body;
+    const { token } = req.cookies;
     const user = await tables.user.checkToken(token);
     const vehicules = await tables.vehicule.checkVehicule(user[0].id);
     const vehiculeMap = vehicules.map(async (vehicule) => {
@@ -26,7 +26,8 @@ const browse = async (req, res, next) => {
 
 const checkListId = async (req, res, next) => {
   try {
-    const { token, listId } = req.body;
+    const { token } = req.cookies;
+    const { listId } = req.body;
 
     const user = await tables.user.checkToken(token);
     const result = await tables.list.checkListId(listId);
@@ -60,7 +61,8 @@ const readAll = async (req, res, next) => {
 
 const edit = async (req, res, next) => {
   try {
-    const { token, listId, listName, listDescription } = req.body;
+    const { token } = req.cookies;
+    const { listId, listName, listDescription } = req.body;
     const user = await tables.user.checkToken(token);
     const result = await tables.list.checkListId(listId);
 
