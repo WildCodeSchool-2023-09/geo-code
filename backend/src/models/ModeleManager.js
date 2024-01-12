@@ -16,7 +16,7 @@ class ModeleManager extends AbstractManager {
       const [id] = await this.database.query(
         `select id from marque where name="${element.make}"`
       );
-      console.info(id);
+
       this.database.query(
         `insert into ${this.table} (name,marque_id, type_prise)
              values (?, ?, ?)`,
