@@ -18,7 +18,7 @@ export default function AdminPanel() {
 
   useEffect(() => {
     axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, "hello", {
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -79,7 +79,7 @@ export default function AdminPanel() {
     const dateOfThisDay = new Date();
     dateOfThisDay.setDate(dateOfThisDay.getDate() - 8);
 
-    if (reservationDate >= dateOfThisDay) {
+    if (reservationDate >= dateOfThisDay && reservationDate <= new Date()) {
       return reservations;
     }
 

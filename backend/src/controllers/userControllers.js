@@ -142,37 +142,41 @@ const login = async (req, res, next) => {
 };
 
 const checktoken = async (req, res, next) => {
-  const { token } = req.cookies;
+  if (!req.cookies.token) {
+    res.status(204).send({ message: "Not Conencted" });
+  } else {
+    const { token } = req.cookies;
 
-  try {
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    try {
+      const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
-    const { userId } = decodedToken;
-    const checkUserToken = await tables.user.checkToken(token);
-    if (
-      checkUserToken.length === 1 &&
-      checkUserToken[0].token === token &&
-      checkUserToken[0].id === userId &&
-      checkUserToken[0].admin === 1
-    ) {
-      res.status(200).send({
-        message: "OK",
-        admin: true,
-      });
-    } else if (
-      checkUserToken.length === 1 &&
-      checkUserToken[0].token === token &&
-      checkUserToken[0].id === userId &&
-      checkUserToken[0].admin === 0
-    ) {
-      res.status(200).send({
-        message: "OK",
-        admin: false,
-      });
-    } else res.status(200).send({ message: "Error" });
-  } catch (err) {
-    res.status(200).send({ message: err });
-    next(err);
+      const { userId } = decodedToken;
+      const checkUserToken = await tables.user.checkToken(token);
+      if (
+        checkUserToken.length === 1 &&
+        checkUserToken[0].token === token &&
+        checkUserToken[0].id === userId &&
+        checkUserToken[0].admin === 1
+      ) {
+        res.status(200).send({
+          message: "OK",
+          admin: true,
+        });
+      } else if (
+        checkUserToken.length === 1 &&
+        checkUserToken[0].token === token &&
+        checkUserToken[0].id === userId &&
+        checkUserToken[0].admin === 0
+      ) {
+        res.status(200).send({
+          message: "OK",
+          admin: false,
+        });
+      } else res.status(200).send({ message: "Error" });
+    } catch (err) {
+      res.status(200).send({ message: err });
+      next(err);
+    }
   }
 };
 

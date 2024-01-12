@@ -25,7 +25,7 @@ export default function Reservation() {
 
   useEffect(() => {
     axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, "hello", {
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -33,7 +33,7 @@ export default function Reservation() {
           setIsLoggedIn(true);
 
           axios
-            .post(`${import.meta.env.VITE_BACKEND_URL}/api/takedata`, "hello", {
+            .get(`${import.meta.env.VITE_BACKEND_URL}/api/takedata`, {
               withCredentials: true,
             })
             .then((resp) => {

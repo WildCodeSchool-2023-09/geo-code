@@ -25,7 +25,7 @@ export default function Profil() {
 
   useEffect(() => {
     axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, "hello", {
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -41,7 +41,7 @@ export default function Profil() {
       });
 
     axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/logout`, "hello", {
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/takedata`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -57,7 +57,7 @@ export default function Profil() {
 
   function Deconnexion() {
     axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/api/logout`, "hello", {
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/logout`, {
         withCredentials: true,
       })
       .then((res) => {
