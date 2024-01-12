@@ -17,45 +17,37 @@ export default function AdminPanel() {
   const [reservationsData, setReservationsData] = useState([]);
 
   useEffect(() => {
-    if (localStorage.getItem("UserToken") !== null) {
-      axios
-        .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
-          token: localStorage.getItem("UserToken"),
-        })
-        .then((res) => {
-          if (res.data.message === "OK" && res.data.admin === true) {
-            setIsLoggedIn(true);
-            setIsAdmin(true);
-          } else {
-            setIsAdmin(false);
-            setTimeout(() => {
-              window.location.href = "/";
-            }, 3800);
-          }
-          setIsLoading(false);
-        });
-
-      axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users`).then((res) => {
-        setData(res.data);
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        if (res.data.message === "OK" && res.data.admin === true) {
+          setIsLoggedIn(true);
+          setIsAdmin(true);
+        } else {
+          setIsLoggedIn(false);
+          setIsAdmin(false);
+          setTimeout(() => {
+            window.location.href = "/";
+          }, 3800);
+        }
+        setIsLoading(false);
       });
 
-      axios
-        .get(`${import.meta.env.VITE_BACKEND_URL}/api/bornes`)
-        .then((res) => {
-          setBornesData(res.data);
-        });
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users`).then((res) => {
+      setData(res.data);
+    });
 
-      axios
-        .get(`${import.meta.env.VITE_BACKEND_URL}/api/reservations`)
-        .then((res) => {
-          setReservationsData(res.data);
-        });
-    } else {
-      setTimeout(() => {
-        window.location.href = "/sign-in";
-      }, 3800);
-      setIsLoading(false);
-    }
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/bornes`).then((res) => {
+      setBornesData(res.data);
+    });
+
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/reservations`)
+      .then((res) => {
+        setReservationsData(res.data);
+      });
   }, []);
 
   const userCreatedLast7Days = data.filter((user) => {
@@ -87,7 +79,7 @@ export default function AdminPanel() {
     const dateOfThisDay = new Date();
     dateOfThisDay.setDate(dateOfThisDay.getDate() - 8);
 
-    if (reservationDate >= dateOfThisDay) {
+    if (reservationDate >= dateOfThisDay && reservationDate <= new Date()) {
       return reservations;
     }
 

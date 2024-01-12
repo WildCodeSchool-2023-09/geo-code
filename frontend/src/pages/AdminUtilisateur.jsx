@@ -22,33 +22,28 @@ export default function AdminUtilisateur() {
   }
 
   useEffect(() => {
-    if (localStorage.getItem("UserToken") !== null) {
-      axios
-        .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
-          token: localStorage.getItem("UserToken"),
-        })
-        .then((res) => {
-          if (res.data.message === "OK" && res.data.admin === true) {
-            setIsLoggedIn(true);
-            setIsAdmin(true);
-          } else {
-            setIsAdmin(false);
-            setTimeout(() => {
-              window.location.href = "/";
-            }, 3800);
-          }
-          setIsLoading(false);
-        });
-
-      axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users`).then((res) => {
-        setData(res.data);
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        if (res.data.message === "OK" && res.data.admin === true) {
+          setIsLoggedIn(true);
+          setIsAdmin(true);
+          axios
+            .get(`${import.meta.env.VITE_BACKEND_URL}/api/users`)
+            .then((resp) => {
+              setData(resp.data);
+            });
+        } else {
+          setIsLoggedIn(false);
+          setIsAdmin(false);
+          setTimeout(() => {
+            window.location.href = "/";
+          }, 3800);
+        }
+        setIsLoading(false);
       });
-    } else {
-      setTimeout(() => {
-        window.location.href = "/sign-in";
-      }, 3800);
-      setIsLoading(false);
-    }
   }, []);
 
   if (isLoading) {
@@ -107,6 +102,7 @@ export default function AdminUtilisateur() {
               )
               .map((user) => (
                 <UserCard
+                  key={user.id}
                   firstname={user.prenom}
                   img={user.avatar || "https://i.imgur.com/5Nc6WY0.png"}
                   lastname={user.nom}

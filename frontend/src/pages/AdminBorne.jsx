@@ -22,35 +22,27 @@ export default function AdminBorne() {
   }
 
   useEffect(() => {
-    if (localStorage.getItem("UserToken") !== null) {
-      axios
-        .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
-          token: localStorage.getItem("UserToken"),
-        })
-        .then((res) => {
-          if (res.data.message === "OK" && res.data.admin === true) {
-            setIsLoggedIn(true);
-            setIsAdmin(true);
-          } else {
-            setIsAdmin(false);
-            setTimeout(() => {
-              window.location.href = "/";
-            }, 3800);
-          }
-          setIsLoading(false);
-        });
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        if (res.data.message === "OK" && res.data.admin === true) {
+          setIsLoggedIn(true);
+          setIsAdmin(true);
+        } else {
+          setIsLoggedIn(false);
+          setIsAdmin(false);
+          setTimeout(() => {
+            window.location.href = "/";
+          }, 3800);
+        }
+        setIsLoading(false);
+      });
 
-      axios
-        .get(`${import.meta.env.VITE_BACKEND_URL}/api/bornes`)
-        .then((res) => {
-          setData(res.data);
-        });
-    } else {
-      setTimeout(() => {
-        window.location.href = "/sign-in";
-      }, 3800);
-      setIsLoading(false);
-    }
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/bornes`).then((res) => {
+      setData(res.data);
+    });
   }, []);
 
   if (isLoading) {
@@ -108,7 +100,11 @@ export default function AdminBorne() {
                 borne.n_station.toLowerCase().includes(searchForm.toLowerCase())
               )
               .map((borne) => (
-                <BorneCard name={borne.n_station} adresse={borne.ad_station} />
+                <BorneCard
+                  key={borne.id}
+                  name={borne.n_station}
+                  adresse={borne.ad_station}
+                />
               ))}
         </div>
       </div>
