@@ -110,11 +110,9 @@ app.use(express.static(reactBuildPath));
 
 // Redirect unhandled requests to the react index file
 
-/*
 app.get("*", (req, res) => {
- res.sendFile(`${reactBuildPath}/index.html`);
+  res.sendFile(`${reactBuildPath}/index.html`);
 });
-*/
 
 /** ************************************************************************* */
 // Test Antho prod
