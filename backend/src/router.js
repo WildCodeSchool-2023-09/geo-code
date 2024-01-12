@@ -25,11 +25,11 @@ router.post("/login", userControllers.login);
 router.post("/delete", userControllers.userDelete);
 
 // Route to verify token
-router.post("/checktoken", userControllers.checktoken);
+router.get("/checktoken", userControllers.checktoken);
 
 // Route to verify token
-router.post("/takedata", userControllers.takeData);
-router.post("/logout", userControllers.logout);
+router.get("/takedata", userControllers.takeData);
+router.get("/logout", userControllers.logout);
 
 // Route to get a list of users
 router.get("/users", userControllers.browse);

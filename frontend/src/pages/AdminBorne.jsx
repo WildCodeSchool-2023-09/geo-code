@@ -23,7 +23,7 @@ export default function AdminBorne() {
 
   useEffect(() => {
     axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, "hello", {
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -100,7 +100,11 @@ export default function AdminBorne() {
                 borne.n_station.toLowerCase().includes(searchForm.toLowerCase())
               )
               .map((borne) => (
-                <BorneCard name={borne.n_station} adresse={borne.ad_station} />
+                <BorneCard
+                  key={borne.id}
+                  name={borne.n_station}
+                  adresse={borne.ad_station}
+                />
               ))}
         </div>
       </div>
