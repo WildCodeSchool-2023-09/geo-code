@@ -11,18 +11,12 @@ class ModeleManager extends AbstractManager {
 
   async create(modele) {
     // Execute the SQL INSERT query to add a new item to the "item" table
-    await this.database.query(
-      `ALTER TABLE vehicule DROP FOREIGN KEY vehicule_fk1`
-    );
-    this.database.query(`TRUNCATE TABLE modele`);
-    this.database.query(
-      `ALTER TABLE vehicule ADD CONSTRAINT vehicule_fk1 FOREIGN KEY (modele_id) REFERENCES modele(id);`
-    );
+
     modele.map(async (element) => {
       const [id] = await this.database.query(
         `select id from marque where name="${element.make}"`
       );
-
+      console.info(id);
       this.database.query(
         `insert into ${this.table} (name,marque_id, type_prise)
              values (?, ?, ?)`,

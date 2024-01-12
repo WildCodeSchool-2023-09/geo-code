@@ -20,7 +20,7 @@ class UserManager extends AbstractManager {
         user.rue,
         user.email,
         user.hashedPassword,
-        false,
+        user.connexion,
         user.nb_vehicule,
         false,
         user.anniversaire,
