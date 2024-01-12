@@ -60,7 +60,7 @@ export default function SignIn() {
         document.getElementById("errorLog").innerText = "";
         document.getElementById("email").classList.remove("errorOnPlaceholder");
         const response = await axios.post(
-          "http://localhost:3310/api/delete",
+          `${import.meta.env.VITE_BACKEND_URL}/api/delete`,
           {
             email: escapeHtml(details.email),
             password: escapeHtml(details.password),
