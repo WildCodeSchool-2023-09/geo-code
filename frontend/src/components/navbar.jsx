@@ -275,22 +275,22 @@ export default function Navbar({ navData }) {
                 );
               })}
         </ul>
-        <a
+        <Link
           className="sign-in"
-          href={isConnected === true ? "/profil" : "/sign-in"}
+          to={isConnected === true ? "/profil" : "/sign-in"}
         >
           {}
-        </a>
+        </Link>
         <div className="navbtnmobile">
           {isAdmin === true ? (
-            <a className="admin" href="/admin">
+            <Link className="admin" to="/admin">
               {}
-            </a>
+            </Link>
           ) : null}
           {isConnected === true ? (
-            <a className="reservation" href="/reservations">
+            <Link className="reservation" to="/reservations">
               {}
-            </a>
+            </Link>
           ) : null}
         </div>
         <SettingsPhone navData={navData} />
