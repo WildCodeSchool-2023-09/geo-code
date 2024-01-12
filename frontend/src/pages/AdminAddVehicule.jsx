@@ -15,50 +15,56 @@ export default function AdminAddVehicule() {
   const urlmarques = `${import.meta.env.VITE_BACKEND_URL}/api/marques`;
   const urlmodeles = `${import.meta.env.VITE_BACKEND_URL}/api/modeles`;
 
-  function Submit() {
-    axios
-      .get(
-        `https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/all-vehicles-model/records?group_by=id%2Cmake%2C%20model%2Catvtype&limit=20000&offset=0&refine=fueltype%3AElectricity`
-      )
-      .then((res) => setVehiculeData(res.data.results))
-      .catch((err) => console.error(err));
+  async function Submit() {
+    try {
+      await axios
+        .get(
+          `https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/all-vehicles-model/records?group_by=id%2Cmake%2C%20model%2Catvtype&limit=20000&offset=0&refine=fueltype%3AElectricity`
+        )
+        .then((res) => setVehiculeData(res.data.results))
+        .catch((err) => console.error(err));
 
-    axios
-      .post(urlmarques, vehiculeData)
-      .then((res) => console.info(res))
-      .catch((err) => console.error(err));
+      await axios
+        .post(urlmarques, vehiculeData)
+        .then((res) => console.info(res))
+        .catch((err) => console.error(err));
 
-    axios
-      .post(urlmodeles, vehiculeData)
-      .then((res) => console.info(res))
-      .catch((err) => console.error(err));
+      await axios
+        .post(urlmodeles, vehiculeData)
+        .then((res) => console.info(res))
+        .catch((err) => console.error(err));
+    } catch {
+      console.error("error");
+    }
+
+    setTimeout(() => {
+      window.location.href = "/addVehicule";
+    }, 3500);
   }
 
   useEffect(() => {
-    if (localStorage.getItem("UserToken") !== null) {
-      axios
-        .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
-          token: localStorage.getItem("UserToken"),
-        })
-        .then((res) => {
-          if (res.data.message === "OK" && res.data.admin === true) {
-            setIsLoggedIn(true);
-            setIsAdmin(true);
-          } else {
-            setIsAdmin(false);
-            setTimeout(() => {
-              window.location.href = "/";
-            }, 3800);
-          }
-          setIsLoading(false);
-        });
-    } else {
-      setTimeout(() => {
-        window.location.href = "/sign-in";
-      }, 3800);
-      setIsLoading(false);
-    }
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        if (res.data.message === "OK" && res.data.admin === true) {
+          setIsLoggedIn(true);
+          setIsAdmin(true);
+        } else {
+          setIsLoggedIn(false);
+          setIsAdmin(false);
+          setTimeout(() => {
+            window.location.href = "/";
+          }, 3800);
+        }
+        setIsLoading(false);
+      });
   }, []);
+
+  if (isLoading) {
+    return null;
+  }
 
   if (isLoading) {
     return null;

@@ -22,6 +22,7 @@ function Register() {
     type_prise: "",
     inscription: newDate,
     derniere_maj: newDate,
+    connexion: newDate,
   });
   if (user.anniversaire.length !== 0) {
     user.anniversaire = user.anniversaire.replaceAll("/", "-");

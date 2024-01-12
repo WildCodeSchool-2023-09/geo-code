@@ -38,6 +38,9 @@ export default function AdminAddBornes() {
     formData.append("file", file);
     formData.append("fileName", file.name);
     axios.post(url, formData, config).catch((err) => console.error(err));
+    setTimeout(() => {
+      window.location.href = "/addBornesSuccess";
+    }, 500);
   }
 
   useEffect(() => {
