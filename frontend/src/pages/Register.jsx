@@ -227,7 +227,9 @@ function Register() {
               <input type="checkbox" />
               <span className="slider round" />
             </label>
-            <p>J'accepte les conditions générales d'utilisations</p>
+            <p className="toggle_button_text">
+              J'accepte les conditions générales d'utilisations
+            </p>
           </div>
           <div className="button_dispose">
             <label className="switch_button">
@@ -235,7 +237,9 @@ function Register() {
               <input type="checkbox" />
               <span className="slider round" />
             </label>
-            <p>J'accepte les politiques de confidentialité</p>
+            <p className="toggle_button_text">
+              J'accepte les politiques de confidentialité
+            </p>
           </div>
         </div>
         <div className="button-form">
