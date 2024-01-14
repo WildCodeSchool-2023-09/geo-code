@@ -128,6 +128,9 @@ export default function AdminPanel() {
             <Link className="buttons blue-button" to="/ajout-bornes">
               Ajouter des Bornes
             </Link>
+            <Link className="buttons blue-button" to="/adminAddVehicule">
+              Mise à jour de la base de donnée voiture
+            </Link>
           </div>
         </div>
         <div className="admin_page_infos">

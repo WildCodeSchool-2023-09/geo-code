@@ -3,10 +3,11 @@ import Lottie from "react-lottie-player";
 import LogInProgress from "../../assets/LottieFiles/LogIn.json";
 import ScrollToTop from "../ResetScrollOnPage";
 
-function registerSucces() {
+function addBornesSuccess() {
   setTimeout(() => {
-    window.location.href = "/sign-in";
+    window.location.href = "/admin";
   }, 3500);
+
   return (
     <section>
       <ScrollToTop />
@@ -17,10 +18,10 @@ function registerSucces() {
           play
           style={{ width: 120, height: 120 }}
         />
-        <h1>Inscription en cours</h1>
+        <h1>Importation des bornes</h1>
       </div>
     </section>
   );
 }
 
-export default registerSucces;
+export default addBornesSuccess;
