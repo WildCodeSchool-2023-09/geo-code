@@ -53,18 +53,7 @@ function Filtre() {
               onChange={handleChange}
             />
           </div>
-          <div className="separate">
-            <label htmlFor="enseigne">Enseigne</label>
-            <select
-              value={valueDefault.enseigne}
-              onChange={handleChange}
-              name="enseigne"
-            >
-              <option value="Toutes">Toutes</option>
-              <option value="Une">Une</option>
-              <option value="Deux">Deux</option>
-            </select>
-          </div>
+
           <div className="separate">
             <label htmlFor="rayon">Rayon (Km)</label>
             <input
