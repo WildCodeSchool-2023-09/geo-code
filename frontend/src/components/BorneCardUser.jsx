@@ -9,7 +9,6 @@ export default function BorneCard({
   lat,
   lng,
   code,
-  enseigne,
   disponible,
   puissance,
   prise,
@@ -28,9 +27,6 @@ export default function BorneCard({
       <div className="userCardBorne_data">
         <div className="userCardBorne_data_array">
           <p className="userCardBorne_data_array_value">Code postal : {code}</p>
-          <p className="userCardBorne_data_array_value">
-            Enseigne : {enseigne}
-          </p>
         </div>
         <div className="userCardBorne_data_array">
           <p className="userCardBorne_data_array_value">
@@ -49,7 +45,6 @@ export default function BorneCard({
 
 BorneCard.propTypes = {
   name: PropTypes.string.isRequired,
-  enseigne: PropTypes.string.isRequired,
   lat: PropTypes.string.isRequired,
   lng: PropTypes.string.isRequired,
   code: PropTypes.string.isRequired,

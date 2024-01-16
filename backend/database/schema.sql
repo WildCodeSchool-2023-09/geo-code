@@ -27,8 +27,7 @@ INSERT INTO user (nom, prenom, rue, code_postal,ville, email, password, connecti
 
 DROP TABLE IF EXISTS borne;
 CREATE TABLE borne (
-  id VARCHAR(250)  NOT NULL PRIMARY KEY,
-	id_station VARCHAR (80) NOT NULL,
+	id VARCHAR (80) NOT NULL PRIMARY KEY,
 	n_station VARCHAR(255)  NOT NULL,
 	ad_station VARCHAR(255)  NOT NULL,
 	code_postal VARCHAR (80)  NOT NULL,

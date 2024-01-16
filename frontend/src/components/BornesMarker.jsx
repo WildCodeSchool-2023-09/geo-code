@@ -63,7 +63,7 @@ function BornesMarker() {
   if (research.prise === "") {
     borneFilters = allBornes.filter(
       (cluster) =>
-        cluster.code_postal.slice(0, 2).includes(research.code) &&
+        cluster.code_postal.startsWith(research.code) &&
         cluster.n_enseigne.includes(research.enseigne) &&
         cluster.puiss_max.includes(research.puissance) &&
         cluster.type_prise.includes(
@@ -80,8 +80,7 @@ function BornesMarker() {
   for (let i = 0; i < research.prise.length; i += 1) {
     borneFilters = allBornes.filter(
       (cluster) =>
-        cluster.code_postal.slice(0, 2).includes(research.code) &&
-        cluster.n_enseigne.includes(research.enseigne) &&
+        cluster.code_postal.startsWith(research.code) &&
         cluster.puiss_max.includes(research.puissance) &&
         cluster.type_prise.includes(
           research.prise[i] || research.prise[i].toLowerCase()

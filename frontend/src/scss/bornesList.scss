@@ -7,12 +7,6 @@
   min-height: 110vh;
   padding: 1rem;
 
-  .buttonContainer {
-    display: flex;
-    width: 100%;
-    justify-content: flex-end;
-    margin: 0.5rem;
-  }
   .filterBorne {
     display: flex;
     justify-content: space-between;
@@ -41,6 +35,7 @@
     height: auto;
     flex-wrap: wrap;
     gap: 1.6rem;
+    margin-bottom: 2rem;
 
     .bornecard {
       display: flex;
