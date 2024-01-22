@@ -166,7 +166,10 @@ function BornesMarker() {
               <Link
                 to="/DoReservation"
                 onClick={() => {
-                  setBorneId(cluster.properties.id);
+                  setBorneId({
+                    borne_id: cluster.properties.id,
+                    borne_name: cluster.properties.n_station,
+                  });
                 }}
               >
                 <SecondaryButton>Réservez cette borne</SecondaryButton>

@@ -39,14 +39,8 @@ function App() {
     () => ({ bornes, setBornes }),
     [bornes, setBornes]
   );
-  const [reservation, setReservation] = useState({
-    vehicule_id: "",
-    date_reservation: "",
-    heure: "",
-    heure_fin: "",
-    prise: "",
-  });
-  const [borneId, setBorneId] = useState("");
+  const [reservation, setReservation] = useState("");
+  const [borneId, setBorneId] = useState({ borne_id: "", borne_name: "" });
   const reservationValue = useMemo(
     () => ({ reservation, setReservation, borneId, setBorneId }),
     [reservation, setReservation, borneId, setBorneId]

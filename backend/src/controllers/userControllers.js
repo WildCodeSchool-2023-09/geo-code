@@ -16,7 +16,8 @@ const browse = async (req, res, next) => {
 // The R of BREAD - Read operation
 const read = async (req, res, next) => {
   try {
-    const user = await tables.user.read(req.params.id);
+    const { token } = req.cookies;
+    const user = await tables.user.read(token);
 
     if (user == null) {
       res.sendStatus(404);
