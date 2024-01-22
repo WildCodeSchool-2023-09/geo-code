@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import Home from "./pages/Home";
 import ErrorPage from "./pages/404";
-
+import DoReservation from "./pages/DoReservation";
 import Reservation from "./pages/Reservation";
 
 import Map from "./pages/Map";
@@ -121,6 +121,10 @@ const router = createBrowserRouter([
       {
         path: "/addVehicule",
         element: <AddVehicule />,
+      },
+      {
+        path: "/DoReservation",
+        element: <DoReservation />,
       },
     ],
   },

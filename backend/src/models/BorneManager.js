@@ -21,7 +21,7 @@ class BorneManager extends AbstractManager {
     for (let i = 0; i < bornesExist.length; i += 1) {
       noRepeat.push(bornesExist[i].id);
     }
-    console.info("c'est les id de la db", noRepeat);
+
     fs.createReadStream(fileCSV)
       .pipe(csv({ separator: ";" }))
       .on("data", async (data) => {
@@ -51,14 +51,15 @@ class BorneManager extends AbstractManager {
 
         if (data.accessibilite === "") line.accessibilite = "non renseigné";
 
+        if (data.n_station === "") line.nbre_pdc = 1;
+
         // s'il n'y a pas de borne dans la db
 
         if (bornesExist.length === 0) {
-          console.info("la db est vide");
           if (compare.includes(line.id_station) !== true) {
-            console.info("est ce que c'est déjà rentré?");
+            compare.push(line.id_station);
             await this.database.query(
-              `INSERT INTO ${this.table} ( id, n_station, ad_station, code_postal, lng, lat, puiss_max, accessibilite, type_prise, date_maj, n_enseigne) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+              `INSERT INTO ${this.table} ( id, n_station, ad_station, code_postal, lng, lat, puiss_max, accessibilite, type_prise, date_maj, n_enseigne, nbre_pdc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`,
               [
                 line.id_station,
                 line.n_station,
@@ -71,16 +72,16 @@ class BorneManager extends AbstractManager {
                 line.type_prise,
                 line.date_maj,
                 line.n_enseigne,
+                line.nbre_pdc,
               ]
             );
-            compare.push(line.id_station);
           }
         }
         // si l'id de la borne n'est pas connu
         else if (!noRepeat.includes(line.id_station)) {
           noRepeat.push(line.id_station);
           await this.database.query(
-            `INSERT INTO ${this.table} ( id, n_station, ad_station, code_postal, lng, lat, puiss_max, accessibilite, type_prise, date_maj, n_enseigne) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            `INSERT INTO ${this.table} ( id, n_station, ad_station, code_postal, lng, lat, puiss_max, accessibilite, type_prise, date_maj, n_enseigne,nbre_pdc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
               line.id_station,
               line.n_station,
@@ -93,6 +94,7 @@ class BorneManager extends AbstractManager {
               line.type_prise,
               line.date_maj,
               line.n_enseigne,
+              line.nbre_pdc,
             ]
           );
           noRepeat.push(line.id_station);

@@ -1,13 +1,16 @@
-import { Marker, useMap } from "react-leaflet";
+import { Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import axios from "axios";
 import { useContext, useEffect, useState, useCallback } from "react";
+import { Link } from "react-router-dom";
 import Supercluster from "supercluster";
 import convertToDistance from "../services/ConvertToDistance";
 import iconMarker from "../assets/borne-marker-white.svg";
 import LocationContext from "../Context/locationContext";
 import FilterContext from "../Context/ResearchContext";
+import ReservationContext from "../Context/ReservationContext";
 import BornesContext from "../Context/BornesContext";
+import SecondaryButton from "./buttons/SecondaryButton";
 
 function GetIcon() {
   // fonction qui permet de customiser l'icône des bornes
@@ -24,6 +27,7 @@ function BornesMarker() {
   const { research } = useContext(FilterContext);
   const { position } = useContext(LocationContext);
   const { bornes, setBornes } = useContext(BornesContext);
+  const { setBorneId } = useContext(ReservationContext);
 
   useEffect(() => {
     // permet de réactualiser le composant reasearch à chaque changement.
@@ -42,16 +46,14 @@ function BornesMarker() {
 
   // transformation en geojson pour pouvoir faire le cluster
   allBornes = bornes.map((oneBorne) => ({
-    ...oneBorne,
     type: "Feature",
     properties: {
-      cluster: true,
-      point_count: bornes.indexOf(oneBorne),
-      clusterId: oneBorne.code_postal.slice(0, 2),
+      cluster: false,
+      ...oneBorne,
     },
     geometry: {
       type: "Point",
-      coordinates: [oneBorne.lat, oneBorne.lng],
+      coordinates: [oneBorne.lng, oneBorne.lat],
     },
   }));
 
@@ -63,15 +65,15 @@ function BornesMarker() {
   if (research.prise === "") {
     borneFilters = allBornes.filter(
       (cluster) =>
-        cluster.code_postal.startsWith(research.code) &&
-        cluster.n_enseigne.includes(research.enseigne) &&
-        cluster.puiss_max.includes(research.puissance) &&
-        cluster.type_prise.includes(
+        cluster.properties.code_postal.startsWith(research.code) &&
+        cluster.properties.n_enseigne.includes(research.enseigne) &&
+        cluster.properties.puiss_max.includes(research.puissance) &&
+        cluster.properties.type_prise.includes(
           research.prise || research.prise.toLowerCase()
         ) &&
         convertToDistance(
-          cluster.lat,
-          cluster.lng,
+          cluster.properties.lat,
+          cluster.properties.lng,
           position.lat,
           position.lng
         ) <= parseInt(research.rayon, 10)
@@ -80,14 +82,14 @@ function BornesMarker() {
   for (let i = 0; i < research.prise.length; i += 1) {
     borneFilters = allBornes.filter(
       (cluster) =>
-        cluster.code_postal.startsWith(research.code) &&
-        cluster.puiss_max.includes(research.puissance) &&
-        cluster.type_prise.includes(
+        cluster.properties.code_postal.startsWith(research.code) &&
+        cluster.properties.puiss_max.includes(research.puissance) &&
+        cluster.properties.type_prise.includes(
           research.prise[i] || research.prise[i].toLowerCase()
         ) &&
         convertToDistance(
-          cluster.lat,
-          cluster.lng,
+          cluster.properties.lat,
+          cluster.properties.lng,
           position.lat,
           position.lng
         ) <= parseInt(research.rayon, 10)
@@ -95,15 +97,19 @@ function BornesMarker() {
   }
 
   const supercluster = new Supercluster({ radius: 75, maxZoom: 15 });
-  const bounds = [
-    -36.64988022329375, -4.915832801313164, 51.328635401706265,
-    59.84481485969108,
-  ];
-  const [zoom, setZoom] = useState(20);
+  const [bbox, setBbox] = useState([]);
+  const [zoom, setZoom] = useState(15);
   const [clusters, setClusters] = useState([]);
   const map = useMap();
 
   function updateMap() {
+    const b = map.getBounds();
+    setBbox([
+      b.getSouthWest().lng,
+      b.getSouthWest().lat,
+      b.getNorthEast().lng,
+      b.getNorthEast().lat,
+    ]);
     setZoom(map.getZoom());
   }
   const onMove = useCallback(() => {
@@ -112,7 +118,7 @@ function BornesMarker() {
 
   useEffect(() => {
     updateMap();
-  }, []);
+  }, [map]);
 
   useEffect(() => {
     map.on("move", onMove);
@@ -120,7 +126,7 @@ function BornesMarker() {
 
   useEffect(() => {
     supercluster.load(borneFilters);
-    setClusters(supercluster.getClusters(bounds, zoom));
+    setClusters(supercluster.getClusters(bbox, zoom));
   }, [zoom, research]);
 
   return (
@@ -129,31 +135,45 @@ function BornesMarker() {
         // every cluster point has coordinates
         const [lat, lng] = cluster.geometry.coordinates;
         // the point may be either a cluster or a crime point
-        const { cluster: isCluster, clusterId } = cluster.properties;
+        const { cluster: isCluster } = cluster.properties;
 
         if (isCluster) {
           return (
             <Marker
               key={`cluster-${cluster.id}`}
-              position={[lat, lng]}
+              position={[lng, lat]}
               icon={GetIcon()}
-              eventHandlers={{
-                click: () => {
-                  const expansionZoom = Math.min(
-                    supercluster.getClusterExpansionZoom(clusterId),
-                    15
-                  );
-                  map.setView([lat, lng], expansionZoom, {
-                    animate: true,
-                  });
-                },
-              }}
             />
           );
         }
-        return cluster.map((borne) => (
-          <Marker position={[lat, lng]} key={borne.id} icon={GetIcon()} />
-        ));
+
+        return (
+          <Marker position={[lng, lat]} key={cluster.id} icon={GetIcon()}>
+            <Popup>
+              <h2>{cluster.properties.n_station}</h2>
+              <p>Nombre de prise : {cluster.properties.nbre_pdc}</p>
+              <p>Type de prise : {cluster.properties.type_prise}</p>
+              <p>
+                {" "}
+                {convertToDistance(
+                  cluster.properties.lat,
+                  cluster.properties.lng,
+                  position.lat,
+                  position.lng
+                )}{" "}
+                km
+              </p>
+              <Link
+                to="/DoReservation"
+                onClick={() => {
+                  setBorneId(cluster.properties.id);
+                }}
+              >
+                <SecondaryButton>Réservez cette borne</SecondaryButton>
+              </Link>
+            </Popup>
+          </Marker>
+        );
       })}
     </div>
   );

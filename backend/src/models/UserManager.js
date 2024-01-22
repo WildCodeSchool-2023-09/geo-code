@@ -37,9 +37,11 @@ class UserManager extends AbstractManager {
   async read(id) {
     // Execute the SQL SELECT query to retrieve a specific item by its ID
     const [rows] = await this.database.query(
-      `select *
-             from ${this.table}
-             where id = ?`,
+      // récupère le user id, vehicule id pour les vehicule dont user_id=id de la requête
+      `select u.id,v.id 
+             from ${this.table} as u
+             join vehicule as v on v.user_id=u.id
+             where u.id = ?`,
       [id]
     );
 
