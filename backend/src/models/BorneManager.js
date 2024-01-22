@@ -21,14 +21,14 @@ class BorneManager extends AbstractManager {
     for (let i = 0; i < bornesExist.length; i += 1) {
       noRepeat.push(bornesExist[i].id);
     }
-
+    console.info("c'est les id de la db", noRepeat);
     fs.createReadStream(fileCSV)
       .pipe(csv({ separator: ";" }))
       .on("data", async (data) => {
         const line = data;
 
-        if (data.id_pdc === "") {
-          line.id_pdc = "non renseigné";
+        if (data.id_station === "") {
+          line.id_station = "non renseigné";
         }
 
         if (data.n_enseigne === "") {
@@ -54,11 +54,13 @@ class BorneManager extends AbstractManager {
         // s'il n'y a pas de borne dans la db
 
         if (bornesExist.length === 0) {
-          if (compare.includes(line.id_pdc) !== true) {
-            this.database.query(
+          console.info("la db est vide");
+          if (compare.includes(line.id_station) !== true) {
+            console.info("est ce que c'est déjà rentré?");
+            await this.database.query(
               `INSERT INTO ${this.table} ( id, n_station, ad_station, code_postal, lng, lat, puiss_max, accessibilite, type_prise, date_maj, n_enseigne) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
               [
-                line.id_pdc,
+                line.id_station,
                 line.n_station,
                 line.ad_station,
                 line.code_insee,
@@ -71,16 +73,16 @@ class BorneManager extends AbstractManager {
                 line.n_enseigne,
               ]
             );
-            compare.push(line.id_pdc);
+            compare.push(line.id_station);
           }
         }
         // si l'id de la borne n'est pas connu
-
-        if (noRepeat.includes(line.id_pdc) !== true) {
-          this.database.query(
+        else if (!noRepeat.includes(line.id_station)) {
+          noRepeat.push(line.id_station);
+          await this.database.query(
             `INSERT INTO ${this.table} ( id, n_station, ad_station, code_postal, lng, lat, puiss_max, accessibilite, type_prise, date_maj, n_enseigne) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
-              line.id_pdc,
+              line.id_station,
               line.n_station,
               line.ad_station,
               line.code_insee,
@@ -93,9 +95,8 @@ class BorneManager extends AbstractManager {
               line.n_enseigne,
             ]
           );
+          noRepeat.push(line.id_station);
         }
-
-        // si la db est vide
       })
       .on("end", () => {
         return true;
