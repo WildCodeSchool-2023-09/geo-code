@@ -60,7 +60,7 @@ const readAll = async (req, res, next) => {
 };
 const add = async (req, res, next) => {
   const reservationData = req.body;
-  console.info(reservationData);
+
   try {
     // Insert the item into the database
     const insertId = await tables.reservation.create(reservationData);

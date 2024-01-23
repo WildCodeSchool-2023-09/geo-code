@@ -119,7 +119,6 @@ export default function SignIn() {
       })
       .then((res) => {
         if (res.data.message === "OK") {
-          console.info("Connexion Approuvée");
           setIsLoggedIn(true);
         } else {
           setIsLoggedIn(false);

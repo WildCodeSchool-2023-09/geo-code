@@ -23,16 +23,9 @@ export default function AdminAddVehicule() {
         )
         .then((res) => data.push(res.data.results))
         .catch((err) => console.error(err));
-      console.info(data[0]);
-      await axios
-        .post(urlmarques, data[0])
-        .then((res) => console.info(res))
-        .catch((err) => console.error(err));
+      await axios.post(urlmarques, data[0]).catch((err) => console.error(err));
 
-      await axios
-        .post(urlmodeles, data[0])
-        .then((res) => console.info(res))
-        .catch((err) => console.error(err));
+      await axios.post(urlmodeles, data[0]).catch((err) => console.error(err));
     } catch {
       console.error("error");
     }
