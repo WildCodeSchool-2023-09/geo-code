@@ -4,6 +4,28 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 function Register() {
+  const isEmailValid = (value) => {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,4}$/;
+    return emailPattern.test(value);
+  };
+  function escapeHtml(unsafe) {
+    return unsafe.replace(/[&<"'>]/g, function toMatch(match) {
+      switch (match) {
+        case "&":
+          return "&amp;";
+        case "<":
+          return "&lt;";
+        case ">":
+          return "&gt;";
+        case '"':
+          return "&quot;";
+        case "'":
+          return "&#39;";
+        default:
+          return match;
+      }
+    });
+  }
   const date = new Date().toISOString();
   const newDate = date.slice(0, 10);
   const [user, setUser] = useState({
@@ -11,7 +33,7 @@ function Register() {
     prenom: "",
     email: "",
     password: "",
-    confirm: "",
+    confirmPassword: "",
     anniversaire: "",
     rue: "",
     code_postal: "",
@@ -31,16 +53,46 @@ function Register() {
   const handleChange = (event) => {
     setUser({ ...user, [event.target.name]: event.target.value });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      if (!isEmailValid(user.email)) {
+        document.getElementById("errorLog").innerText = "";
+        document.getElementById("errorEmail").innerText =
+          "Votre Email n'est pas valide";
+        document.getElementById("email").classList.add("errorOnPlaceholder");
+      } else {
+        document.getElementById("errorEmail").innerText = "";
+        document.getElementById("errorLog").innerText = "";
+        document.getElementById("email").classList.remove("errorOnPlaceholder");
 
-    axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/api/users`, user)
-      .catch((err) => console.error(err));
+        const response = await axios
+          .post(`${import.meta.env.VITE_BACKEND_URL}/api/users`, {
+            nom: escapeHtml(user.nom),
+            prenom: escapeHtml(user.prenom),
+            email: escapeHtml(user.email),
+            password: escapeHtml(user.password),
+            anniversaire: escapeHtml(user.anniversaire),
+            rue: escapeHtml(user.rue),
+            code_postal: escapeHtml(user.code_postal),
+            ville: escapeHtml(user.ville),
+            nb_vehicule: user.nb_vehicule,
+            connexion: user.connexion,
+            inscription: user.inscription,
+            derniere_maj: user.derniere_maj,
+          })
+          .catch((err) => console.error(err));
 
-    setTimeout(() => {
-      window.location.href = "/registerSuccess";
-    }, 500);
+        document.getElementById("successLog").innerText =
+          "Inscription en cours...";
+        localStorage.setItem("UserToken", response.data.token);
+        setTimeout(() => {
+          window.location.href = "/registerSuccess";
+        }, 500);
+      }
+    } catch (error) {
+      console.info("il y a une erreur");
+    }
   };
 
   return (
@@ -107,14 +159,14 @@ function Register() {
           </div>
           <div className="content_input">
             <label className="content_input_label" htmlFor="confirm">
-              Confirmez
+              Confirmez le mot de passe
             </label>
             <input
               className="content_input_placeholder"
-              value={user.confirm}
+              value={user.confirmPassword}
               type="password"
-              name="confirm"
-              id="confirm"
+              name="confirmPassword"
+              id="confirmconfirmPassword"
               onChange={handleChange}
               placeholder="Confirmez le mot de passe"
             />
@@ -260,6 +312,16 @@ function Register() {
               </button>
             </Link>
           </div>
+          <p className="error_container" id="errorEmail" />
+          <p className="error_container" id="errorLog" />
+          <p className="success_container" id="successLog" />
+          {user.confirmPassword !== user.password ? (
+            <div className="errorOnPlaceholder">
+              Le mot de passe de confirmation ne match pas
+            </div>
+          ) : (
+            <p />
+          )}
         </div>
       </div>
     </div>

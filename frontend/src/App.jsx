@@ -1,9 +1,9 @@
 import { Outlet } from "react-router-dom";
 import { useMemo, useState } from "react";
-
 import FilterResearch from "./Context/ResearchContext";
 import LocationContext from "./Context/locationContext";
 import BornesContext from "./Context/BornesContext";
+import ReservationContext from "./Context/ReservationContext";
 import Navbar from "./components/navbar";
 import NavMobile from "./components/navmobile";
 import Footer from "./components/footer";
@@ -38,6 +38,12 @@ function App() {
   const bornesValue = useMemo(
     () => ({ bornes, setBornes }),
     [bornes, setBornes]
+  );
+  const [reservation, setReservation] = useState("");
+  const [borneId, setBorneId] = useState({ borne_id: "", borne_name: "" });
+  const reservationValue = useMemo(
+    () => ({ reservation, setReservation, borneId, setBorneId }),
+    [reservation, setReservation, borneId, setBorneId]
   );
 
   function OnChangePage() {
@@ -74,11 +80,13 @@ function App() {
       <Navbar navData={navData} />
       <main>
         <BornesContext.Provider value={bornesValue}>
-          <LocationContext.Provider value={positionValue}>
-            <FilterResearch.Provider value={value}>
-              <Outlet onChange={OnChangePage()} />
-            </FilterResearch.Provider>
-          </LocationContext.Provider>
+          <ReservationContext.Provider value={reservationValue}>
+            <LocationContext.Provider value={positionValue}>
+              <FilterResearch.Provider value={value}>
+                <Outlet onChange={OnChangePage()} />
+              </FilterResearch.Provider>
+            </LocationContext.Provider>
+          </ReservationContext.Provider>
         </BornesContext.Provider>
       </main>
       <Footer className="FooterParams" />

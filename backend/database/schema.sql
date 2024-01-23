@@ -37,6 +37,7 @@ CREATE TABLE borne (
 	accessibilite VARCHAR(80)  NOT NULL,
 	type_prise VARCHAR(250)  NOT NULL,
 	n_enseigne  VARCHAR (80)  NOT NULL,
+	nbre_pdc VARCHAR(80),
 	date_maj DATE NOT NULL
 );
 
@@ -71,6 +72,7 @@ CREATE TABLE vehicule (
 	modele_id int NOT NULL,
 	PRIMARY KEY (id)
 );
+
 
 DROP TABLE IF EXISTS reservation;
 CREATE TABLE reservation (

@@ -44,7 +44,7 @@ const add = async (req, res, next) => {
   const marques = [];
   marque.forEach((item) => marques.push(item.make));
   const newMarques = [...new Set(marques)];
-
+  console.info(req.body, marque);
   try {
     // Insert the item into the database
     const insertId = await tables.marque.create(newMarques);

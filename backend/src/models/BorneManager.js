@@ -27,8 +27,8 @@ class BorneManager extends AbstractManager {
       .on("data", async (data) => {
         const line = data;
 
-        if (data.id_pdc === "") {
-          line.id_pdc = "non renseigné";
+        if (data.id_station === "") {
+          line.id_station = "non renseigné";
         }
 
         if (data.n_enseigne === "") {
@@ -51,14 +51,17 @@ class BorneManager extends AbstractManager {
 
         if (data.accessibilite === "") line.accessibilite = "non renseigné";
 
+        if (data.n_station === "") line.nbre_pdc = 1;
+
         // s'il n'y a pas de borne dans la db
 
         if (bornesExist.length === 0) {
-          if (compare.includes(line.id_pdc) !== true) {
-            this.database.query(
-              `INSERT INTO ${this.table} ( id, n_station, ad_station, code_postal, lng, lat, puiss_max, accessibilite, type_prise, date_maj, n_enseigne) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          if (compare.includes(line.id_station) !== true) {
+            compare.push(line.id_station);
+            await this.database.query(
+              `INSERT INTO ${this.table} ( id, n_station, ad_station, code_postal, lng, lat, puiss_max, accessibilite, type_prise, date_maj, n_enseigne, nbre_pdc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`,
               [
-                line.id_pdc,
+                line.id_station,
                 line.n_station,
                 line.ad_station,
                 line.code_insee,
@@ -69,18 +72,18 @@ class BorneManager extends AbstractManager {
                 line.type_prise,
                 line.date_maj,
                 line.n_enseigne,
+                line.nbre_pdc,
               ]
             );
-            compare.push(line.id_pdc);
           }
         }
         // si l'id de la borne n'est pas connu
-
-        if (noRepeat.includes(line.id_pdc) !== true) {
-          this.database.query(
-            `INSERT INTO ${this.table} ( id, n_station, ad_station, code_postal, lng, lat, puiss_max, accessibilite, type_prise, date_maj, n_enseigne) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        else if (!noRepeat.includes(line.id_station)) {
+          noRepeat.push(line.id_station);
+          await this.database.query(
+            `INSERT INTO ${this.table} ( id, n_station, ad_station, code_postal, lng, lat, puiss_max, accessibilite, type_prise, date_maj, n_enseigne,nbre_pdc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
-              line.id_pdc,
+              line.id_station,
               line.n_station,
               line.ad_station,
               line.code_insee,
@@ -91,11 +94,11 @@ class BorneManager extends AbstractManager {
               line.type_prise,
               line.date_maj,
               line.n_enseigne,
+              line.nbre_pdc,
             ]
           );
+          noRepeat.push(line.id_station);
         }
-
-        // si la db est vide
       })
       .on("end", () => {
         return true;

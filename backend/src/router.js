@@ -44,7 +44,7 @@ router.post("/users", hashPassword, userControllers.add);
 router.post("/edituser", userControllers.edit);
 
 // Route to get a list of reservations
-router.post("/reservations", reservationControllers.browse);
+router.post("/reservations", reservationControllers.add);
 
 router.get("/reservations", reservationControllers.readAll);
 
