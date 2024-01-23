@@ -71,7 +71,6 @@ export default function SignIn() {
         document.getElementById("successLog").innerText =
           "Authentification en cours...";
 
-        localStorage.setItem("UserToken", response.data.token);
         console.info(response.data);
 
         setTimeout(() => {

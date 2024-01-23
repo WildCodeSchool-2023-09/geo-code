@@ -65,9 +65,6 @@ function DoReservation() {
       .catch((err) => console.error(err));
   }, []);
 
-  if (isLoading) {
-    return null;
-  }
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -76,10 +73,15 @@ function DoReservation() {
         `${import.meta.env.VITE_BACKEND_URL}/api/reservations`,
         reservationData
       )
-      .then((res) => console.info(res.data))
       .catch((err) => console.error(err));
+    setTimeout(() => {
+      window.location.href = "/reservationSuccess";
+    }, 1000);
   };
 
+  if (isLoading) {
+    return null;
+  }
   if (!isLoggedIn) {
     return (
       <section>

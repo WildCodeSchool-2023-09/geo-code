@@ -9,7 +9,7 @@ CREATE TABLE user (
 	rue VARCHAR(255) NOT NULL,
 	code_postal int NOT NULL,
 	ville VARCHAR(255) NOT NULL,
-	email VARCHAR(255) NOT NULL,
+	email  VARCHAR(255) NOT NULL UNIQUE,
 	password VARCHAR(300) NOT NULL,
 	connection DATE NULL,
 	nb_vehicule int NOT NULL,

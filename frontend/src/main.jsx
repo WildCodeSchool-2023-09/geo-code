@@ -28,6 +28,9 @@ import AdminAddVehicule from "./pages/AdminAddVehicule";
 import RegisterSuccess from "./pages/Auth/registerSuccess";
 import AddBornesSuccess from "./pages/Account/addBornesSuccess";
 import AddVehicule from "./pages/Account/addVehicule";
+import AddYourVehicule from "./pages/Auth/addYourVehicule";
+import AddVehiculeSuccess from "./pages/Auth/addVehiculeSuccess";
+import ReservationSuccess from "./pages/Auth/reservationSuccess";
 
 const router = createBrowserRouter([
   {
@@ -125,6 +128,18 @@ const router = createBrowserRouter([
       {
         path: "/DoReservation",
         element: <DoReservation />,
+      },
+      {
+        path: "/AddYourVehicule",
+        element: <AddYourVehicule />,
+      },
+      {
+        path: "/addVehiculeSuccess",
+        element: <AddVehiculeSuccess />,
+      },
+      {
+        path: "/reservationSuccess",
+        element: <ReservationSuccess />,
       },
     ],
   },

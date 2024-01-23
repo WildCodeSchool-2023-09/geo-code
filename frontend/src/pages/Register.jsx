@@ -1,9 +1,12 @@
 import "../scss/register.scss";
-import { useState } from "react";
+import { useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import UserContext from "../Context/UserContext";
 
 function Register() {
+  const { user, setUser } = useContext(UserContext);
+
   const isEmailValid = (value) => {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,4}$/;
     return emailPattern.test(value);
@@ -26,26 +29,7 @@ function Register() {
       }
     });
   }
-  const date = new Date().toISOString();
-  const newDate = date.slice(0, 10);
-  const [user, setUser] = useState({
-    nom: "",
-    prenom: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    anniversaire: "",
-    rue: "",
-    code_postal: "",
-    ville: "",
-    nb_vehicule: 1,
-    marque: "",
-    model: "",
-    type_prise: "",
-    inscription: newDate,
-    derniere_maj: newDate,
-    connexion: newDate,
-  });
+
   if (user.anniversaire.length !== 0) {
     user.anniversaire = user.anniversaire.replaceAll("/", "-");
   }
@@ -66,33 +50,33 @@ function Register() {
         document.getElementById("errorLog").innerText = "";
         document.getElementById("email").classList.remove("errorOnPlaceholder");
 
-        const response = await axios
-          .post(`${import.meta.env.VITE_BACKEND_URL}/api/users`, {
-            nom: escapeHtml(user.nom),
-            prenom: escapeHtml(user.prenom),
-            email: escapeHtml(user.email),
-            password: escapeHtml(user.password),
-            anniversaire: escapeHtml(user.anniversaire),
-            rue: escapeHtml(user.rue),
-            code_postal: escapeHtml(user.code_postal),
-            ville: escapeHtml(user.ville),
-            nb_vehicule: user.nb_vehicule,
-            connexion: user.connexion,
-            inscription: user.inscription,
-            derniere_maj: user.derniere_maj,
-          })
+        await axios
+          .post(
+            `${import.meta.env.VITE_BACKEND_URL}/api/users`,
+            {
+              nom: escapeHtml(user.nom),
+              prenom: escapeHtml(user.prenom),
+              email: escapeHtml(user.email),
+              password: escapeHtml(user.password),
+              anniversaire: escapeHtml(user.anniversaire),
+              rue: escapeHtml(user.rue),
+              code_postal: escapeHtml(user.code_postal),
+              ville: escapeHtml(user.ville),
+              nb_vehicule: user.nb_vehicule,
+              connexion: user.connexion,
+              inscription: user.inscription,
+              derniere_maj: user.derniere_maj,
+            },
+            { withCredentials: true }
+          )
           .catch((err) => console.error(err));
-
-        document.getElementById("successLog").innerText =
-          "Inscription en cours...";
-        localStorage.setItem("UserToken", response.data.token);
-        setTimeout(() => {
-          window.location.href = "/registerSuccess";
-        }, 500);
       }
     } catch (error) {
       console.info("il y a une erreur");
     }
+    setTimeout(() => {
+      window.location.href = "/registerSuccess";
+    }, 500);
   };
 
   return (
@@ -228,51 +212,7 @@ function Register() {
             />
           </div>
         </form>
-        <form className="vehiculeInfo">
-          <h3>Informations sur le véhicule</h3>
-          <div className="content_input">
-            <label className="content_input_label" htmlFor="marque">
-              Marque
-            </label>
-            <input
-              className="content_input_placeholder"
-              value={user.marque}
-              type="text"
-              name="marque"
-              id="marque"
-              onChange={handleChange}
-              placeholder="Renault"
-            />
-          </div>
-          <div className="content_input">
-            <label className="content_input_label" htmlFor="model">
-              Modèle
-            </label>
-            <input
-              className="content_input_placeholder"
-              value={user.model}
-              type="text"
-              name="model"
-              id="model"
-              onChange={handleChange}
-              placeholder="Megane RS"
-            />
-          </div>
-          <div className="content_input">
-            <label className="content_input_label" htmlFor="prise">
-              Prise
-            </label>
-            <input
-              className="content_input_placeholder"
-              value={user.prise}
-              type="text"
-              name="prise"
-              id="prise"
-              onChange={handleChange}
-              placeholder="Type A"
-            />
-          </div>
-        </form>
+
         <div className="toggle-button">
           <div className="button_dispose">
             <label className="switch_button">

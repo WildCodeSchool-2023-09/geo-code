@@ -29,6 +29,21 @@ const read = async (req, res, next) => {
   }
 };
 
+const takeId = async (req, res, next) => {
+  try {
+    const { email } = req.params;
+    const user = await tables.user.takeId(email);
+
+    if (user == null) {
+      res.sendStatus(404);
+    } else {
+      res.json(user);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
 // The E of BREAD - Edit (Update) operation
 const edit = async (req, res, next) => {
   const { token } = req.cookies;
@@ -71,14 +86,47 @@ const edit = async (req, res, next) => {
 
 // The A of BREAD - Add (Create) operation
 const add = async (req, res, next) => {
-  // Extract the item data from the request body
   const user = req.body;
+
   try {
     // Insert the item into the database
     const insertId = await tables.user.create(user);
 
-    // Respond with HTTP 201 (Created) and the ID of the newly inserted item
-    res.status(201).json({ insertId });
+    const ActualDate = new Date();
+
+    const tokenUser = jwt.sign(
+      { email: user.email, userId: insertId },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    if (user.admin === 1) {
+      res.cookie("token", tokenUser, {
+        httpOnly: true,
+        maxAge: 3600000,
+      });
+      res.status(200).send({
+        message: "Authentification réussie",
+        admin: true,
+        insertId,
+      });
+
+      await tables.user.saveToken(tokenUser, user.email);
+      await tables.user.setLastConnexion(ActualDate, user.email);
+    } else {
+      res.cookie("token", tokenUser, {
+        httpOnly: true,
+        maxAge: 3600000,
+      });
+      res.status(200).send({
+        message: "Authentification réussie",
+        admin: false,
+        insertId,
+      });
+
+      await tables.user.saveToken(tokenUser, user.email);
+      await tables.user.setLastConnexion(ActualDate, user.email);
+    }
   } catch (err) {
     // Pass any errors to the error-handling middleware
     next(err);
@@ -152,7 +200,9 @@ const checktoken = async (req, res, next) => {
       const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
       const { userId } = decodedToken;
+
       const checkUserToken = await tables.user.checkToken(token);
+
       if (
         checkUserToken.length === 1 &&
         checkUserToken[0].token === token &&
@@ -162,6 +212,7 @@ const checktoken = async (req, res, next) => {
         res.status(200).send({
           message: "OK",
           admin: true,
+          id: userId,
         });
       } else if (
         checkUserToken.length === 1 &&
@@ -172,6 +223,7 @@ const checktoken = async (req, res, next) => {
         res.status(200).send({
           message: "OK",
           admin: false,
+          id: userId,
         });
       } else res.status(200).send({ message: "Error" });
     } catch (err) {
@@ -253,5 +305,6 @@ module.exports = {
   checktoken,
   userDelete,
   takeData,
+  takeId,
   logout,
 };
