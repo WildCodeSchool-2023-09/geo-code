@@ -112,6 +112,49 @@
           transform: scale(0.95);
         }
       }
+      .saveVehicule {
+        display: flex;
+        padding: 0.6rem 1.2rem;
+        background-color: $color-primary;
+        border-radius: 0.6rem;
+        justify-content: center;
+        width: fit-content;
+        height: fit-content;
+        text-decoration: none;
+        font-family: $font;
+        color: $color-light;
+        text-align: center;
+        font-size: 1rem;
+        transition: transform 0.1s ease-in-out;
+        border: none;
+
+        &:hover {
+          background-color: $color-primary-light;
+          transform: scale(0.95);
+        }
+      }
+
+      .Abort {
+        display: flex;
+        padding: 0.6rem 1.2rem;
+        background-color: $color-grey;
+        border-radius: 0.6rem;
+        justify-content: center;
+        width: fit-content;
+        height: fit-content;
+        text-decoration: none;
+        font-family: $font;
+        color: $color-light;
+        text-align: center;
+        font-size: 1rem;
+        transition: transform 0.1s ease-in-out;
+        border: none;
+
+        &:hover {
+          background-color: $color-grey-hover;
+          transform: scale(0.95);
+        }
+      }
     }
 
     .forgotPassword {

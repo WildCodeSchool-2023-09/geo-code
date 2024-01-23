@@ -6,6 +6,9 @@ import PrimaryButton from "../../components/buttons/PrimaryButton";
 import ReservationContext from "../../Context/ReservationContext";
 
 import mailError from "../../assets/LottieFiles/EmailError.json";
+import "../../scss/auth/SignInPage.scss";
+
+import ScrollToTop from "../ResetScrollOnPage";
 
 function AddYourVehicule() {
   const [marque, setMarque] = useState([]);
@@ -102,48 +105,68 @@ function AddYourVehicule() {
     );
   }
   return (
-    <form className="vehiculeInfo">
-      <h3>Informations sur le véhicule</h3>
-      <div className="content_input">
-        <label className="content_input_label" htmlFor="marque">
-          Marque
-        </label>
-        <select onChange={handleSelectedMarque}>
-          <option>Selectionnez la marque de votre voiture</option>
-          {marque.map((item) => (
-            <option key={item.name} value={item.id} name={item.name}>
-              {item.name}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className="content_input">
-        <label className="content_input_label" htmlFor="model">
-          Modèle
-        </label>
-        <select name="marque" onChange={handleSelectedModele}>
-          <option>Sélectionnez le modèle de votre véhicule</option>
-          {modele
-            .filter((item) => {
-              return +item.marque_id === +selectedMarque.id;
-            })
-            .map((item) => (
-              <option key={item.id} value={item.id}>
-                {item.name}
-              </option>
-            ))}
-        </select>
-      </div>
+    <div className="backgroundImageMain SignInMain">
+      <ScrollToTop />
+      <div className="SignIn_container ">
+        <div className="SignIn_container_title">
+          <h1>Informations sur le véhicule</h1>
+        </div>
+        <form className="SignIn_container_form">
+          <div className="form_placeholder">
+            <label className="form_placeholder_title" htmlFor="marque">
+              Marque
+            </label>
+            <select
+              onChange={handleSelectedMarque}
+              className="form_placeholder_input"
+            >
+              <option>Selectionnez la marque de votre voiture</option>
+              {marque.map((item) => (
+                <option key={item.name} value={item.id} name={item.name}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="form_placeholder">
+            <label className="form_placeholder_title" htmlFor="model">
+              Modèle
+            </label>
+            <select
+              name="marque"
+              onChange={handleSelectedModele}
+              className="form_placeholder_input"
+            >
+              <option>Sélectionnez le modèle de votre véhicule</option>
+              {modele
+                .filter((item) => {
+                  return +item.marque_id === +selectedMarque.id;
+                })
+                .map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                  </option>
+                ))}
+            </select>
+          </div>
 
-      <div className="addYourVehicule_buttonContainer">
-        <button type="button" onClick={handleSubmit}>
-          Enregistrer cette voiture
-        </button>
-        <Link to="/">
-          <button type="button">Annuler</button>
-        </Link>
+          <div className="form_buttons">
+            <button
+              type="button"
+              className="saveVehicule"
+              onClick={handleSubmit}
+            >
+              Enregistrer cette voiture
+            </button>
+            <Link to="/">
+              <button className="Abort" type="button">
+                Annuler
+              </button>
+            </Link>
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
   );
 }
 
