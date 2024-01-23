@@ -11,7 +11,7 @@ class MarqueManager extends AbstractManager {
 
   async create(newMarques) {
     // Execute the SQL INSERT query to add a new item to the "item" table
-    console.info(newMarques);
+
     try {
       await this.database.query(
         `ALTER TABLE vehicule DROP CONSTRAINT vehicule_fk1`
