@@ -1,29 +1,35 @@
 import "../scss/register.scss";
-import { useState } from "react";
+import { useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import UserContext from "../Context/UserContext";
 
 function Register() {
-  const date = new Date().toISOString();
-  const newDate = date.slice(0, 10);
-  const [user, setUser] = useState({
-    nom: "",
-    prenom: "",
-    email: "",
-    password: "",
-    confirm: "",
-    anniversaire: "",
-    rue: "",
-    code_postal: "",
-    ville: "",
-    nb_vehicule: 1,
-    marque: "",
-    model: "",
-    type_prise: "",
-    inscription: newDate,
-    derniere_maj: newDate,
-    connexion: newDate,
-  });
+  const { user, setUser } = useContext(UserContext);
+
+  const isEmailValid = (value) => {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,4}$/;
+    return emailPattern.test(value);
+  };
+  function escapeHtml(unsafe) {
+    return unsafe.replace(/[&<"'>]/g, function toMatch(match) {
+      switch (match) {
+        case "&":
+          return "&amp;";
+        case "<":
+          return "&lt;";
+        case ">":
+          return "&gt;";
+        case '"':
+          return "&quot;";
+        case "'":
+          return "&#39;";
+        default:
+          return match;
+      }
+    });
+  }
+
   if (user.anniversaire.length !== 0) {
     user.anniversaire = user.anniversaire.replaceAll("/", "-");
   }
@@ -31,13 +37,43 @@ function Register() {
   const handleChange = (event) => {
     setUser({ ...user, [event.target.name]: event.target.value });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      if (!isEmailValid(user.email)) {
+        document.getElementById("errorLog").innerText = "";
+        document.getElementById("errorEmail").innerText =
+          "Votre Email n'est pas valide";
+        document.getElementById("email").classList.add("errorOnPlaceholder");
+      } else {
+        document.getElementById("errorEmail").innerText = "";
+        document.getElementById("errorLog").innerText = "";
+        document.getElementById("email").classList.remove("errorOnPlaceholder");
 
-    axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/api/users`, user)
-      .catch((err) => console.error(err));
-
+        await axios
+          .post(
+            `${import.meta.env.VITE_BACKEND_URL}/api/users`,
+            {
+              nom: escapeHtml(user.nom),
+              prenom: escapeHtml(user.prenom),
+              email: escapeHtml(user.email),
+              password: escapeHtml(user.password),
+              anniversaire: escapeHtml(user.anniversaire),
+              rue: escapeHtml(user.rue),
+              code_postal: escapeHtml(user.code_postal),
+              ville: escapeHtml(user.ville),
+              nb_vehicule: user.nb_vehicule,
+              connexion: user.connexion,
+              inscription: user.inscription,
+              derniere_maj: user.derniere_maj,
+            },
+            { withCredentials: true }
+          )
+          .catch((err) => console.error(err));
+      }
+    } catch (error) {
+      console.info("il y a une erreur");
+    }
     setTimeout(() => {
       window.location.href = "/registerSuccess";
     }, 500);
@@ -107,14 +143,14 @@ function Register() {
           </div>
           <div className="content_input">
             <label className="content_input_label" htmlFor="confirm">
-              Confirmez
+              Confirmez le mot de passe
             </label>
             <input
               className="content_input_placeholder"
-              value={user.confirm}
+              value={user.confirmPassword}
               type="password"
-              name="confirm"
-              id="confirm"
+              name="confirmPassword"
+              id="confirmconfirmPassword"
               onChange={handleChange}
               placeholder="Confirmez le mot de passe"
             />
@@ -176,51 +212,7 @@ function Register() {
             />
           </div>
         </form>
-        <form className="vehiculeInfo">
-          <h3>Informations sur le véhicule</h3>
-          <div className="content_input">
-            <label className="content_input_label" htmlFor="marque">
-              Marque
-            </label>
-            <input
-              className="content_input_placeholder"
-              value={user.marque}
-              type="text"
-              name="marque"
-              id="marque"
-              onChange={handleChange}
-              placeholder="Renault"
-            />
-          </div>
-          <div className="content_input">
-            <label className="content_input_label" htmlFor="model">
-              Modèle
-            </label>
-            <input
-              className="content_input_placeholder"
-              value={user.model}
-              type="text"
-              name="model"
-              id="model"
-              onChange={handleChange}
-              placeholder="Megane RS"
-            />
-          </div>
-          <div className="content_input">
-            <label className="content_input_label" htmlFor="prise">
-              Prise
-            </label>
-            <input
-              className="content_input_placeholder"
-              value={user.prise}
-              type="text"
-              name="prise"
-              id="prise"
-              onChange={handleChange}
-              placeholder="Type A"
-            />
-          </div>
-        </form>
+
         <div className="toggle-button">
           <div className="button_dispose">
             <label className="switch_button">
@@ -260,6 +252,16 @@ function Register() {
               </button>
             </Link>
           </div>
+          <p className="error_container" id="errorEmail" />
+          <p className="error_container" id="errorLog" />
+          <p className="success_container" id="successLog" />
+          {user.confirmPassword !== user.password ? (
+            <div className="errorOnPlaceholder">
+              Le mot de passe de confirmation ne match pas
+            </div>
+          ) : (
+            <p />
+          )}
         </div>
       </div>
     </div>

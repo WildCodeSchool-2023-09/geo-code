@@ -1,6 +1,5 @@
 const fs = require("fs");
 const csv = require("csv-parser");
-const { v4: uuidv4 } = require("uuid");
 const AbstractManager = require("./AbstractManager");
 
 class BorneManager extends AbstractManager {
@@ -13,19 +12,19 @@ class BorneManager extends AbstractManager {
   // The C of CRUD - Create operation
 
   async create(fileCSV) {
-    // Execute the SQL INSERT query to add a new item to the "item" table
-    await this.database.query(
-      `ALTER TABLE reservation DROP FOREIGN KEY reservation_fk0`
+    const compare = [];
+    const [bornesExist] = await this.database.query(
+      `select id from ${this.table}`
     );
+    // rempli un tableau avec les id de la db
+    const noRepeat = [];
+    for (let i = 0; i < bornesExist.length; i += 1) {
+      noRepeat.push(bornesExist[i].id);
+    }
 
-    this.database.query(`TRUNCATE TABLE ${this.table}`);
-
-    this.database.query(
-      `ALTER TABLE reservation ADD CONSTRAINT reservation_fk0 FOREIGN KEY (borne_id) REFERENCES borne(id);`
-    );
     fs.createReadStream(fileCSV)
-      .pipe(csv({ separator: "," }))
-      .on("data", (data) => {
+      .pipe(csv({ separator: ";" }))
+      .on("data", async (data) => {
         const line = data;
 
         if (data.id_station === "") {
@@ -52,23 +51,54 @@ class BorneManager extends AbstractManager {
 
         if (data.accessibilite === "") line.accessibilite = "non renseigné";
 
-        this.database.query(
-          `INSERT INTO ${this.table} (id, id_station, n_station, ad_station, code_postal, lng, lat, puiss_max, accessibilite, type_prise, date_maj, n_enseigne) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-          [
-            uuidv4(),
-            line.id_station,
-            line.n_station,
-            line.ad_station,
-            line.code_insee,
-            line.xlongitude,
-            line.ylatitude,
-            line.puiss_max,
-            line.accessibilite,
-            line.type_prise,
-            line.date_maj,
-            line.n_enseigne,
-          ]
-        );
+        if (data.n_station === "") line.nbre_pdc = 1;
+
+        // s'il n'y a pas de borne dans la db
+
+        if (bornesExist.length === 0) {
+          if (compare.includes(line.id_station) !== true) {
+            compare.push(line.id_station);
+            await this.database.query(
+              `INSERT INTO ${this.table} ( id, n_station, ad_station, code_postal, lng, lat, puiss_max, accessibilite, type_prise, date_maj, n_enseigne, nbre_pdc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`,
+              [
+                line.id_station,
+                line.n_station,
+                line.ad_station,
+                line.code_insee,
+                line.xlongitude,
+                line.ylatitude,
+                line.puiss_max,
+                line.accessibilite,
+                line.type_prise,
+                line.date_maj,
+                line.n_enseigne,
+                line.nbre_pdc,
+              ]
+            );
+          }
+        }
+        // si l'id de la borne n'est pas connu
+        else if (!noRepeat.includes(line.id_station)) {
+          noRepeat.push(line.id_station);
+          await this.database.query(
+            `INSERT INTO ${this.table} ( id, n_station, ad_station, code_postal, lng, lat, puiss_max, accessibilite, type_prise, date_maj, n_enseigne,nbre_pdc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+              line.id_station,
+              line.n_station,
+              line.ad_station,
+              line.code_insee,
+              line.xlongitude,
+              line.ylatitude,
+              line.puiss_max,
+              line.accessibilite,
+              line.type_prise,
+              line.date_maj,
+              line.n_enseigne,
+              line.nbre_pdc,
+            ]
+          );
+          noRepeat.push(line.id_station);
+        }
       })
       .on("end", () => {
         return true;

@@ -12,9 +12,9 @@ class VehiculeManager extends AbstractManager {
   async create(vehicule) {
     // Execute the SQL INSERT query to add a new item to the "item" table
     const [result] = await this.database.query(
-      `insert into ${this.table} (proprietaire_id, modele_id, id_type_prise)
-             values (?, ?, ?)`,
-      [vehicule.proprietaire_id, vehicule.modele_id, vehicule.id_type_prise]
+      `insert into ${this.table} (proprietaire_id, modele_id)
+             values (?, ?)`,
+      [vehicule.proprietaire_id, vehicule.modele_id]
     );
 
     // Return the ID of the newly inserted item

@@ -34,13 +34,29 @@ class UserManager extends AbstractManager {
 
   // The Rs of CRUD - Read operations
 
-  async read(id) {
+  async read(token) {
     // Execute the SQL SELECT query to retrieve a specific item by its ID
     const [rows] = await this.database.query(
+      // récupère le user id, vehicule id pour les vehicule dont user_id=id de la requête
+      `select v.id 
+             from ${this.table} as u
+             join vehicule as v on v.proprietaire_id=u.id
+             where token = ?`,
+      [token]
+    );
+
+    // Return the first row of the result, which represents the item
+    return rows[0];
+  }
+
+  async takeId(email) {
+    // Execute the SQL SELECT query to retrieve a specific item by its ID
+    const [rows] = await this.database.query(
+      // récupère le user id, vehicule id pour les vehicule dont user_id=id de la requête
       `select *
              from ${this.table}
-             where id = ?`,
-      [id]
+             where email = ?`,
+      [email]
     );
 
     // Return the first row of the result, which represents the item

@@ -11,35 +11,24 @@ export default function AdminAddVehicule() {
   const [isAdmin, setIsAdmin] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [vehiculeData, setVehiculeData] = useState([]);
   const urlmarques = `${import.meta.env.VITE_BACKEND_URL}/api/marques`;
   const urlmodeles = `${import.meta.env.VITE_BACKEND_URL}/api/modeles`;
 
   async function Submit() {
+    const data = [];
     try {
       await axios
         .get(
           `https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/all-vehicles-model/records?group_by=id%2Cmake%2C%20model%2Catvtype&limit=20000&offset=0&refine=fueltype%3AElectricity`
         )
-        .then((res) => setVehiculeData(res.data.results))
+        .then((res) => data.push(res.data.results))
         .catch((err) => console.error(err));
+      await axios.post(urlmarques, data[0]).catch((err) => console.error(err));
 
-      await axios
-        .post(urlmarques, vehiculeData)
-        .then((res) => console.info(res))
-        .catch((err) => console.error(err));
-
-      await axios
-        .post(urlmodeles, vehiculeData)
-        .then((res) => console.info(res))
-        .catch((err) => console.error(err));
+      await axios.post(urlmodeles, data[0]).catch((err) => console.error(err));
     } catch {
       console.error("error");
     }
-
-    setTimeout(() => {
-      window.location.href = "/addVehicule";
-    }, 3500);
   }
 
   useEffect(() => {

@@ -21,6 +21,9 @@ const borneControllers = require("./controllers/borneControllers");
 // Route to connect user
 router.post("/login", userControllers.login);
 
+// Route to add a new users
+router.post("/users", hashPassword, userControllers.add);
+
 // Route to delete user
 router.post("/delete", userControllers.userDelete);
 
@@ -37,14 +40,14 @@ router.get("/users", userControllers.browse);
 // Route to get a list of reservations by ID
 router.get("/users/:id", userControllers.read);
 
-// Route to add a new users
-router.post("/users", hashPassword, userControllers.add);
+// Route to get a list of reservations by email for having id
+router.get("/takeid/:email", userControllers.takeId);
 
 // Route to edit a user
 router.post("/edituser", userControllers.edit);
 
 // Route to get a list of reservations
-router.post("/reservations", reservationControllers.browse);
+router.post("/reservations", reservationControllers.add);
 
 router.get("/reservations", reservationControllers.readAll);
 

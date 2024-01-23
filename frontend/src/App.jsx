@@ -1,9 +1,10 @@
 import { Outlet } from "react-router-dom";
 import { useMemo, useState } from "react";
-
 import FilterResearch from "./Context/ResearchContext";
 import LocationContext from "./Context/locationContext";
 import BornesContext from "./Context/BornesContext";
+import ReservationContext from "./Context/ReservationContext";
+import UserContext from "./Context/UserContext";
 import Navbar from "./components/navbar";
 import NavMobile from "./components/navmobile";
 import Footer from "./components/footer";
@@ -39,6 +40,30 @@ function App() {
     () => ({ bornes, setBornes }),
     [bornes, setBornes]
   );
+  const [reservation, setReservation] = useState("");
+  const [borneId, setBorneId] = useState({ borne_id: "", borne_name: "" });
+  const reservationValue = useMemo(
+    () => ({ reservation, setReservation, borneId, setBorneId }),
+    [reservation, setReservation, borneId, setBorneId]
+  );
+  const date = new Date().toISOString();
+  const newDate = date.slice(0, 10);
+  const [user, setUser] = useState({
+    nom: "",
+    prenom: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    anniversaire: "",
+    rue: "",
+    code_postal: "",
+    ville: "",
+    nb_vehicule: 1,
+    inscription: newDate,
+    derniere_maj: newDate,
+    connexion: newDate,
+  });
+  const UserValue = useMemo(() => ({ user, setUser }), [user, setUser]);
 
   function OnChangePage() {
     const resizeObserver = new ResizeObserver(() => {
@@ -73,13 +98,17 @@ function App() {
     <>
       <Navbar navData={navData} />
       <main>
-        <BornesContext.Provider value={bornesValue}>
-          <LocationContext.Provider value={positionValue}>
-            <FilterResearch.Provider value={value}>
-              <Outlet onChange={OnChangePage()} />
-            </FilterResearch.Provider>
-          </LocationContext.Provider>
-        </BornesContext.Provider>
+        <UserContext.Provider value={UserValue}>
+          <BornesContext.Provider value={bornesValue}>
+            <ReservationContext.Provider value={reservationValue}>
+              <LocationContext.Provider value={positionValue}>
+                <FilterResearch.Provider value={value}>
+                  <Outlet onChange={OnChangePage()} />
+                </FilterResearch.Provider>
+              </LocationContext.Provider>
+            </ReservationContext.Provider>
+          </BornesContext.Provider>
+        </UserContext.Provider>
       </main>
       <Footer className="FooterParams" />
       <NavMobile />

@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import Home from "./pages/Home";
 import ErrorPage from "./pages/404";
-
+import DoReservation from "./pages/DoReservation";
 import Reservation from "./pages/Reservation";
 
 import Map from "./pages/Map";
@@ -28,6 +28,9 @@ import AdminAddVehicule from "./pages/AdminAddVehicule";
 import RegisterSuccess from "./pages/Auth/registerSuccess";
 import AddBornesSuccess from "./pages/Account/addBornesSuccess";
 import AddVehicule from "./pages/Account/addVehicule";
+import AddYourVehicule from "./pages/Auth/addYourVehicule";
+import AddVehiculeSuccess from "./pages/Auth/addVehiculeSuccess";
+import ReservationSuccess from "./pages/Auth/reservationSuccess";
 
 const router = createBrowserRouter([
   {
@@ -121,6 +124,22 @@ const router = createBrowserRouter([
       {
         path: "/addVehicule",
         element: <AddVehicule />,
+      },
+      {
+        path: "/DoReservation",
+        element: <DoReservation />,
+      },
+      {
+        path: "/AddYourVehicule",
+        element: <AddYourVehicule />,
+      },
+      {
+        path: "/addVehiculeSuccess",
+        element: <AddVehiculeSuccess />,
+      },
+      {
+        path: "/reservationSuccess",
+        element: <ReservationSuccess />,
       },
     ],
   },

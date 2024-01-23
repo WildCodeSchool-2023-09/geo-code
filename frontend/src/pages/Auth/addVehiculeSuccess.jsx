@@ -1,30 +1,25 @@
 import "../../scss/pages.scss";
+import { Link } from "react-router-dom";
 import Lottie from "react-lottie-player";
-import { useEffect } from "react";
 import LogInProgress from "../../assets/LottieFiles/LogIn.json";
 import ScrollToTop from "../ResetScrollOnPage";
 
-function registerSucces() {
-  useEffect(() => {
-    setTimeout(() => {
-      window.location.href = "/AddYourVehicule";
-    }, 3500);
-  }, []);
-
+function addVehiculeSuccess() {
   return (
     <section>
       <ScrollToTop />
       <div className="containererror">
         <Lottie
-          loop
+          loop={false}
           animationData={LogInProgress}
           play
           style={{ width: 120, height: 120 }}
         />
-        <h1>Inscription en cours</h1>
+        <h1>Ajout de votre véhicule</h1>
       </div>
+      <Link to="/addYourVehicule">Ajouter un véhicule</Link>
     </section>
   );
 }
 
-export default registerSucces;
+export default addVehiculeSuccess;

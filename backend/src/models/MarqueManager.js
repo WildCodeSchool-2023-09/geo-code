@@ -12,30 +12,37 @@ class MarqueManager extends AbstractManager {
   async create(newMarques) {
     // Execute the SQL INSERT query to add a new item to the "item" table
 
-    await this.database.query(
-      `ALTER TABLE vehicule DROP CONSTRAINT vehicule_fk1`
-    );
-
-    await this.database.query(`ALTER TABLE modele DROP FOREIGN KEY modele_fk0`);
-    await this.database.query(`TRUNCATE TABLE marque`);
-    await this.database.query(`TRUNCATE TABLE modele`);
-
-    await this.database.query(
-      `ALTER TABLE modele ADD CONSTRAINT modele_fk0 FOREIGN KEY (marque_id) REFERENCES marque(id);`
-    );
-    await this.database.query(
-      `ALTER TABLE vehicule ADD CONSTRAINT vehicule_fk1 FOREIGN KEY (modele_id) REFERENCES modele(id);`
-    );
-
-    newMarques.map((element) => {
-      this.database.query(
-        `insert into ${this.table} (name)
-           values (?)`,
-        [element]
+    try {
+      await this.database.query(
+        `ALTER TABLE vehicule DROP CONSTRAINT vehicule_fk1`
       );
-      return true;
-    });
 
+      await this.database.query(
+        `ALTER TABLE modele DROP FOREIGN KEY modele_fk0`
+      );
+
+      await this.database.query(`TRUNCATE TABLE marque`);
+
+      await this.database.query(`TRUNCATE TABLE modele`);
+
+      await this.database.query(
+        `ALTER TABLE modele ADD CONSTRAINT modele_fk0 FOREIGN KEY (marque_id) REFERENCES marque(id);`
+      );
+
+      await this.database.query(
+        `ALTER TABLE vehicule ADD CONSTRAINT vehicule_fk1 FOREIGN KEY (modele_id) REFERENCES modele(id);`
+      );
+
+      await newMarques.map((element) =>
+        this.database.query(
+          `insert into ${this.table} (name)
+           values (?)`,
+          [element]
+        )
+      );
+    } catch (error) {
+      console.error(error);
+    }
     // Return the ID of the newly inserted item
   }
 

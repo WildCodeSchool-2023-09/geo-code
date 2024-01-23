@@ -9,7 +9,7 @@ CREATE TABLE user (
 	rue VARCHAR(255) NOT NULL,
 	code_postal int NOT NULL,
 	ville VARCHAR(255) NOT NULL,
-	email VARCHAR(255) NOT NULL,
+	email  VARCHAR(255) NOT NULL UNIQUE,
 	password VARCHAR(300) NOT NULL,
 	connection DATE NULL,
 	nb_vehicule int NOT NULL,
@@ -27,8 +27,7 @@ INSERT INTO user (nom, prenom, rue, code_postal,ville, email, password, connecti
 
 DROP TABLE IF EXISTS borne;
 CREATE TABLE borne (
-  id VARCHAR(250)  NOT NULL PRIMARY KEY,
-	id_station VARCHAR (80) NOT NULL,
+	id VARCHAR (80) NOT NULL PRIMARY KEY,
 	n_station VARCHAR(255)  NOT NULL,
 	ad_station VARCHAR(255)  NOT NULL,
 	code_postal VARCHAR (80)  NOT NULL,
@@ -38,6 +37,7 @@ CREATE TABLE borne (
 	accessibilite VARCHAR(80)  NOT NULL,
 	type_prise VARCHAR(250)  NOT NULL,
 	n_enseigne  VARCHAR (80)  NOT NULL,
+	nbre_pdc VARCHAR(80),
 	date_maj DATE NOT NULL
 );
 
@@ -72,6 +72,7 @@ CREATE TABLE vehicule (
 	modele_id int NOT NULL,
 	PRIMARY KEY (id)
 );
+
 
 DROP TABLE IF EXISTS reservation;
 CREATE TABLE reservation (

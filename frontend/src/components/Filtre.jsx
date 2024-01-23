@@ -4,7 +4,7 @@ import "../scss/components/Filter.scss";
 
 function Filtre() {
   const { setResearch } = useContext(FilterContext);
-  let isActive = "inactive";
+  const isActive = false;
   const [valueDefault, setValueDefault] = useState({
     code: "",
     enseigne: "",
@@ -25,14 +25,11 @@ function Filtre() {
   };
 
   const handleToogle = (e) => {
-    if (isActive === "inactive") {
-      e.target.className = "filter_prisetype_buttons_active";
-      isActive = "active";
-    } else {
-      e.target.className = " filter_prisetype_buttons";
-      isActive = "inactive";
+    if (e.target.className === `filter_prisetype_buttons_false`)
+      e.target.className = `filter_prisetype_buttons_${!isActive}`;
+    else {
+      e.target.className = `filter_prisetype_buttons_${isActive}`;
     }
-    return e.target.className;
   };
 
   const handleSubmit = (event) => {
@@ -56,18 +53,7 @@ function Filtre() {
               onChange={handleChange}
             />
           </div>
-          <div className="separate">
-            <label htmlFor="enseigne">Enseigne</label>
-            <select
-              value={valueDefault.enseigne}
-              onChange={handleChange}
-              name="enseigne"
-            >
-              <option value="Toutes">Toutes</option>
-              <option value="Une">Une</option>
-              <option value="Deux">Deux</option>
-            </select>
-          </div>
+
           <div className="separate">
             <label htmlFor="rayon">Rayon (Km)</label>
             <input
@@ -113,7 +99,7 @@ function Filtre() {
                   handleToogle(e);
                   selectValue(e);
                 }}
-                className=" filter_prisetype_buttons"
+                className={`filter_prisetype_buttons_${isActive}`}
               >
                 AC
               </button>
@@ -125,7 +111,7 @@ function Filtre() {
                   handleToogle(e);
                   selectValue(e);
                 }}
-                className=" filter_prisetype_buttons"
+                className={`filter_prisetype_buttons_${isActive}`}
               >
                 EF
               </button>
@@ -137,7 +123,7 @@ function Filtre() {
                   handleToogle(e);
                   selectValue(e);
                 }}
-                className=" filter_prisetype_buttons"
+                className={`filter_prisetype_buttons_${isActive}`}
               >
                 Type 1
               </button>
@@ -149,7 +135,7 @@ function Filtre() {
                   handleToogle(e);
                   selectValue(e);
                 }}
-                className=" filter_prisetype_buttons"
+                className={`filter_prisetype_buttons_${isActive}`}
               >
                 Type 2
               </button>
@@ -161,7 +147,7 @@ function Filtre() {
                   handleToogle(e);
                   selectValue(e);
                 }}
-                className=" filter_prisetype_buttons"
+                className={`filter_prisetype_buttons_${isActive}`}
               >
                 Type 3
               </button>
@@ -173,7 +159,7 @@ function Filtre() {
                   handleToogle(e);
                   selectValue(e);
                 }}
-                className=" filter_prisetype_buttons"
+                className={`filter_prisetype_buttons_${isActive}`}
               >
                 CHADEMO
               </button>
@@ -185,7 +171,7 @@ function Filtre() {
                   handleToogle(e);
                   selectValue(e);
                 }}
-                className=" filter_prisetype_buttons"
+                className={`filter_prisetype_buttons_${isActive}`}
               >
                 Combo CCS
               </button>

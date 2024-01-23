@@ -23,7 +23,7 @@ function BornesListe() {
 
   const { position } = useContext(LocationContext);
 
-  const display = 10;
+  const display = 9;
   let bornesFilters = [];
   const [max, setMax] = useState(bornes.length);
 
@@ -32,8 +32,7 @@ function BornesListe() {
   }
   bornesFilters = bornes.filter(
     (cluster) =>
-      cluster.code_postal.slice(0, 2).includes(research.code) &&
-      cluster.n_enseigne.includes(research.enseigne) &&
+      cluster.code_postal.startsWith(research.code) &&
       cluster.puiss_max.includes(research.puissance) &&
       cluster.type_prise.includes(
         research.prise || research.prise.toLowerCase()

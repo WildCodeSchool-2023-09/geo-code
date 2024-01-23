@@ -58,6 +58,20 @@ const readAll = async (req, res, next) => {
     next(err);
   }
 };
+const add = async (req, res, next) => {
+  const reservationData = req.body;
+
+  try {
+    // Insert the item into the database
+    const insertId = await tables.reservation.create(reservationData);
+
+    // Respond with HTTP 201 (Created) and the ID of the newly inserted item
+    res.status(201).json({ insertId });
+  } catch (err) {
+    // Pass any errors to the error-handling middleware
+    next(err);
+  }
+};
 
 const edit = async (req, res, next) => {
   try {
@@ -103,6 +117,7 @@ module.exports = {
   browse,
   checkListId,
   readAll,
+  add,
   edit,
   destroyReservation,
 };
