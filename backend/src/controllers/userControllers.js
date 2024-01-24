@@ -96,7 +96,7 @@ const add = async (req, res, next) => {
 
     const tokenUser = jwt.sign(
       { email: user.email, userId: insertId },
-      process.env.JWT_SECRET,
+      process.env.APP_SECRET,
       { expiresIn: "1h" }
     );
 
@@ -148,7 +148,7 @@ const login = async (req, res, next) => {
 
         const tokenUser = jwt.sign(
           { email: user[0].email, userId: user[0].id },
-          process.env.JWT_SECRET,
+          process.env.APP_SECRET,
           { expiresIn: "1h" }
         );
 
@@ -197,7 +197,7 @@ const checktoken = async (req, res, next) => {
     const { token } = req.cookies;
 
     try {
-      const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+      const decodedToken = jwt.verify(token, process.env.APP_SECRET);
 
       const { userId } = decodedToken;
 
