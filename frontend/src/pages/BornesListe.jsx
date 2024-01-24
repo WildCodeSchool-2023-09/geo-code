@@ -103,6 +103,7 @@ function BornesListe() {
                       enseigne={borne.n_enseigne}
                       puissance={borne.puiss_max}
                       prise={borne.type_prise}
+                      id={borne.id}
                     />
                   </div>
                 </div>

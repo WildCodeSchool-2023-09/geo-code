@@ -72,7 +72,7 @@ CREATE TABLE vehicule (
 	modele_id int NOT NULL,
 	PRIMARY KEY (id)
 );
-
+INSERT INTO vehicule (proprietaire_id, modele_id) VALUES (1,1),(2,1),(3,1),(4,1);
 
 DROP TABLE IF EXISTS reservation;
 CREATE TABLE reservation (
