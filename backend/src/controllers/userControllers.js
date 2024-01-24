@@ -87,7 +87,7 @@ const edit = async (req, res, next) => {
 // The A of BREAD - Add (Create) operation
 const add = async (req, res, next) => {
   const user = req.body;
-  console.info(user);
+
   try {
     // Insert the item into the database
     const userExist = await tables.user.signIn(user.email);

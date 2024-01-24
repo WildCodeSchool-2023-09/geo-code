@@ -30,7 +30,6 @@ function Register() {
     });
   }
 
-  console.info(user.anniversaire);
   const handleChange = (event) => {
     setUser({ ...user, [event.target.name]: event.target.value });
   };
