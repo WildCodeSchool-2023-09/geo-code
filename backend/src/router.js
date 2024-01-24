@@ -48,6 +48,8 @@ router.post("/edituser", userControllers.edit);
 
 // Route to get a list of reservations
 router.post("/reservations", reservationControllers.add);
+// Route to get a list of reservations
+router.get("/reservationsBrowse", reservationControllers.browse);
 
 router.get("/reservations", reservationControllers.readAll);
 

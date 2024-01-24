@@ -7,7 +7,9 @@ const browse = async (req, res, next) => {
   try {
     const data = [];
     const { token } = req.cookies;
+
     const user = await tables.user.checkToken(token);
+
     const vehicules = await tables.vehicule.checkVehicule(user[0].id);
     const vehiculeMap = vehicules.map(async (vehicule) => {
       const reservation = await tables.reservation.checkReservationForDelete(
