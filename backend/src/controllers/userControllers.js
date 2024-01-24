@@ -87,45 +87,61 @@ const edit = async (req, res, next) => {
 // The A of BREAD - Add (Create) operation
 const add = async (req, res, next) => {
   const user = req.body;
-
+  console.info(user);
   try {
     // Insert the item into the database
-    const insertId = await tables.user.create(user);
+    const userExist = await tables.user.signIn(user.email);
 
     const ActualDate = new Date();
+    const birthday = new Date(user.anniversaire);
+    if (userExist.length === 0) {
+      if (
+        user.anniversaire < user.derniere_maj &&
+        Math.floor((Date.now() - birthday) / 31557600000) >= 18
+      ) {
+        const insertId = await tables.user.create(user);
+        const tokenUser = jwt.sign(
+          { email: user.email, userId: insertId },
+          process.env.APP_SECRET,
+          { expiresIn: "1h" }
+        );
 
-    const tokenUser = jwt.sign(
-      { email: user.email, userId: insertId },
-      process.env.APP_SECRET,
-      { expiresIn: "1h" }
-    );
+        if (user.admin === 1) {
+          res.cookie("token", tokenUser, {
+            httpOnly: true,
+            maxAge: 3600000,
+          });
+          res.status(200).send({
+            message: "Authentification réussie",
+            admin: true,
+            insertId,
+          });
 
-    if (user.admin === 1) {
-      res.cookie("token", tokenUser, {
-        httpOnly: true,
-        maxAge: 3600000,
-      });
-      res.status(200).send({
-        message: "Authentification réussie",
-        admin: true,
-        insertId,
-      });
+          await tables.user.saveToken(tokenUser, user.email);
+          await tables.user.setLastConnexion(ActualDate, user.email);
+        } else {
+          res.cookie("token", tokenUser, {
+            httpOnly: true,
+            maxAge: 3600000,
+          });
+          res.status(200).send({
+            message: "Authentification réussie",
+            admin: false,
+            insertId,
+          });
 
-      await tables.user.saveToken(tokenUser, user.email);
-      await tables.user.setLastConnexion(ActualDate, user.email);
+          await tables.user.saveToken(tokenUser, user.email);
+          await tables.user.setLastConnexion(ActualDate, user.email);
+        }
+      } else {
+        res.status(200).send({
+          message: "Vous devez avoir plus de 18 ans",
+        });
+      }
     } else {
-      res.cookie("token", tokenUser, {
-        httpOnly: true,
-        maxAge: 3600000,
-      });
       res.status(200).send({
-        message: "Authentification réussie",
-        admin: false,
-        insertId,
+        message: "Cet email est déjà prit",
       });
-
-      await tables.user.saveToken(tokenUser, user.email);
-      await tables.user.setLastConnexion(ActualDate, user.email);
     }
   } catch (err) {
     // Pass any errors to the error-handling middleware

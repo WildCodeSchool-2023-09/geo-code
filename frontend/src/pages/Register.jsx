@@ -30,10 +30,7 @@ function Register() {
     });
   }
 
-  if (user.anniversaire.length !== 0) {
-    user.anniversaire = user.anniversaire.replaceAll("/", "-");
-  }
-
+  console.info(user.anniversaire);
   const handleChange = (event) => {
     setUser({ ...user, [event.target.name]: event.target.value });
   };
@@ -69,14 +66,25 @@ function Register() {
             },
             { withCredentials: true }
           )
+          .then((res) => {
+            if (res.data.message === "Authentification réussie") {
+              setTimeout(() => {
+                window.location.href = "/registerSuccess";
+              }, 500);
+            } else {
+              document.getElementById("errorLog").innerText = "";
+              document.getElementById("errorEmail").innerText =
+                res.data.message;
+              document
+                .getElementById("email")
+                .classList.add("errorOnPlaceholder");
+            }
+          })
           .catch((err) => console.error(err));
       }
     } catch (error) {
       console.info("il y a une erreur");
     }
-    setTimeout(() => {
-      window.location.href = "/registerSuccess";
-    }, 500);
   };
 
   return (
@@ -143,7 +151,7 @@ function Register() {
           </div>
           <div className="content_input">
             <label className="content_input_label" htmlFor="confirm">
-              Confirmez le mot de passe
+              Confirmez
             </label>
             <input
               className="content_input_placeholder"
@@ -162,7 +170,7 @@ function Register() {
             <input
               className="content_input_placeholder_space"
               value={user.anniversaire}
-              type="text"
+              type="date"
               name="anniversaire"
               id="anniversary"
               onChange={handleChange}
@@ -213,27 +221,12 @@ function Register() {
           </div>
         </form>
 
-        <div className="toggle-button">
-          <div className="button_dispose">
-            <label className="switch_button">
-              <p>{}</p>
-              <input type="checkbox" />
-              <span className="slider round" />
-            </label>
-            <p className="toggle_button_text">
-              J'accepte les conditions générales d'utilisations
-            </p>
-          </div>
-          <div className="button_dispose">
-            <label className="switch_button">
-              <p>{}</p>
-              <input type="checkbox" />
-              <span className="slider round" />
-            </label>
-            <p className="toggle_button_text">
-              J'accepte les politiques de confidentialité
-            </p>
-          </div>
+        <div>
+          En cliquant sur Créer mon compte, vous acceptez :{" "}
+          <ul>
+            <li>- notre politique de confidentialité </li>
+            <li>- nos conditions générales d'utilisation</li>
+          </ul>
         </div>
         <div className="button-form">
           <div>

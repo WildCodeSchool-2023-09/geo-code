@@ -43,9 +43,9 @@ export default function Reservation() {
             });
 
           axios
-            .post(
-              `${import.meta.env.VITE_BACKEND_URL}/api/reservations`,
-              "hello",
+            .get(
+              `${import.meta.env.VITE_BACKEND_URL}/api/reservationsBrowse`,
+
               {
                 withCredentials: true,
               }
