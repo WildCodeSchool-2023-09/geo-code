@@ -1,8 +1,10 @@
 import "../scss/components/borneCardUser.scss";
 import PropTypes from "prop-types";
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 import LocationContext from "../Context/locationContext";
 import convertToDistance from "../services/ConvertToDistance";
+import ReservationContext from "../Context/ReservationContext";
 
 export default function BorneCard({
   name,
@@ -12,8 +14,11 @@ export default function BorneCard({
   disponible,
   puissance,
   prise,
+  id,
 }) {
   const { position } = useContext(LocationContext);
+  const { setBorneId } = useContext(ReservationContext);
+
   return (
     <div className="userCardBorne">
       <div className="userCardBorne_info">
@@ -36,9 +41,18 @@ export default function BorneCard({
           <p className="userCardBorne_data_array_value">Prise : {prise}</p>
         </div>
       </div>
-      <button type="button" className="userCardBorne_button">
+      <Link
+        to="/doReservation"
+        className="userCardBorne_button"
+        onClick={() => {
+          setBorneId({
+            borne_id: id,
+            borne_name: name,
+          });
+        }}
+      >
         Réservation
-      </button>
+      </Link>
     </div>
   );
 }
@@ -51,4 +65,5 @@ BorneCard.propTypes = {
   puissance: PropTypes.string.isRequired,
   disponible: PropTypes.string.isRequired,
   prise: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
 };

@@ -73,7 +73,6 @@ CREATE TABLE vehicule (
 	PRIMARY KEY (id)
 );
 
-
 DROP TABLE IF EXISTS reservation;
 CREATE TABLE reservation (
 	id int  AUTO_INCREMENT NOT NULL,
