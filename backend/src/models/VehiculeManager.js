@@ -66,9 +66,19 @@ class VehiculeManager extends AbstractManager {
   // The U of CRUD - Update operation
   // TODO: Implement the update operation to modify an existing item
 
-  // async update(item) {
-  //   ...
-  // }
+  async update(data) {
+    data.forEach(async (element) => {
+      console.info(element);
+      const [result] = await this.database.query(
+        `UPDATE vehicule
+             SET  modele_id=?, proprietaire_id=?
+                 WHERE id = ?`,
+        [element.modele_id, element.proprietaire_id, element.id]
+      );
+
+      return result;
+    });
+  }
 
   // The D of CRUD - Delete operation
   // TODO: Implement the delete operation to remove an item by its ID

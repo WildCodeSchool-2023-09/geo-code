@@ -35,7 +35,17 @@ const read = async (req, res, next) => {
 };
 
 // The E of BREAD - Edit (Update) operation
-// This operation is not yet implemented
+const edit = async (req, res, next) => {
+  try {
+    const { token } = req.cookies;
+    const data = req.body;
+
+    await tables.user.checkToken(token);
+    await tables.vehicule.update(data);
+  } catch (err) {
+    next(err);
+  }
+};
 
 // The A of BREAD - Add (Create) operation
 const add = async (req, res, next) => {
@@ -80,7 +90,7 @@ module.exports = {
   browse,
   read,
   checkVehicule,
-  // edit,
+  edit,
   add,
   // destroy,
 };
