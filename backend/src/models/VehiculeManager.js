@@ -68,7 +68,6 @@ class VehiculeManager extends AbstractManager {
 
   async update(data) {
     data.forEach(async (element) => {
-      console.info(element);
       const [result] = await this.database.query(
         `UPDATE vehicule
              SET  modele_id=?, proprietaire_id=?
