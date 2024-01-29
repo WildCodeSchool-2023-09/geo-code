@@ -38,8 +38,13 @@ class VehiculeManager extends AbstractManager {
 
   async readAll() {
     // Execute the SQL SELECT query to retrieve all items from the "item" table
-    const [rows] = await this.database.query(`select *
-                                                  from ${this.table}`);
+    const [rows] = await this.database
+      .query(`select v.id, u.nom, u.prenom, m.name as modele_name, ma.name as marque_name
+       from ${this.table} as v
+       join user as u on u.id = v.proprietaire_id
+       join modele as m on m.id = v.modele_id
+       join marque as ma on ma.id = m.marque_id
+       `);
 
     // Return the array of items
     return rows;

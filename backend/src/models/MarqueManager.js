@@ -14,10 +14,6 @@ class MarqueManager extends AbstractManager {
 
     try {
       await this.database.query(
-        `ALTER TABLE vehicule DROP CONSTRAINT vehicule_fk1`
-      );
-
-      await this.database.query(
         `ALTER TABLE modele DROP FOREIGN KEY modele_fk0`
       );
 
@@ -27,10 +23,6 @@ class MarqueManager extends AbstractManager {
 
       await this.database.query(
         `ALTER TABLE modele ADD CONSTRAINT modele_fk0 FOREIGN KEY (marque_id) REFERENCES marque(id);`
-      );
-
-      await this.database.query(
-        `ALTER TABLE vehicule ADD CONSTRAINT vehicule_fk1 FOREIGN KEY (modele_id) REFERENCES modele(id);`
       );
 
       await newMarques.map((element) =>

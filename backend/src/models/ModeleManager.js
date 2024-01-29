@@ -17,11 +17,12 @@ class ModeleManager extends AbstractManager {
         `select id from marque where name="${element.make}"`
       );
 
-      this.database.query(
+      await this.database.query(
         `insert into ${this.table} (name,marque_id, type_prise)
              values (?, ?, ?)`,
         [element.model, id[0].id, element.atvtype]
       );
+
       return true;
     });
 
