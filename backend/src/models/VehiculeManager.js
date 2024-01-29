@@ -52,7 +52,11 @@ class VehiculeManager extends AbstractManager {
 
   async checkVehicule(proprietaireId) {
     const [rows] = await this.database.query(
-      `SELECT * FROM vehicule WHERE proprietaire_id = ?`,
+      `SELECT v.id, m.name as modele_name, ma.name as marque_name
+       FROM vehicule as v
+       join modele as m on m.id = v.modele_id
+       join marque as ma on ma.id = m.marque_id
+      WHERE proprietaire_id = ?`,
       [proprietaireId]
     );
 

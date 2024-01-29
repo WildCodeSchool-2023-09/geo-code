@@ -54,6 +54,24 @@ const add = async (req, res, next) => {
   }
 };
 
+const checkVehicule = async (req, res, next) => {
+  try {
+    // Fetch a specific item from the database based on the provided ID
+    const vehicule = await tables.vehicule.checkVehicule(req.params.id);
+
+    // If the item is not found, respond with HTTP 404 (Not Found)
+    // Otherwise, respond with the item in JSON format
+    if (vehicule == null) {
+      res.sendStatus(404);
+    } else {
+      res.json(vehicule);
+    }
+  } catch (err) {
+    // Pass any errors to the error-handling middleware
+    next(err);
+  }
+};
+
 // The D of BREAD - Destroy (Delete) operation
 // This operation is not yet implemented
 
@@ -61,6 +79,7 @@ const add = async (req, res, next) => {
 module.exports = {
   browse,
   read,
+  checkVehicule,
   // edit,
   add,
   // destroy,
