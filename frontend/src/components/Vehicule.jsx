@@ -35,7 +35,6 @@ function Vehicule({
   };
 
   const deleteVehicule = () => {
-    console.info(vehiculeId);
     axios.delete(
       `${import.meta.env.VITE_BACKEND_URL}/api/vehicules/${vehiculeId}`
     );
