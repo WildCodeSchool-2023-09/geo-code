@@ -36,7 +36,7 @@ function MyVehicule() {
       .get(`${import.meta.env.VITE_BACKEND_URL}/api/checkVehicule/${id}`)
       .then((res) => setVehicules(res.data))
       .catch((err) => console.error(err));
-  }, []);
+  }, [id]);
 
   // envoi des informations vers le back
 

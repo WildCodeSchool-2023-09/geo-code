@@ -83,7 +83,16 @@ const checkVehicule = async (req, res, next) => {
 };
 
 // The D of BREAD - Destroy (Delete) operation
-// This operation is not yet implemented
+const destroy = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    await tables.vehicule.delete(id);
+
+    res.status(200).send({ message: "Véhicule supprimé" });
+  } catch (err) {
+    next(err);
+  }
+};
 
 // Ready to export the controller functions
 module.exports = {
@@ -92,5 +101,5 @@ module.exports = {
   checkVehicule,
   edit,
   add,
-  // destroy,
+  destroy,
 };

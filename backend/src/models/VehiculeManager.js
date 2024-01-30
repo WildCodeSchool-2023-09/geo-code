@@ -81,11 +81,14 @@ class VehiculeManager extends AbstractManager {
   }
 
   // The D of CRUD - Delete operation
-  // TODO: Implement the delete operation to remove an item by its ID
+  async delete(id) {
+    const [rows] = await this.database.query(
+      `DELETE FROM vehicule WHERE id = ?`,
+      [id]
+    );
 
-  // async delete(id) {
-  //   ...
-  // }
+    return rows;
+  }
 }
 
 module.exports = VehiculeManager;

@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 import MarqueModeleContext from "../Context/MarqueModeleContext";
 
 function Vehicule({
@@ -33,6 +34,12 @@ function Vehicule({
     ]);
   };
 
+  const deleteVehicule = () => {
+    console.info(vehiculeId);
+    axios.delete(
+      `${import.meta.env.VITE_BACKEND_URL}/api/vehicules/${vehiculeId}`
+    );
+  };
   return (
     <form>
       <label className="form_placeholder_title" htmlFor="marque">
@@ -78,7 +85,11 @@ function Vehicule({
         >
           Modifier ce véhicule
         </button>
-        <button type="button" className="vehicule_card_button">
+        <button
+          type="button"
+          className="vehicule_card_button"
+          onClick={deleteVehicule}
+        >
           Supprimer ce véhicule
         </button>
       </div>
@@ -88,7 +99,7 @@ function Vehicule({
 Vehicule.propTypes = {
   vehiculeMarque: PropTypes.string.isRequired,
   vehiculeModele: PropTypes.string.isRequired,
-  vehiculeId: PropTypes.string.isRequired,
+  vehiculeId: PropTypes.number.isRequired,
   id: PropTypes.number.isRequired,
   toPushInDB: PropTypes.func.isRequired,
   setToPushInDB: PropTypes.func.isRequired,

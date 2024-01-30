@@ -10,7 +10,6 @@ import LocationContext from "../Context/locationContext";
 import FilterContext from "../Context/ResearchContext";
 import ReservationContext from "../Context/ReservationContext";
 import BornesContext from "../Context/BornesContext";
-import SecondaryButton from "./buttons/SecondaryButton";
 
 function GetIcon() {
   // fonction qui permet de customiser l'icône des bornes
@@ -172,7 +171,8 @@ function BornesMarker() {
                   });
                 }}
               >
-                <SecondaryButton>Réservez cette borne</SecondaryButton>
+                <button type="button">Réservez cette borne</button>Réservez
+                cette borne
               </Link>
             </Popup>
           </Marker>
