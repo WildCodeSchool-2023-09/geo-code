@@ -80,18 +80,19 @@ function MyVehicule() {
         </div>
 
         <div className="vehicule_card_container">
-          {vehicules.map((vehicule) => (
-            <div className="vehicule_card" key={vehicule.id}>
-              <Vehicule
-                vehiculeMarque={vehicule.marque_name}
-                vehiculeModele={vehicule.modele_name}
-                vehiculeId={vehicule.id}
-                id={id}
-                toPushInDB={toPushInDB}
-                setToPushInDB={setToPushInDB}
-              />
-            </div>
-          ))}
+          {vehicules &&
+            vehicules.map((vehicule) => (
+              <div className="vehicule_card" key={vehicule.id}>
+                <Vehicule
+                  vehiculeMarque={vehicule.marque_name}
+                  vehiculeModele={vehicule.modele_name}
+                  vehiculeId={vehicule.id}
+                  id={id}
+                  toPushInDB={toPushInDB}
+                  setToPushInDB={setToPushInDB}
+                />
+              </div>
+            ))}
         </div>
         <div className="final_Button">
           <PrimaryButton

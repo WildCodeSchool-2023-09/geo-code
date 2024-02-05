@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Lottie from "react-lottie-player";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -107,11 +107,12 @@ function AddYourVehicule() {
               className="form_placeholder_input"
             >
               <option>Selectionnez la marque de votre voiture</option>
-              {marque.map((item) => (
-                <option key={item.name} value={item.id} name={item.name}>
-                  {item.name}
-                </option>
-              ))}
+              {marque &&
+                marque.map((item) => (
+                  <option key={item.name} value={item.id} name={item.name}>
+                    {item.name}
+                  </option>
+                ))}
             </select>
           </div>
           <div className="form_placeholder">
@@ -124,15 +125,16 @@ function AddYourVehicule() {
               className="form_placeholder_input"
             >
               <option>Sélectionnez le modèle de votre véhicule</option>
-              {modele
-                .filter((item) => {
-                  return +item.marque_id === +selectedMarque.id;
-                })
-                .map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.name}
-                  </option>
-                ))}
+              {modele &&
+                modele
+                  .filter((item) => {
+                    return +item.marque_id === +selectedMarque.id;
+                  })
+                  .map((item) => (
+                    <option key={item.id} value={item.id}>
+                      {item.name}
+                    </option>
+                  ))}
             </select>
           </div>
 
