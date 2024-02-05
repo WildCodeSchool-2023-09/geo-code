@@ -39,6 +39,8 @@ const read = async (req, res, next) => {
 
 // The A of BREAD - Add (Create) operation
 const add = async (req, res, next) => {
+  // check si la db est déjà rempli
+  const full = await tables.marque.readAll();
   // Extract the item data from the request body
   const marque = req.body;
   const marques = [];
@@ -47,7 +49,7 @@ const add = async (req, res, next) => {
 
   try {
     // Insert the item into the database
-    const insertId = await tables.marque.create(newMarques);
+    const insertId = await tables.marque.create(newMarques, full);
 
     // Respond with HTTP 201 (Created) and the ID of the newly inserted item
     res.status(201).json({ insertId });
