@@ -7,11 +7,11 @@ class ModeleManager extends AbstractManager {
     super({ table: "modele" });
   }
 
-  // The C of CRUD - Create operation
+  // The C of CRUD - create operation
+  // TODO: Implement the create operation to modify an existing item
 
-  // async create(modele) {
-  // Execute the SQL INSERT query to add a new item to the "item" table
-  // Return the ID of the newly inserted item
+  // async create(item) {
+  //   ...
   // }
 
   // The Rs of CRUD - Read operations
