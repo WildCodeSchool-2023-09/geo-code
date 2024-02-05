@@ -185,14 +185,15 @@ export default function Home() {
         <div className="stats">
           <h2>Bornes de recharges électriques en chiffres</h2>
           <div className="stats_container">
-            {Statistics.map((stat) => (
-              <div key={stat.id} className="stats_container_box">
-                <div className="stats_container_box_content">
-                  <p className="number">{stat.count}</p>
-                  <p className="name">{stat.name}</p>
+            {Statistics &&
+              Statistics.map((stat) => (
+                <div key={stat.id} className="stats_container_box">
+                  <div className="stats_container_box_content">
+                    <p className="number">{stat.count}</p>
+                    <p className="name">{stat.name}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
 
@@ -222,14 +223,15 @@ export default function Home() {
               Ils nous font confiance
             </h2>
             <div className="partners_container_content">
-              {Partners.map((partner) => (
-                <img
-                  key={partner.id}
-                  className="partner-logo"
-                  src={partner.logo}
-                  alt={partner.name}
-                />
-              ))}
+              {Partners &&
+                Partners.map((partner) => (
+                  <img
+                    key={partner.id}
+                    className="partner-logo"
+                    src={partner.logo}
+                    alt={partner.name}
+                  />
+                ))}
             </div>
           </div>
         </div>
