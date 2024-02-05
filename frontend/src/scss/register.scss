@@ -3,42 +3,42 @@
 .register-page {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 2rem;
+  width: 100%;
+  max-width: 1280px;
+  margin: 4rem auto 10rem;
+  align-items: center;
 
+  .registerbox {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 720px;
+    background-color: $color-light;
+    filter: drop-shadow(0px 0px 10px rgba($color-black, 0.2));
+    border-radius: 0.6rem;
+    padding: 1rem;
+  }
   h1 {
     display: flex;
     justify-content: center;
-    margin-top: 5rem;
-    margin-bottom: 2rem;
+
     font-size: 2rem;
     text-align: center;
-    @media screen and (max-width: 549px) {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
   }
   h2 {
     display: flex;
     justify-content: center;
-    margin-bottom: 2rem;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     text-align: center;
-    @media screen and (max-width: 549px) {
-      font-size: 1rem;
-      margin-bottom: 1rem;
-    }
   }
 
   h3 {
     display: flex;
     justify-content: center;
     padding: 2rem;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     text-align: center;
-    @media screen and (max-width: 549px) {
-      font-size: 1rem;
-      padding: 1rem;
-    }
   }
 }
 
@@ -46,13 +46,13 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 380px;
-  margin: 0 auto;
+  align-items: center;
 }
 .content_input {
   display: flex;
   flex-direction: row;
   padding: 0.6rem 0;
+  width: 100%;
   border-bottom: solid 1px rgba($color-black, 0.4);
 
   &_label {
@@ -60,6 +60,7 @@
   }
 
   &_placeholder {
+    width: 100%;
     border: none;
   }
 
@@ -82,8 +83,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 380px;
-  margin: 0 auto;
+  align-items: center;
 }
 
 .button-form {
@@ -102,7 +102,7 @@
 
   & input {
     opacity: 0;
-    width: 0;
+    width: 60px;
     height: 0;
   }
 }
@@ -117,6 +117,7 @@
   background-color: #ccc;
   -webkit-transition: 0.4s;
   transition: 0.4s;
+  width: 60px;
 
   &:before {
     position: absolute;
@@ -155,7 +156,6 @@ input:checked + .slider:before {
 
 .button_dispose {
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 1rem;
 }
@@ -169,6 +169,12 @@ input:checked + .slider:before {
   margin: 0 auto;
   gap: 1rem;
   margin-top: 2rem;
+
+  &_text {
+    text-overflow: clip;
+    font-size: 1rem;
+    font-weight: 500;
+  }
 }
 
 .create_button {
@@ -187,7 +193,7 @@ input:checked + .slider:before {
 .cancel_button {
   border-radius: 10px;
   cursor: pointer;
-  padding: 10px 20px;
+  background: none;
   text-align: center;
   border: 0;
   font-size: 16px;
@@ -195,13 +201,15 @@ input:checked + .slider:before {
   touch-action: manipulation;
 
   &:hover {
-    background-color: #ccc;
+    text-decoration: underline;
+    text-underline-offset: 0.3rem;
   }
 }
 
 .logo_register {
-  display: none;
+  display: flex;
+  width: 32px;
 }
-.eslinthappy {
-  display: none;
+li {
+  list-style: none;
 }

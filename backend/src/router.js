@@ -21,14 +21,18 @@ const borneControllers = require("./controllers/borneControllers");
 // Route to connect user
 router.post("/login", userControllers.login);
 
+// Route to add a new users
+router.post("/users", hashPassword, userControllers.add);
+
 // Route to delete user
 router.post("/delete", userControllers.userDelete);
 
 // Route to verify token
-router.post("/checktoken", userControllers.checktoken);
+router.get("/checktoken", userControllers.checktoken);
 
 // Route to verify token
-router.post("/takedata", userControllers.takeData);
+router.get("/takedata", userControllers.takeData);
+router.get("/logout", userControllers.logout);
 
 // Route to get a list of users
 router.get("/users", userControllers.browse);
@@ -36,18 +40,20 @@ router.get("/users", userControllers.browse);
 // Route to get a list of reservations by ID
 router.get("/users/:id", userControllers.read);
 
-// Route to add a new users
-router.post("/users", hashPassword, userControllers.add);
+// Route to get a list of reservations by email for having id
+router.get("/takeid/:email", userControllers.takeId);
 
 // Route to edit a user
 router.post("/edituser", userControllers.edit);
 
 // Route to get a list of reservations
-router.post("/reservations", reservationControllers.browse);
+router.post("/reservations", reservationControllers.add);
+// Route to get a list of reservations
+router.get("/reservationsBrowse", reservationControllers.browse);
 
 router.get("/reservations", reservationControllers.readAll);
 
-router.post("/borneinfo", borneControllers.read);
+router.get("/borneinfo/:id", borneControllers.read);
 
 // Route to get a list of marque
 router.get("/marques", marqueControllers.browse);
@@ -75,6 +81,15 @@ router.get("/vehicules/:id", vehiculeControllers.read);
 
 // Route to add a new reservations
 router.post("/vehicules", vehiculeControllers.add);
+
+// Route to add a new reservations
+router.put("/vehicules", vehiculeControllers.edit);
+
+// Route to get a specific vehicules by userID
+router.get("/checkVehicule/:id", vehiculeControllers.checkVehicule);
+
+// Route to delete a specific vehicules by userID
+router.delete("/vehicules/:id", vehiculeControllers.destroy);
 
 // Route to get a list of tarifications
 router.get("/tarifications", tarificationControllers.browse);

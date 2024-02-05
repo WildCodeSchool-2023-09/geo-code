@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import Home from "./pages/Home";
 import ErrorPage from "./pages/404";
-
+import DoReservation from "./pages/DoReservation";
 import Reservation from "./pages/Reservation";
 
 import Map from "./pages/Map";
@@ -18,13 +18,21 @@ import BornesListe from "./pages/BornesListe";
 import SignIn from "./pages/Auth/SignIn";
 import SuccessAuth from "./pages/Auth/SuccessAuth";
 import DeleteAccount from "./pages/Account/DeleteAccount";
-import Register from "./pages/Register";
+import SignUp from "./pages/Register";
 
 import AdminPanel from "./pages/AdminPanel";
 import AdminUtilisateur from "./pages/AdminUtilisateur";
 import AdminBorne from "./pages/AdminBorne";
 import AdminAddBornes from "./pages/AdminAddBornes";
+import AdminAddVehicule from "./pages/AdminAddVehicule";
 import RegisterSuccess from "./pages/Auth/registerSuccess";
+import AddBornesSuccess from "./pages/Account/addBornesSuccess";
+import AddVehicule from "./pages/Account/addVehicule";
+import AddYourVehicule from "./pages/Auth/addYourVehicule";
+import AddVehiculeSuccess from "./pages/Auth/addVehiculeSuccess";
+import ReservationSuccess from "./pages/Auth/reservationSuccess";
+import AdminVehiculeList from "./pages/adminVehiculeList";
+import MyVehicule from "./pages/MyVehicule";
 
 const router = createBrowserRouter([
   {
@@ -100,12 +108,48 @@ const router = createBrowserRouter([
         element: <DeleteAccount />,
       },
       {
-        path: "/register",
-        element: <Register />,
+        path: "/sign-up",
+        element: <SignUp />,
       },
       {
         path: "/registerSuccess",
         element: <RegisterSuccess />,
+      },
+      {
+        path: "/addBornesSuccess",
+        element: <AddBornesSuccess />,
+      },
+      {
+        path: "/adminAddVehicule",
+        element: <AdminAddVehicule />,
+      },
+      {
+        path: "/addVehicule",
+        element: <AddVehicule />,
+      },
+      {
+        path: "/DoReservation",
+        element: <DoReservation />,
+      },
+      {
+        path: "/AddYourVehicule",
+        element: <AddYourVehicule />,
+      },
+      {
+        path: "/addVehiculeSuccess",
+        element: <AddVehiculeSuccess />,
+      },
+      {
+        path: "/reservationSuccess",
+        element: <ReservationSuccess />,
+      },
+      {
+        path: "/AdminVehiculeList",
+        element: <AdminVehiculeList />,
+      },
+      {
+        path: "/MyVehicule",
+        element: <MyVehicule />,
       },
     ],
   },

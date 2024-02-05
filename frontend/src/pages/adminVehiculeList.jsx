@@ -5,10 +5,10 @@ import "../scss/admin-borne.scss";
 import Breadcrumb from "../components/breadcrumb";
 
 import mailError from "../assets/LottieFiles/EmailError.json";
-import BorneCard from "../components/BorneCard";
+import VehiculeCard from "../components/VehiculeCard";
 import ScrollToTop from "./ResetScrollOnPage";
 
-export default function AdminBorne() {
+export default function adminVehiculeList() {
   const [searchForm, setSearchForm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -40,9 +40,11 @@ export default function AdminBorne() {
         setIsLoading(false);
       });
 
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/bornes`).then((res) => {
-      setData(res.data);
-    });
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/vehicules`)
+      .then((res) => {
+        setData(res.data);
+      });
   }, []);
 
   if (isLoading) {
@@ -76,8 +78,8 @@ export default function AdminBorne() {
   return (
     <div className="admin-borne backgroundImageMain">
       <ScrollToTop />
-      <Breadcrumb data={arianfil} currentname="Liste des Bornes" />
-      <h1>Liste des Bornes</h1>
+      <Breadcrumb data={arianfil} currentname="Liste des Véhicules" />
+      <h1>Liste des Véhicules</h1>
       <div className="borneSearch">
         <form onSubmit={updateForm}>
           <div className="search-bar">
@@ -96,14 +98,23 @@ export default function AdminBorne() {
         <div className="card-list">
           {data &&
             data
-              .filter((borne) =>
-                borne.n_station.toLowerCase().includes(searchForm.toLowerCase())
+              .filter(
+                (vehicule) =>
+                  vehicule.modele_name
+                    .toLowerCase()
+                    .includes(searchForm.toLowerCase()) ||
+                  vehicule.marque_name
+                    .toLowerCase()
+                    .includes(searchForm.toLowerCase()) ||
+                  vehicule.nom.toLowerCase().includes(searchForm.toLowerCase())
               )
-              .map((borne) => (
-                <BorneCard
-                  key={borne.id}
-                  name={borne.n_station}
-                  adresse={borne.ad_station}
+              .map((vehicule) => (
+                <VehiculeCard
+                  key={vehicule.id}
+                  nom={vehicule.nom}
+                  prenom={vehicule.prenom}
+                  modeleName={vehicule.modele_name}
+                  marqueName={vehicule.marque_name}
                 />
               ))}
         </div>

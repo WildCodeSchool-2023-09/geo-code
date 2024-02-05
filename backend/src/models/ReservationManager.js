@@ -9,16 +9,17 @@ class ReservationManager extends AbstractManager {
 
   // The C of CRUD - Create operation
 
-  async create(reservation) {
+  async create(reservationData) {
     // Execute the SQL INSERT query to add a new item to the "item" table
     const [result] = await this.database.query(
-      `insert into ${this.table} (vehicule_id, borne_id, date_book, heure)
-             values (?, ?, ?, ?)`,
+      `insert into ${this.table} (vehicule_id, borne_id, date_reservation, heure, heure_fin)
+             values (?, ?, ?, ?, ?)`,
       [
-        reservation.vehicule_id,
-        reservation.borne_id,
-        reservation.date_book,
-        reservation.heure,
+        reservationData.vehicule_id,
+        reservationData.borne_id,
+        reservationData.date,
+        reservationData.heure,
+        reservationData.heure_fin,
       ]
     );
 
@@ -72,13 +73,6 @@ class ReservationManager extends AbstractManager {
   // TODO: Implement the update operation to modify an existing item
 
   // async update(item) {
-  //   ...
-  // }
-
-  // The D of CRUD - Delete operation
-  // TODO: Implement the delete operation to remove an item by its ID
-
-  // async delete(id) {
   //   ...
   // }
 }

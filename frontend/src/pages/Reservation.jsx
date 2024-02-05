@@ -11,6 +11,7 @@ import mailError from "../assets/LottieFiles/EmailError.json";
 import PrimaryButton from "../components/buttons/PrimaryButton";
 import ScrollToTop from "./ResetScrollOnPage";
 import ReservationCard from "../components/ReservationCard";
+import PastReservationCard from "../components/PastReservationCard";
 
 export default function Reservation() {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,46 +24,43 @@ export default function Reservation() {
   const [reservation, setReservation] = useState();
 
   useEffect(() => {
-    if (localStorage.getItem("UserToken") !== null) {
-      axios
-        .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
-          token: localStorage.getItem("UserToken"),
-        })
-        .then((res) => {
-          if (res.data.message === "OK") {
-            setIsLoggedIn(true);
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        if (res.data.message === "OK") {
+          setIsLoggedIn(true);
 
-            axios
-              .post(`${import.meta.env.VITE_BACKEND_URL}/api/takedata`, {
-                token: localStorage.getItem("UserToken"),
-              })
-              .then((resp) => {
-                setLastname(resp.data[0].nom);
-                setFirstname(resp.data[0].prenom);
-                setAvatar(data[0].img);
-              });
+          axios
+            .get(`${import.meta.env.VITE_BACKEND_URL}/api/takedata`, {
+              withCredentials: true,
+            })
+            .then((resp) => {
+              setLastname(resp.data[0].nom);
+              setFirstname(resp.data[0].prenom);
+              setAvatar(data[0].img);
+            });
 
-            axios
-              .post(`${import.meta.env.VITE_BACKEND_URL}/api/reservations`, {
-                token: localStorage.getItem("UserToken"),
-              })
-              .then((respo) => {
-                setReservation(respo.data);
-              });
-          } else {
-            setIsLoggedIn(false);
-            setTimeout(() => {
-              window.location.href = "/sign-in";
-            }, 3800);
-          }
-          setIsLoading(false);
-        });
-    } else {
-      setTimeout(() => {
-        window.location.href = "/sign-in";
-      }, 3800);
-      setIsLoading(false);
-    }
+          axios
+            .get(
+              `${import.meta.env.VITE_BACKEND_URL}/api/reservationsBrowse`,
+
+              {
+                withCredentials: true,
+              }
+            )
+            .then((respo) => {
+              setReservation(respo.data);
+            });
+        } else {
+          setIsLoggedIn(false);
+          setTimeout(() => {
+            window.location.href = "/sign-in";
+          }, 3800);
+        }
+        setIsLoading(false);
+      });
   }, []);
 
   if (isLoading) {
@@ -120,6 +118,7 @@ export default function Reservation() {
                     return (
                       <ReservationCard
                         key={r.id}
+                        id={r.id}
                         borneId={r.borne_id}
                         date={r.date_reservation}
                       />
@@ -147,9 +146,8 @@ export default function Reservation() {
 
                 if (reservationDate < new Date()) {
                   return (
-                    <ReservationCard
+                    <PastReservationCard
                       key={r.id}
-                      id={r.id}
                       borneId={r.borne_id}
                       date={r.date_reservation}
                     />

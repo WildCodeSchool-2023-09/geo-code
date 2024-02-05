@@ -14,21 +14,24 @@ export default function Navbar({ navData }) {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem("UserToken") !== null) {
-      axios
-        .post(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
-          token: localStorage.getItem("UserToken"),
-        })
-        .then((res) => {
-          if (res.data.message === "OK" && res.data.admin === true) {
-            setIsAdmin(true);
-            setIsConnected(true);
-          } else if (res.data.message === "OK" && res.data.admin === false) {
-            setIsAdmin(false);
-            setIsConnected(true);
-          }
-        });
-    }
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
+        withCredentials: true,
+      })
+
+      .then((res) => {
+        if (res.data.message === "OK" && res.data.admin === true) {
+          setIsAdmin(true);
+          setIsConnected(true);
+        } else if (res.data.message === "OK" && res.data.admin === false) {
+          setIsAdmin(false);
+          setIsConnected(true);
+        } else {
+          setIsAdmin(false);
+          setIsConnected(false);
+        }
+      });
+    setIsConnected(false);
   }, []);
 
   return (
@@ -272,22 +275,22 @@ export default function Navbar({ navData }) {
                 );
               })}
         </ul>
-        <a
+        <Link
           className="sign-in"
-          href={isConnected === true ? "/profil" : "/sign-in"}
+          to={isConnected === true ? "/profil" : "/sign-in"}
         >
           {}
-        </a>
+        </Link>
         <div className="navbtnmobile">
           {isAdmin === true ? (
-            <a className="admin" href="/admin">
+            <Link className="admin" to="/admin">
               {}
-            </a>
+            </Link>
           ) : null}
           {isConnected === true ? (
-            <a className="reservation" href="/reservations">
+            <Link className="reservation" to="/reservations">
               {}
-            </a>
+            </Link>
           ) : null}
         </div>
         <SettingsPhone navData={navData} />

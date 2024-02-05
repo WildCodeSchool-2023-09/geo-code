@@ -1,6 +1,7 @@
 // Load the express module to create a web application
 
 const express = require("express");
+const path = require("path");
 
 const app = express();
 
@@ -30,6 +31,7 @@ const cors = require("cors");
 app.use(
   cors({
     origin: [process.env.FRONTEND_URL],
+    credentials: true,
   })
 );
 
@@ -66,8 +68,9 @@ app.use(express.json());
 
 // Then, require the module and use it as middleware in your Express application:
 
-// const cookieParser = require("cookie-parser");
-// app.use(cookieParser());
+const cookieParser = require("cookie-parser");
+
+app.use(cookieParser());
 
 // Once `cookie-parser` is set up, you can read and set cookies in your routes.
 // For example, to set a cookie named "username" with the value "john":
@@ -101,16 +104,30 @@ app.use("/api", router);
 // 1. Uncomment the lines related to serving static files and redirecting unhandled requests.
 // 2. Ensure that the `reactBuildPath` points to the correct directory where your frontend's build artifacts are located.
 
-const reactBuildPath = `${__dirname}/../../frontend/dist`;
+// const reactBuildPath = `${__dirname}/../../frontend/dist`;
 
 // Serve react resources
 
-app.use(express.static(reactBuildPath));
+// app.use(express.static(reactBuildPath));
 
 // Redirect unhandled requests to the react index file
 
-app.get("*", (req, res) => {
-  res.sendFile(`${reactBuildPath}/index.html`);
+// app.get("*", (req, res) => {
+//   res.sendFile(`${reactBuildPath}/index.html`);
+// });
+
+/** ************************************************************************* */
+// Test Antho prod
+/** ************************************************************************* */
+
+app.use("*", (req, res) => {
+  if (req.originalUrl.includes("assets")) {
+    res.sendFile(
+      path.resolve(__dirname, `../../frontend/dist/${req.originalUrl}`)
+    );
+  } else {
+    res.sendFile(path.resolve(__dirname, `../../frontend/dist/index.html`));
+  }
 });
 
 /* ************************************************************************* */

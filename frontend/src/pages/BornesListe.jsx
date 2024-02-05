@@ -23,7 +23,7 @@ function BornesListe() {
 
   const { position } = useContext(LocationContext);
 
-  const display = 10;
+  const display = 9;
   let bornesFilters = [];
   const [max, setMax] = useState(bornes.length);
 
@@ -32,8 +32,7 @@ function BornesListe() {
   }
   bornesFilters = bornes.filter(
     (cluster) =>
-      cluster.code_postal.slice(0, 2).includes(research.code) &&
-      cluster.n_enseigne.includes(research.enseigne) &&
+      cluster.code_postal.startsWith(research.code) &&
       cluster.puiss_max.includes(research.puissance) &&
       cluster.type_prise.includes(
         research.prise || research.prise.toLowerCase()
@@ -57,6 +56,7 @@ function BornesListe() {
       setPageActuel(pageActuel - display);
     }
   }
+
   return (
     <div className="borneListPage">
       <ScrollToTop />
@@ -90,25 +90,27 @@ function BornesListe() {
               Suivant
             </button>
           </div>
-          {bornesFilters
-            .slice(pageActuel, pageActuel + display)
-            .map((borne) => {
-              return (
-                <div>
-                  <div key={borne.index} className="bornecard">
-                    <BorneCardUser
-                      name={borne.n_station}
-                      lat={borne.lat}
-                      lng={borne.lng}
-                      code={borne.code_postal}
-                      enseigne={borne.n_enseigne}
-                      puissance={borne.puiss_max}
-                      prise={borne.type_prise}
-                    />
+          {bornesFilters &&
+            bornesFilters
+              .slice(pageActuel, pageActuel + display)
+              .map((borne) => {
+                return (
+                  <div>
+                    <div key={borne.index} className="bornecard">
+                      <BorneCardUser
+                        name={borne.n_station}
+                        lat={borne.lat}
+                        lng={borne.lng}
+                        code={borne.code_postal}
+                        enseigne={borne.n_enseigne}
+                        puissance={borne.puiss_max}
+                        prise={borne.type_prise}
+                        id={borne.id}
+                      />
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
           <div className="prevnext">
             <button
               type="button"

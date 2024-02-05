@@ -9,16 +9,56 @@ class MarqueManager extends AbstractManager {
 
   // The C of CRUD - Create operation
 
-  async create(marque) {
+  async create(newMarques, full) {
     // Execute the SQL INSERT query to add a new item to the "item" table
-    const [result] = await this.database.query(
-      `insert into ${this.table} (name)
-             values (?)`,
-      [marque.name]
-    );
 
+    if (full.length === 0) {
+      try {
+        await newMarques.map((element) =>
+          this.database.query(
+            `insert into ${this.table} (name)
+                         values (?)`,
+            [element]
+          )
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      try {
+        await this.database.query(
+          `ALTER TABLE modele
+                        DROP FOREIGN KEY modele_fk0`
+        );
+        await this.database.query(
+          `ALTER TABLE vehicule
+                        DROP FOREIGN KEY vehicule_fk1`
+        );
+        await this.database.query(`TRUNCATE TABLE marque`);
+
+        await this.database.query(`TRUNCATE TABLE modele`);
+
+        await newMarques.map((element) =>
+          this.database.query(
+            `insert into ${this.table} (name)
+                         values (?)`,
+            [element]
+          )
+        );
+
+        await this.database.query(
+          `ALTER TABLE modele
+                        ADD CONSTRAINT modele_fk0 FOREIGN KEY (marque_id) REFERENCES marque (id);`
+        );
+        await this.database.query(
+          `ALTER TABLE vehicule
+                        ADD CONSTRAINT vehicule_fk1 FOREIGN KEY (modele_id) REFERENCES modele (id);`
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    }
     // Return the ID of the newly inserted item
-    return result.insertId;
   }
 
   // The Rs of CRUD - Read operations

@@ -3,7 +3,7 @@ import axios from "axios";
 
 import PropTypes from "prop-types";
 
-export default function ReservationCard({ id, borneId, date }) {
+export default function PastReservationCard({ borneId, date }) {
   const [borneInfo, setBorneInfo] = useState();
 
   const newDate = date.split("T");
@@ -23,30 +23,11 @@ export default function ReservationCard({ id, borneId, date }) {
     <div className="reservation_card">
       <p className="nameborne">{borneInfo?.n_station}</p>
       <p className="date">{dateFr}</p>
-      <div className="buttons-container">
-        <button type="button">Modifier la réservation</button>
-        <button
-          type="button"
-          onClick={() =>
-            axios
-              .post(
-                `${import.meta.env.VITE_BACKEND_URL}/api/deletereservation`,
-                {
-                  id,
-                }
-              )
-              .then(() => window.location.reload())
-          }
-        >
-          Annuler la réservation
-        </button>
-      </div>
     </div>
   );
 }
 
-ReservationCard.propTypes = {
-  id: PropTypes.number.isRequired,
+PastReservationCard.propTypes = {
   borneId: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
 };

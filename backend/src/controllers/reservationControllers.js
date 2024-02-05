@@ -6,8 +6,10 @@ const tables = require("../tables");
 const browse = async (req, res, next) => {
   try {
     const data = [];
-    const { token } = req.body;
+    const { token } = req.cookies;
+
     const user = await tables.user.checkToken(token);
+
     const vehicules = await tables.vehicule.checkVehicule(user[0].id);
     const vehiculeMap = vehicules.map(async (vehicule) => {
       const reservation = await tables.reservation.checkReservationForDelete(
@@ -26,7 +28,8 @@ const browse = async (req, res, next) => {
 
 const checkListId = async (req, res, next) => {
   try {
-    const { token, listId } = req.body;
+    const { token } = req.cookies;
+    const { listId } = req.body;
 
     const user = await tables.user.checkToken(token);
     const result = await tables.list.checkListId(listId);
@@ -48,7 +51,7 @@ const checkListId = async (req, res, next) => {
 const readAll = async (req, res, next) => {
   try {
     // Fetch all items from the database
-    const modeles = await tables.modele.readAll();
+    const modeles = await tables.reservation.readAll();
 
     // Respond with the items in JSON format
     res.json(modeles);
@@ -57,10 +60,25 @@ const readAll = async (req, res, next) => {
     next(err);
   }
 };
+const add = async (req, res, next) => {
+  const reservationData = req.body;
+
+  try {
+    // Insert the item into the database
+    const insertId = await tables.reservation.create(reservationData);
+
+    // Respond with HTTP 201 (Created) and the ID of the newly inserted item
+    res.status(201).json({ insertId });
+  } catch (err) {
+    // Pass any errors to the error-handling middleware
+    next(err);
+  }
+};
 
 const edit = async (req, res, next) => {
   try {
-    const { token, listId, listName, listDescription } = req.body;
+    const { token } = req.cookies;
+    const { listId, listName, listDescription } = req.body;
     const user = await tables.user.checkToken(token);
     const result = await tables.list.checkListId(listId);
 
@@ -101,6 +119,7 @@ module.exports = {
   browse,
   checkListId,
   readAll,
+  add,
   edit,
   destroyReservation,
 };
