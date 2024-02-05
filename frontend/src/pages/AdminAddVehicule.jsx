@@ -12,7 +12,6 @@ export default function AdminAddVehicule() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const urlmarques = `${import.meta.env.VITE_BACKEND_URL}/api/marques`;
-  const urlmodeles = `${import.meta.env.VITE_BACKEND_URL}/api/modeles`;
 
   async function Submit() {
     const data = [];
@@ -24,8 +23,6 @@ export default function AdminAddVehicule() {
         .then((res) => data.push(res.data.results))
         .catch((err) => console.error(err));
       await axios.post(urlmarques, data[0]).catch((err) => console.error(err));
-
-      await axios.post(urlmodeles, data[0]).catch((err) => console.error(err));
     } catch {
       console.error("error");
     }

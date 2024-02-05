@@ -7,27 +7,12 @@ class ModeleManager extends AbstractManager {
     super({ table: "modele" });
   }
 
-  // The C of CRUD - Create operation
+  // The C of CRUD - create operation
+  // TODO: Implement the create operation to modify an existing item
 
-  async create(modele) {
-    // Execute the SQL INSERT query to add a new item to the "item" table
-
-    modele.map(async (element) => {
-      const [id] = await this.database.query(
-        `select id from marque where name="${element.make}"`
-      );
-
-      await this.database.query(
-        `insert into ${this.table} (name,marque_id, type_prise)
-             values (?, ?, ?)`,
-        [element.model, id[0].id, element.atvtype]
-      );
-
-      return true;
-    });
-
-    // Return the ID of the newly inserted item
-  }
+  // async create(item) {
+  //   ...
+  // }
 
   // The Rs of CRUD - Read operations
 
