@@ -32,6 +32,7 @@ import AddYourVehicule from "./pages/Auth/addYourVehicule";
 import AddVehiculeSuccess from "./pages/Auth/addVehiculeSuccess";
 import ReservationSuccess from "./pages/Auth/reservationSuccess";
 import AdminVehiculeList from "./pages/adminVehiculeList";
+import MyVehicule from "./pages/MyVehicule";
 
 const router = createBrowserRouter([
   {
@@ -145,6 +146,10 @@ const router = createBrowserRouter([
       {
         path: "/AdminVehiculeList",
         element: <AdminVehiculeList />,
+      },
+      {
+        path: "/MyVehicule",
+        element: <MyVehicule />,
       },
     ],
   },

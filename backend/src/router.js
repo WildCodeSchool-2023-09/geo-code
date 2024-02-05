@@ -82,6 +82,15 @@ router.get("/vehicules/:id", vehiculeControllers.read);
 // Route to add a new reservations
 router.post("/vehicules", vehiculeControllers.add);
 
+// Route to add a new reservations
+router.put("/vehicules", vehiculeControllers.edit);
+
+// Route to get a specific vehicules by userID
+router.get("/checkVehicule/:id", vehiculeControllers.checkVehicule);
+
+// Route to delete a specific vehicules by userID
+router.delete("/vehicules/:id", vehiculeControllers.destroy);
+
 // Route to get a list of tarifications
 router.get("/tarifications", tarificationControllers.browse);
 

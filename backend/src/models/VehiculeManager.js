@@ -52,7 +52,11 @@ class VehiculeManager extends AbstractManager {
 
   async checkVehicule(proprietaireId) {
     const [rows] = await this.database.query(
-      `SELECT * FROM vehicule WHERE proprietaire_id = ?`,
+      `SELECT v.id, m.name as modele_name, ma.name as marque_name
+       FROM vehicule as v
+       join modele as m on m.id = v.modele_id
+       join marque as ma on ma.id = m.marque_id
+      WHERE proprietaire_id = ?`,
       [proprietaireId]
     );
 
@@ -62,16 +66,28 @@ class VehiculeManager extends AbstractManager {
   // The U of CRUD - Update operation
   // TODO: Implement the update operation to modify an existing item
 
-  // async update(item) {
-  //   ...
-  // }
+  async update(data) {
+    data.forEach(async (element) => {
+      const [result] = await this.database.query(
+        `UPDATE vehicule
+             SET  modele_id=?, proprietaire_id=?
+                 WHERE id = ?`,
+        [element.modele_id, element.proprietaire_id, element.id]
+      );
+
+      return result;
+    });
+  }
 
   // The D of CRUD - Delete operation
-  // TODO: Implement the delete operation to remove an item by its ID
+  async delete(id) {
+    const [rows] = await this.database.query(
+      `DELETE FROM vehicule WHERE id = ?`,
+      [id]
+    );
 
-  // async delete(id) {
-  //   ...
-  // }
+    return rows;
+  }
 }
 
 module.exports = VehiculeManager;

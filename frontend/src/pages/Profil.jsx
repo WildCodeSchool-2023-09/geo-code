@@ -203,7 +203,7 @@ export default function Profil() {
                 <Link to="/reservations" className="button grey-button">
                   Voir les réservations
                 </Link>
-                <Link to="/profil-vehicule" className="button grey-button">
+                <Link to="/MyVehicule" className="button grey-button">
                   Modifier les véhicules
                 </Link>
                 <button

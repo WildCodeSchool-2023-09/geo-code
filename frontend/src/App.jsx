@@ -1,9 +1,11 @@
 import { Outlet } from "react-router-dom";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
+import axios from "axios";
 import FilterResearch from "./Context/ResearchContext";
 import LocationContext from "./Context/locationContext";
 import BornesContext from "./Context/BornesContext";
 import ReservationContext from "./Context/ReservationContext";
+import MarqueModele from "./Context/MarqueModeleContext";
 import UserContext from "./Context/UserContext";
 import Navbar from "./components/navbar";
 import NavMobile from "./components/navmobile";
@@ -65,6 +67,25 @@ function App() {
   });
   const UserValue = useMemo(() => ({ user, setUser }), [user, setUser]);
 
+  const [marque, setMarque] = useState([]);
+  const [modele, setModele] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/marques`)
+      .then((resp) => {
+        setMarque(resp.data);
+      })
+      .catch((err) => console.error(err));
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/modeles`)
+      .then((res) => {
+        setModele(res.data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+  const marqueModele = useMemo(() => ({ marque, modele }), [marque, modele]);
+
   function OnChangePage() {
     const resizeObserver = new ResizeObserver(() => {
       if (window.innerWidth < 721) {
@@ -98,17 +119,19 @@ function App() {
     <>
       <Navbar navData={navData} />
       <main>
-        <UserContext.Provider value={UserValue}>
-          <BornesContext.Provider value={bornesValue}>
-            <ReservationContext.Provider value={reservationValue}>
-              <LocationContext.Provider value={positionValue}>
-                <FilterResearch.Provider value={value}>
-                  <Outlet onChange={OnChangePage()} />
-                </FilterResearch.Provider>
-              </LocationContext.Provider>
-            </ReservationContext.Provider>
-          </BornesContext.Provider>
-        </UserContext.Provider>
+        <MarqueModele.Provider value={marqueModele}>
+          <UserContext.Provider value={UserValue}>
+            <BornesContext.Provider value={bornesValue}>
+              <ReservationContext.Provider value={reservationValue}>
+                <LocationContext.Provider value={positionValue}>
+                  <FilterResearch.Provider value={value}>
+                    <Outlet onChange={OnChangePage()} />
+                  </FilterResearch.Provider>
+                </LocationContext.Provider>
+              </ReservationContext.Provider>
+            </BornesContext.Provider>
+          </UserContext.Provider>
+        </MarqueModele.Provider>
       </main>
       <Footer className="FooterParams" />
       <NavMobile />

@@ -9,10 +9,10 @@ import mailError from "../../assets/LottieFiles/EmailError.json";
 import "../../scss/auth/SignInPage.scss";
 
 import ScrollToTop from "../ResetScrollOnPage";
+import MarqueModeleContext from "../../Context/MarqueModeleContext";
 
 function AddYourVehicule() {
-  const [marque, setMarque] = useState([]);
-  const [modele, setModele] = useState([]);
+  const { marque, modele } = useContext(MarqueModeleContext);
   const [selectedMarque, setSelectedMarque] = useState({});
   const [selectedModele, setSelectedModele] = useState({});
   const { reservation, setReservation } = useContext(ReservationContext);
@@ -49,20 +49,6 @@ function AddYourVehicule() {
         }
         setIsLoading(false);
       });
-  }, []);
-  useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/api/marques`)
-      .then((resp) => {
-        setMarque(resp.data);
-      })
-      .catch((err) => console.error(err));
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/api/modeles`)
-      .then((res) => {
-        setModele(res.data);
-      })
-      .catch((err) => console.error(err));
   }, []);
 
   const vehiculeData = {

@@ -14,6 +14,7 @@ function DoReservation() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [date, setDate] = useState({ date: "", heure: "" });
+  const [userId, setUserId] = useState("");
 
   // import des data sur les bornes
   const { reservation, setReservation, borneId } =
@@ -36,7 +37,7 @@ function DoReservation() {
     heure: date.heure,
     heure_fin: newHeure,
     borne_id: borneId.borne_id,
-    vehicule_id: reservation.id,
+    vehicule_id: reservation,
   };
 
   useEffect(() => {
@@ -47,6 +48,7 @@ function DoReservation() {
       .then((res) => {
         if (res.data.message === "OK") {
           setIsLoggedIn(true);
+          setUserId(res.data.id);
         } else {
           setIsLoggedIn(false);
           setTimeout(() => {
@@ -55,15 +57,16 @@ function DoReservation() {
         }
         setIsLoading(false);
       });
+
     axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/api/users/:id`, {
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/checkVehicule/${userId}`, {
         withCredentials: true,
       })
       .then((res) => {
-        setReservation(res.data);
+        setReservation(res.data[0].id);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [userId]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
