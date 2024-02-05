@@ -1,9 +1,9 @@
 import "../../scss/pages.scss";
-
 import Lottie from "react-lottie-player";
 import LogInProgress from "../../assets/LottieFiles/LogIn.json";
 import ScrollToTop from "../ResetScrollOnPage";
 import PrimaryButton from "../../components/buttons/PrimaryButton";
+import SecondaryButton from "../../components/buttons/SecondaryButton";
 
 function addVehiculeSuccess() {
   return (
@@ -19,6 +19,7 @@ function addVehiculeSuccess() {
         <h1>Ajout de votre véhicule</h1>
       </div>
       <PrimaryButton btnLink="/addYourVehicule" btnText="Ajouter un véhicule" />
+      <SecondaryButton btnLink="/profil" btnText="Retour au profil" />
     </section>
   );
 }
