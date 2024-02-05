@@ -11,7 +11,7 @@ class MarqueManager extends AbstractManager {
 
   async create(newMarques, full) {
     // Execute the SQL INSERT query to add a new item to the "item" table
-    console.info(full);
+
     if (full.length === 0) {
       try {
         await newMarques.map((element) =>

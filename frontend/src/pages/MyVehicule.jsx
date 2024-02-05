@@ -72,7 +72,7 @@ function MyVehicule() {
       </section>
     );
   }
-  return (
+  return vehicules.length !== 0 ? (
     <div className="backgroundImageMain">
       <div className="myVehicule_allpage">
         <div className="title_page">
@@ -93,6 +93,35 @@ function MyVehicule() {
                 />
               </div>
             ))}
+        </div>
+        <div className="final_Button">
+          <PrimaryButton
+            btnText="Ajouter un nouveau véhicule"
+            btnLink="/addYourVehicule"
+          />
+          <button
+            type="button"
+            className="vehicule_card_button"
+            onClick={sendtoBack}
+          >
+            Enregistrer les changements
+          </button>
+          <SecondaryButton
+            btnText="Annuler les changements"
+            btnLink="/MyVehicules"
+          />
+        </div>
+      </div>
+    </div>
+  ) : (
+    <div className="backgroundImageMain">
+      <div className="myVehicule_allpage">
+        <div className="title_page">
+          <h2>Voici la liste de vos véhicules</h2>
+        </div>
+
+        <div className="vehicule_card_container">
+          <p>Aucun véhicule enregistré. </p>
         </div>
         <div className="final_Button">
           <PrimaryButton
