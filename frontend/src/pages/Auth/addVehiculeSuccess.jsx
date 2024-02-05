@@ -18,6 +18,7 @@ function addVehiculeSuccess() {
         <h1>Ajout de votre véhicule</h1>
       </div>
       <Link to="/addYourVehicule">Ajouter un véhicule</Link>
+      <Link to="/profil">Aller sur votre profil</Link>
     </section>
   );
 }

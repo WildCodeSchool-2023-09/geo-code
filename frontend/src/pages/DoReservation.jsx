@@ -1,19 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
 import Lottie from "react-lottie-player";
 import axios from "axios";
-import { Link } from "react-router-dom";
-
 import ReservationContext from "../Context/ReservationContext";
 
 import "../scss/reservation.scss";
 
 import mailError from "../assets/LottieFiles/EmailError.json";
 import PrimaryButton from "../components/buttons/PrimaryButton";
+import SecondaryButton from "../components/buttons/SecondaryButton";
+import "../scss/doReservation.scss";
 
 function DoReservation() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [date, setDate] = useState({ date: "", heure: "" });
+  const [userId, setUserId] = useState("");
 
   // import des data sur les bornes
   const { reservation, setReservation, borneId } =
@@ -36,7 +37,7 @@ function DoReservation() {
     heure: date.heure,
     heure_fin: newHeure,
     borne_id: borneId.borne_id,
-    vehicule_id: reservation.id,
+    vehicule_id: reservation,
   };
 
   useEffect(() => {
@@ -47,6 +48,7 @@ function DoReservation() {
       .then((res) => {
         if (res.data.message === "OK") {
           setIsLoggedIn(true);
+          setUserId(res.data.id);
         } else {
           setIsLoggedIn(false);
           setTimeout(() => {
@@ -55,15 +57,16 @@ function DoReservation() {
         }
         setIsLoading(false);
       });
+
     axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/api/users/:id`, {
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/checkVehicule/${userId}`, {
         withCredentials: true,
       })
       .then((res) => {
-        setReservation(res.data);
+        setReservation(res.data[0].id);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [userId]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -106,7 +109,7 @@ function DoReservation() {
   return (
     <div className="makeReservation">
       <h1>Réserver</h1>
-      <div className="BorneInfo">{borneId.borne_name}</div>
+      <div className="BorneInfo">Nom de la borne : {borneId.borne_name}</div>
       <div className="formulaire_Resa">
         <form className="formulaire">
           <div className="form_placeholder">
@@ -132,10 +135,10 @@ function DoReservation() {
             />
           </div>
           <div className="submitButton">
-            <button type="submit" onClick={handleSubmit}>
+            <button type="submit" onClick={handleSubmit} className="submit">
               Réserver
             </button>
-            <Link to="/">Annuler</Link>
+            <SecondaryButton btnLink="/" btnText="Annuler" />
           </div>
         </form>
       </div>

@@ -1,0 +1,63 @@
+@import "./color-config.scss";
+
+.makeReservation {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  height: 80dvh;
+  .formulaire_Resa {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 3px 14px 1px $color-grey;
+    width: 75%;
+    height: 50%;
+    border-radius: 20px;
+    .formulaire {
+      width: 40%;
+      .form_placeholder {
+        margin: 10% 0 10% 0;
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        &_title {
+          margin-bottom: 5%;
+        }
+        &_input {
+          border-radius: 20px;
+          border: none;
+          height: 2rem;
+          text-align: center;
+        }
+      }
+      .submitButton {
+        display: flex;
+        justify-content: space-around;
+        .submit {
+          display: flex;
+          padding: 0.6rem 1.2rem;
+          width: fit-content;
+          height: fit-content;
+          background-color: $color-primary-light;
+          border-radius: 0.6rem;
+          justify-content: center;
+          border: none;
+          text-decoration: none;
+          font-family: $font;
+          color: $color-light;
+          text-align: center;
+          font-size: 1rem;
+          font-weight: 400;
+          transition: transform 0.1s ease-in-out;
+
+          &:hover {
+            transform: scale(0.95);
+            background-color: $color-primary;
+            color: $color-light;
+          }
+        }
+      }
+    }
+  }
+}
