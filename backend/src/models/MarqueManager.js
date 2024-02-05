@@ -17,7 +17,7 @@ class MarqueManager extends AbstractManager {
         await newMarques.map((element) =>
           this.database.query(
             `insert into ${this.table} (name)
-           values (?)`,
+                         values (?)`,
             [element]
           )
         );
@@ -27,28 +27,32 @@ class MarqueManager extends AbstractManager {
     } else {
       try {
         await this.database.query(
-          `ALTER TABLE modele DROP FOREIGN KEY modele_fk0`
+          `ALTER TABLE modele
+                        DROP FOREIGN KEY modele_fk0`
         );
         await this.database.query(
-          `ALTER TABLE vehicule DROP FOREIGN KEY vehicule_fk1`
+          `ALTER TABLE vehicule
+                        DROP FOREIGN KEY vehicule_fk1`
         );
         await this.database.query(`TRUNCATE TABLE marque`);
 
         await this.database.query(`TRUNCATE TABLE modele`);
 
-        await this.database.query(
-          `ALTER TABLE modele ADD CONSTRAINT modele_fk0 FOREIGN KEY (marque_id) REFERENCES marque(id);`
-        );
-        await this.database.query(
-          `ALTER TABLE vehicule ADD CONSTRAINT vehicule_fk1 FOREIGN KEY (modele_id) REFERENCES modele(id);`
-        );
-
         await newMarques.map((element) =>
           this.database.query(
             `insert into ${this.table} (name)
-           values (?)`,
+                         values (?)`,
             [element]
           )
+        );
+
+        await this.database.query(
+          `ALTER TABLE modele
+                        ADD CONSTRAINT modele_fk0 FOREIGN KEY (marque_id) REFERENCES marque (id);`
+        );
+        await this.database.query(
+          `ALTER TABLE vehicule
+                        ADD CONSTRAINT vehicule_fk1 FOREIGN KEY (modele_id) REFERENCES modele (id);`
         );
       } catch (error) {
         console.error(error);
