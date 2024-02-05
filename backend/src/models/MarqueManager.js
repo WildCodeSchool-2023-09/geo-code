@@ -1,3 +1,5 @@
+/* eslint-disable no-await-in-loop */
+// C'est le seul moyen qu'on ait trouvé pour remplir la db avec le bonne ordre à chaque fois
 const AbstractManager = require("./AbstractManager");
 
 class MarqueManager extends AbstractManager {
@@ -9,47 +11,79 @@ class MarqueManager extends AbstractManager {
 
   // The C of CRUD - Create operation
 
-  async create(newMarques, full) {
+  async create(newMarques, full, marque) {
     // Execute the SQL INSERT query to add a new item to the "item" table
-    console.info(full);
+
     if (full.length === 0) {
-      console.info("est vide je passe par là");
+      // si db vide
       try {
         await newMarques.map((element) =>
           this.database.query(
             `insert into ${this.table} (name)
-           values (?)`,
+                         values (?)`,
             [element]
           )
         );
+
+        for (let i = 0; i < marque.length; i += 1) {
+          const [id] = await this.database.query(
+            `select id from marque where name="${marque[i].make}"`
+          );
+
+          await this.database.query(
+            `insert into modele (name,marque_id, type_prise)
+             values (?, ?, ?)`,
+            [marque[i].model, id[0].id, marque[i].atvtype]
+          );
+        }
       } catch (error) {
         console.error(error);
       }
     } else {
+      // si db pleine
       try {
         await this.database.query(
-          `ALTER TABLE modele DROP FOREIGN KEY modele_fk0`
+          `ALTER TABLE modele
+                        DROP FOREIGN KEY modele_fk0`
         );
         await this.database.query(
-          `ALTER TABLE vehicule DROP FOREIGN KEY vehicule_fk1`
+          `ALTER TABLE vehicule
+                        DROP FOREIGN KEY vehicule_fk1`
         );
+
         await this.database.query(`TRUNCATE TABLE marque`);
 
         await this.database.query(`TRUNCATE TABLE modele`);
 
-        await this.database.query(
-          `ALTER TABLE modele ADD CONSTRAINT modele_fk0 FOREIGN KEY (marque_id) REFERENCES marque(id);`
-        );
-        await this.database.query(
-          `ALTER TABLE vehicule ADD CONSTRAINT vehicule_fk1 FOREIGN KEY (modele_id) REFERENCES modele(id);`
-        );
-
-        await newMarques.map((element) =>
-          this.database.query(
+        // ajout des marques
+        for (let i = 0; i < newMarques.length; i += 1) {
+          await this.database.query(
             `insert into ${this.table} (name)
-           values (?)`,
-            [element]
-          )
+                         values (?)`,
+            [newMarques[i]]
+          );
+        }
+
+        // ajout des modeles
+        for (let i = 0; i < marque.length; i += 1) {
+          const [id] = await this.database.query(
+            `select id from marque where name="${marque[i].make}"`
+          );
+
+          await this.database.query(
+            `insert into modele (name,marque_id, type_prise)
+             values (?, ?, ?)`,
+            [marque[i].model, id[0].id, marque[i].atvtype]
+          );
+        }
+
+        await this.database.query(
+          `ALTER TABLE modele
+                        ADD CONSTRAINT modele_fk0 FOREIGN KEY (marque_id) REFERENCES marque (id);`
+        );
+        await this.database.query(
+          `ALTER TABLE vehicule
+                        ADD CONSTRAINT vehicule_fk1 FOREIGN KEY (modele_id) REFERENCES modele (id);`
         );
       } catch (error) {
         console.error(error);
