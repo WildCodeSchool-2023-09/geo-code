@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import Lottie from "react-lottie-player";
 import axios from "axios";
-import { Link } from "react-router-dom";
-
 import ReservationContext from "../Context/ReservationContext";
 
 import "../scss/reservation.scss";
 
 import mailError from "../assets/LottieFiles/EmailError.json";
 import PrimaryButton from "../components/buttons/PrimaryButton";
+import SecondaryButton from "../components/buttons/SecondaryButton";
+import "../scss/doReservation.scss";
 
 function DoReservation() {
   const [isLoading, setIsLoading] = useState(true);
@@ -109,7 +109,7 @@ function DoReservation() {
   return (
     <div className="makeReservation">
       <h1>Réserver</h1>
-      <div className="BorneInfo">{borneId.borne_name}</div>
+      <div className="BorneInfo">Nom de la borne : {borneId.borne_name}</div>
       <div className="formulaire_Resa">
         <form className="formulaire">
           <div className="form_placeholder">
@@ -135,10 +135,10 @@ function DoReservation() {
             />
           </div>
           <div className="submitButton">
-            <button type="submit" onClick={handleSubmit}>
+            <button type="submit" onClick={handleSubmit} className="submit">
               Réserver
             </button>
-            <Link to="/">Annuler</Link>
+            <SecondaryButton btnLink="/" btnText="Annuler" />
           </div>
         </form>
       </div>

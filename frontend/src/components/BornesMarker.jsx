@@ -164,6 +164,7 @@ function BornesMarker() {
               </p>
               <Link
                 to="/DoReservation"
+                className="doreservation"
                 onClick={() => {
                   setBorneId({
                     borne_id: cluster.properties.id,
@@ -171,8 +172,9 @@ function BornesMarker() {
                   });
                 }}
               >
-                <button type="button">Réservez cette borne</button>Réservez
-                cette borne
+                <button type="button" className="reservation">
+                  Réservez cette borne
+                </button>
               </Link>
             </Popup>
           </Marker>
