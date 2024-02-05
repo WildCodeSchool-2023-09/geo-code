@@ -49,7 +49,7 @@ const add = async (req, res, next) => {
 
   try {
     // Insert the item into the database
-    const insertId = await tables.marque.create(newMarques, full);
+    const insertId = await tables.marque.create(newMarques, full, marque);
 
     // Respond with HTTP 201 (Created) and the ID of the newly inserted item
     res.status(201).json({ insertId });
