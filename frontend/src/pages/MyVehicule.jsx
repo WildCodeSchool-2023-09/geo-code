@@ -14,7 +14,7 @@ function MyVehicule() {
   const { id, vehicules } = useContext(IdContext);
 
   const [toPushInDB, setToPushInDB] = useState([]);
-
+  console.info(vehicules.length);
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
@@ -66,7 +66,7 @@ function MyVehicule() {
       </section>
     );
   }
-  return vehicules !== null ? (
+  return vehicules.length !== 0 ? (
     <div className="backgroundImageMain">
       <div className="myVehicule_allpage">
         <div className="title_page">
