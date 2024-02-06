@@ -35,7 +35,7 @@ function MyVehicule() {
       .then((res) => setVehicules(res.data))
       .catch((err) => console.error(err));
   }, [id]);
-  console.info(vehicules);
+
   // envoi des informations vers le back
 
   const sendtoBack = () => {
