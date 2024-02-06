@@ -1,5 +1,5 @@
 # Dockerfile backend
-FROM node:16.14
+FROM node:lts-alpine
 
 WORKDIR /usr/src/app
 
