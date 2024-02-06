@@ -23,13 +23,14 @@ function MyVehicule() {
       .then((res) => {
         if (res.data.message === "OK") {
           setIsLoggedIn(true);
-          setId(res.data.id);
-          axios
-            .get(`${import.meta.env.VITE_BACKEND_URL}/api/checkVehicule/${id}`)
-            .then((resp) => {
-              setVehicules(resp.data);
-            })
-            .catch((err) => console.error(err));
+        } else {
+          setIsLoggedIn(false);
+          setTimeout(() => {
+            window.location.href = "/sign-in";
+          }, 3800);
+        }
+        setIsLoading(false);
+      });
   }, []);
   // envoi des informations vers le back
 
