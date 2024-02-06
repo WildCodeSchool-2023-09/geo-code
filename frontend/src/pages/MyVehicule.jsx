@@ -11,9 +11,8 @@ function MyVehicule() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [id, setId] = useState("");
-  const [vehicules, setVehicules] = useState([]);
+  const [vehicules, setVehicules] = useState(null);
   const [toPushInDB, setToPushInDB] = useState([]);
-
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
@@ -31,13 +30,12 @@ function MyVehicule() {
         }
         setIsLoading(false);
       });
-
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/api/checkVehicule/${id}`)
       .then((res) => setVehicules(res.data))
       .catch((err) => console.error(err));
   }, [id]);
-
+  console.info(vehicules);
   // envoi des informations vers le back
 
   const sendtoBack = () => {
@@ -72,7 +70,7 @@ function MyVehicule() {
       </section>
     );
   }
-  return vehicules.length !== 0 ? (
+  return vehicules !== null ? (
     <div className="backgroundImageMain">
       <div className="myVehicule_allpage">
         <div className="title_page">
