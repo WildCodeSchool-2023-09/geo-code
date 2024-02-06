@@ -22,6 +22,12 @@ function MyVehicule() {
         if (res.data.message === "OK") {
           setIsLoggedIn(true);
           setId(res.data.id);
+          axios
+            .get(`${import.meta.env.VITE_BACKEND_URL}/api/checkVehicule/${id}`)
+            .then((resp) => {
+              setVehicules(resp.data);
+            })
+            .catch((err) => console.error(err));
         } else {
           setIsLoggedIn(false);
           setTimeout(() => {
@@ -30,10 +36,6 @@ function MyVehicule() {
         }
         setIsLoading(false);
       });
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/api/checkVehicule/${id}`)
-      .then((res) => setVehicules(res.data))
-      .catch((err) => console.error(err));
   }, [id]);
 
   // envoi des informations vers le back
