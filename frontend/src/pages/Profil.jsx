@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Lottie from "react-lottie-player";
 
 import ScrollToTop from "./ResetScrollOnPage";
 import "../scss/profil.scss";
-
+import IdContext from "../Context/IdContext";
 import data from "../data/UserDataTest.json";
 import mailError from "../assets/LottieFiles/EmailError.json";
 import PrimaryButton from "../components/buttons/PrimaryButton";
@@ -19,7 +19,7 @@ export default function Profil() {
   const [codePostal, setCodePostal] = useState();
   const [ville, setVille] = useState();
   const [avatar, setAvatar] = useState(data[0].img);
-
+  const { id, setId, setVehicules } = useContext(IdContext);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -31,6 +31,7 @@ export default function Profil() {
       .then((res) => {
         if (res.data.message === "OK") {
           setIsLoggedIn(true);
+          setId(res.data.id);
         } else {
           setIsLoggedIn(false);
           setTimeout(() => {
@@ -54,7 +55,12 @@ export default function Profil() {
         setVille(res.data[0].ville);
       });
   }, []);
-
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/checkVehicule/${id}`)
+      .then((res) => setVehicules(res.data))
+      .catch((err) => console.error(err));
+  }, [id]);
   function Deconnexion() {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/api/logout`, {
@@ -203,7 +209,7 @@ export default function Profil() {
                 <Link to="/reservations" className="button grey-button">
                   Voir les réservations
                 </Link>
-                <Link to="/MyVehicule" className="button grey-button">
+                <Link to="/MyVehicule" id={id} className="button grey-button">
                   Modifier les véhicules
                 </Link>
                 <button

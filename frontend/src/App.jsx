@@ -7,6 +7,7 @@ import BornesContext from "./Context/BornesContext";
 import ReservationContext from "./Context/ReservationContext";
 import MarqueModele from "./Context/MarqueModeleContext";
 import UserContext from "./Context/UserContext";
+import IdContext from "./Context/IdContext";
 import Navbar from "./components/navbar";
 import NavMobile from "./components/navmobile";
 import Footer from "./components/footer";
@@ -69,6 +70,12 @@ function App() {
 
   const [marque, setMarque] = useState([]);
   const [modele, setModele] = useState([]);
+  const [id, setId] = useState("");
+  const [vehicules, setVehicules] = useState(null);
+  const idValue = useMemo(
+    () => ({ id, setId, vehicules, setVehicules }),
+    [id, setId, vehicules, setVehicules]
+  );
 
   useEffect(() => {
     axios
@@ -120,17 +127,19 @@ function App() {
       <Navbar navData={navData} />
       <main>
         <MarqueModele.Provider value={marqueModele}>
-          <UserContext.Provider value={UserValue}>
-            <BornesContext.Provider value={bornesValue}>
-              <ReservationContext.Provider value={reservationValue}>
-                <LocationContext.Provider value={positionValue}>
-                  <FilterResearch.Provider value={value}>
-                    <Outlet onChange={OnChangePage()} />
-                  </FilterResearch.Provider>
-                </LocationContext.Provider>
-              </ReservationContext.Provider>
-            </BornesContext.Provider>
-          </UserContext.Provider>
+          <IdContext.Provider value={idValue}>
+            <UserContext.Provider value={UserValue}>
+              <BornesContext.Provider value={bornesValue}>
+                <ReservationContext.Provider value={reservationValue}>
+                  <LocationContext.Provider value={positionValue}>
+                    <FilterResearch.Provider value={value}>
+                      <Outlet onChange={OnChangePage()} />
+                    </FilterResearch.Provider>
+                  </LocationContext.Provider>
+                </ReservationContext.Provider>
+              </BornesContext.Provider>
+            </UserContext.Provider>
+          </IdContext.Provider>
         </MarqueModele.Provider>
       </main>
       <Footer className="FooterParams" />
