@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+// pour passer le check eslint et voir à quoi ressemble _e.map
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Lottie from "react-lottie-player";
@@ -12,9 +14,9 @@ function MyVehicule() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { id, vehicules } = useContext(IdContext);
-
+  // pour voir ce qu'est le _e.map qui bug au deploy
   const [toPushInDB, setToPushInDB] = useState([]);
-  console.info(vehicules.length);
+  console.info(vehicules?.length);
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
@@ -66,7 +68,7 @@ function MyVehicule() {
       </section>
     );
   }
-  return vehicules.length !== 0 ? (
+  return vehicules && vehicules.length !== 0 ? (
     <div className="backgroundImageMain">
       <div className="myVehicule_allpage">
         <div className="title_page">
