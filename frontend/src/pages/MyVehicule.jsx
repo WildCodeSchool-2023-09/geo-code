@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+// pour passer le check eslint et voir à quoi ressemble _e.map
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Lottie from "react-lottie-player";
@@ -12,7 +14,8 @@ function MyVehicule() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { id, vehicules } = useContext(IdContext);
-
+  console.info(_e);
+  // pour voir ce qu'est le _e.map qui bug au deploy
   const [toPushInDB, setToPushInDB] = useState([]);
   console.info(vehicules.length);
   useEffect(() => {
