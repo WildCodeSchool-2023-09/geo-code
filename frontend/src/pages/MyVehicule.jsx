@@ -16,7 +16,7 @@ function MyVehicule() {
   const { id, vehicules } = useContext(IdContext);
   // pour voir ce qu'est le _e.map qui bug au deploy
   const [toPushInDB, setToPushInDB] = useState([]);
-  console.info(vehicules?.length);
+
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
