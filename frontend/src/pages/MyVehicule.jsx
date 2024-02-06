@@ -66,7 +66,7 @@ function MyVehicule() {
       </section>
     );
   }
-  return vehicules.length !== 0 ? (
+  return vehicules && vehicules.length !== 0 ? (
     <div className="backgroundImageMain">
       <div className="myVehicule_allpage">
         <div className="title_page">
