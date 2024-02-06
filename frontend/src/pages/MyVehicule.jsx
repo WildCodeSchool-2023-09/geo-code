@@ -14,7 +14,6 @@ function MyVehicule() {
   const { id, vehicules } = useContext(IdContext);
 
   const [toPushInDB, setToPushInDB] = useState([]);
-  console.info(id, vehicules);
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
