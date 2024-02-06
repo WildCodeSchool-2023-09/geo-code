@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Lottie from "react-lottie-player";
 import SecondaryButton from "../components/buttons/SecondaryButton";
 import Vehicule from "../components/Vehicule";
+import IdContext from "../Context/IdContext";
 import PrimaryButton from "../components/buttons/PrimaryButton";
 import mailError from "../assets/LottieFiles/EmailError.json";
 import "../scss/Myvehicule.scss";
@@ -10,9 +11,10 @@ import "../scss/Myvehicule.scss";
 function MyVehicule() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [id, setId] = useState("");
-  const [vehicules, setVehicules] = useState(null);
+  const { id, vehicules } = useContext(IdContext);
+
   const [toPushInDB, setToPushInDB] = useState([]);
+
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
@@ -21,13 +23,6 @@ function MyVehicule() {
       .then((res) => {
         if (res.data.message === "OK") {
           setIsLoggedIn(true);
-          setId(res.data.id);
-          axios
-            .get(`${import.meta.env.VITE_BACKEND_URL}/api/checkVehicule/${id}`)
-            .then((resp) => {
-              setVehicules(resp.data);
-            })
-            .catch((err) => console.error(err));
         } else {
           setIsLoggedIn(false);
           setTimeout(() => {
@@ -36,8 +31,7 @@ function MyVehicule() {
         }
         setIsLoading(false);
       });
-  }, [id]);
-
+  }, []);
   // envoi des informations vers le back
 
   const sendtoBack = () => {
