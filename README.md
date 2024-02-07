@@ -89,3 +89,4 @@ Then, go on your specific project and run  `docker compose logs -t -f`.
 [Raphaël Foulon Binet](https://github.com/Rapha2202)
 [Jérémy Illien](https://github.com/Merafath)
 [Morgane Debarge](https://github.com/Enagrom5)
+
