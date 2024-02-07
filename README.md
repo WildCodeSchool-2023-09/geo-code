@@ -1,4 +1,4 @@
-## 📄 A Propos
+## 📄 About
 Welcome to GéoCode Portal, your trusted companion for practical and worry-free electric mobility. Our innovative platform was designed to simplify your electric vehicle charging experience, allowing you to quickly and easily find the nearest charging stations, wherever you are.
 
 ## 💡 Concept
