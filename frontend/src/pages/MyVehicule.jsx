@@ -1,8 +1,7 @@
-/* eslint-disable no-undef */
-// pour passer le check eslint et voir à quoi ressemble _e.map
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Lottie from "react-lottie-player";
+import ScrollToTop from "./ResetScrollOnPage";
 import SecondaryButton from "../components/buttons/SecondaryButton";
 import Vehicule from "../components/Vehicule";
 import IdContext from "../Context/IdContext";
@@ -14,10 +13,10 @@ function MyVehicule() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { id, vehicules } = useContext(IdContext);
-  console.info(_e);
+
   // pour voir ce qu'est le _e.map qui bug au deploy
   const [toPushInDB, setToPushInDB] = useState([]);
-  console.info(vehicules.length);
+
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
@@ -70,75 +69,81 @@ function MyVehicule() {
     );
   }
   return vehicules && vehicules.length !== 0 ? (
-    <div className="backgroundImageMain">
-      <div className="myVehicule_allpage">
-        <div className="title_page">
-          <h2>Voici la liste de vos véhicules</h2>
-        </div>
+    <>
+      <ScrollToTop />
+      <div className="backgroundImageMain">
+        <div className="myVehicule_allpage">
+          <div className="title_page">
+            <h2>Voici la liste de vos véhicules</h2>
+          </div>
 
-        <div className="vehicule_card_container">
-          {vehicules &&
-            vehicules.map((vehicule) => (
-              <div className="vehicule_card" key={vehicule.id}>
-                <Vehicule
-                  vehiculeMarque={vehicule.marque_name}
-                  vehiculeModele={vehicule.modele_name}
-                  vehiculeId={vehicule.id}
-                  id={id}
-                  toPushInDB={toPushInDB}
-                  setToPushInDB={setToPushInDB}
-                />
-              </div>
-            ))}
-        </div>
-        <div className="final_Button">
-          <PrimaryButton
-            btnText="Ajouter un nouveau véhicule"
-            btnLink="/addYourVehicule"
-          />
-          <button
-            type="button"
-            className="vehicule_card_button"
-            onClick={sendtoBack}
-          >
-            Enregistrer les changements
-          </button>
-          <SecondaryButton
-            btnText="Annuler les changements"
-            btnLink="/MyVehicules"
-          />
+          <div className="vehicule_card_container">
+            {vehicules &&
+              vehicules.map((vehicule) => (
+                <div className="vehicule_card" key={vehicule.id}>
+                  <Vehicule
+                    vehiculeMarque={vehicule.marque_name}
+                    vehiculeModele={vehicule.modele_name}
+                    vehiculeId={vehicule.id}
+                    id={id}
+                    toPushInDB={toPushInDB}
+                    setToPushInDB={setToPushInDB}
+                  />
+                </div>
+              ))}
+          </div>
+          <div className="final_Button">
+            <PrimaryButton
+              btnText="Ajouter un nouveau véhicule"
+              btnLink="/addYourVehicule"
+            />
+            <button
+              type="button"
+              className="vehicule_card_button"
+              onClick={sendtoBack}
+            >
+              Enregistrer les changements
+            </button>
+            <SecondaryButton
+              btnText="Annuler les changements"
+              btnLink="/MyVehicules"
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   ) : (
-    <div className="backgroundImageMain">
-      <div className="myVehicule_allpage">
-        <div className="title_page">
-          <h2>Voici la liste de vos véhicules</h2>
-        </div>
+    <>
+      <ScrollToTop />
+      <div className="backgroundImageMain">
+        <div className="myVehicule_allpage">
+          <div className="title_page">
+            <h2>Voici la liste de vos véhicules</h2>
+          </div>
 
-        <div className="vehicule_card_container">
-          <p>Aucun véhicule enregistré. </p>
-        </div>
-        <div className="final_Button">
-          <PrimaryButton
-            btnText="Ajouter un nouveau véhicule"
-            btnLink="/addYourVehicule"
-          />
-          <button
-            type="button"
-            className="vehicule_card_button"
-            onClick={sendtoBack}
-          >
-            Enregistrer les changements
-          </button>
-          <SecondaryButton
-            btnText="Annuler les changements"
-            btnLink="/MyVehicules"
-          />
+          <div className="vehicule_card_container">
+            <p>Aucun véhicule enregistré. </p>
+          </div>
+          <div className="final_Button">
+            <PrimaryButton
+              btnText="Ajouter un nouveau véhicule"
+              btnLink="/addYourVehicule"
+            />
+            <button
+              type="button"
+              className="vehicule_card_button"
+              onClick={sendtoBack}
+            >
+              Enregistrer les changements
+            </button>
+            <SecondaryButton
+              btnText="Annuler les changements"
+              btnLink="/MyVehicules"
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

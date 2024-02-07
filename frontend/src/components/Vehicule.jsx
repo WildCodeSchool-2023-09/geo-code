@@ -1,6 +1,8 @@
 import { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
+import "reactjs-popup/dist/index.css";
+import Popup from "reactjs-popup";
 import MarqueModeleContext from "../Context/MarqueModeleContext";
 
 function Vehicule({
@@ -14,6 +16,7 @@ function Vehicule({
   const [selectedMarque, setSelectedMarque] = useState(vehiculeMarque);
   const [selectedModele, setSelectedModele] = useState(vehiculeModele);
   const { marque, modele } = useContext(MarqueModeleContext);
+  const [open, setOpen] = useState(false);
 
   /** Handles */
   // sert à mettre à jour la marque séléctionnée
@@ -25,7 +28,10 @@ function Vehicule({
   const handleSelectedModele = (e) => {
     setSelectedModele(e.target.value);
   };
-
+  // Permet d'ouvrir la popup
+  const openPopup = () => {
+    setOpen(true);
+  };
   // Permet de créer une liste avec les véhicules à modifier
   const pushData = () => {
     setToPushInDB([
@@ -38,9 +44,12 @@ function Vehicule({
     axios.delete(
       `${import.meta.env.VITE_BACKEND_URL}/api/vehicules/${vehiculeId}`
     );
+    setTimeout(() => {
+      window.location.href = "/suppressVehiculeSuccess";
+    }, 1000);
   };
   return (
-    <form>
+    <form className="form">
       <label className="form_placeholder_title" htmlFor="marque">
         Marque
       </label>
@@ -87,10 +96,27 @@ function Vehicule({
         <button
           type="button"
           className="vehicule_card_button"
-          onClick={deleteVehicule}
+          onClick={openPopup}
         >
           Supprimer ce véhicule
         </button>
+        <Popup open={open} closeOnDocumentClick>
+          Etes vous sûr de vouloir supprimer ce véhicule?
+          <div className="container_button">
+            <button type="button" onClick={deleteVehicule} className="yes">
+              Oui
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+              }}
+              className="no"
+            >
+              Non
+            </button>
+          </div>
+        </Popup>
       </div>
     </form>
   );
