@@ -13,7 +13,6 @@ function MyVehicule() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { id, vehicules } = useContext(IdContext);
-
   // pour voir ce qu'est le _e.map qui bug au deploy
   const [toPushInDB, setToPushInDB] = useState([]);
 

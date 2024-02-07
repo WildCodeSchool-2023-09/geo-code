@@ -11,13 +11,13 @@ import mailError from "../assets/LottieFiles/EmailError.json";
 import PrimaryButton from "../components/buttons/PrimaryButton";
 
 export default function Profil() {
-  const [lastname, setLastname] = useState();
-  const [firstname, setFirstname] = useState();
-  const [birthday, setBirthday] = useState();
-  const [email, setEmail] = useState();
-  const [adresse, setAdresse] = useState();
-  const [codePostal, setCodePostal] = useState();
-  const [ville, setVille] = useState();
+  const [lastname, setLastname] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [birthday, setBirthday] = useState("");
+  const [email, setEmail] = useState("");
+  const [adresse, setAdresse] = useState("");
+  const [codePostal, setCodePostal] = useState("");
+  const [ville, setVille] = useState("");
   const [avatar, setAvatar] = useState(data[0].img);
   const { id, setId, setVehicules } = useContext(IdContext);
   const [isLoading, setIsLoading] = useState(true);

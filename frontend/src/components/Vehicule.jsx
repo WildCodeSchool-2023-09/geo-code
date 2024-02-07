@@ -126,7 +126,8 @@ Vehicule.propTypes = {
   vehiculeModele: PropTypes.string.isRequired,
   vehiculeId: PropTypes.number.isRequired,
   id: PropTypes.number.isRequired,
-  toPushInDB: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  toPushInDB: PropTypes.array.isRequired,
   setToPushInDB: PropTypes.func.isRequired,
 };
 export default Vehicule;
