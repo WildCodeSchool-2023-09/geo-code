@@ -1,27 +1,18 @@
-## Concept
+## 📄 A Propos
+Welcome to GéoCode Portal, your trusted companion for practical and worry-free electric mobility. Our innovative platform was designed to simplify your electric vehicle charging experience, allowing you to quickly and easily find the nearest charging stations, wherever you are.
 
-This template is meant to serve as a foundation for every P2/P3 following the React-Express-MySQL stack, as learned in Wild Code School.
-It's pre-configured with a set of tools which'll help students produce industry-quality and easier-to-maintain code, while staying a pedagogical tool.
+## 💡 Concept
 
-## Setup & Use
+At GéoCode, our mission is to facilitate the transition to sustainable mobility by providing you with an interactive map of charging stations. We firmly believe in a future where every electric driver can access efficient charging solutions, thus contributing to the preservation of our planet.
 
-### Windows users
 
-Be sure to run these commands in a git terminal to avoid [issues with newline formats](https://en.wikipedia.org/wiki/Newline#Issues_with_different_newline_formats):
+### ⚙️ Project Initialization
 
-```
-git config --global core.eol lf
-git config --global core.autocrlf false
-```
-
-### Project Initialization
-
-- In VSCode, install plugins **Prettier - Code formatter** and **ESLint** and configure them
 - Clone this repo, enter it
 - Run command `npm install`
 - Create environment files (`.env`) in both `backend` and `frontend`: you can copy `.env.sample` files as starters (**don't** delete them)
 
-### Available Commands
+### ⌨️ Available Commands
 
 - `db:migrate` : Run the database migration script
 - `db:seed` : Run the database seed script
@@ -30,9 +21,9 @@ git config --global core.autocrlf false
 - `dev-back` : Starts the Express backend server
 - `lint` : Runs validation tools (will be executed on every _commit_, and refuse unclean code)
 
-## FAQ
 
-### Tools
+
+### 🪛 Tools
 
 - _Concurrently_ : Allows for several commands to run concurrently in the same CLI
 - _Husky_ : Allows to execute specific commands that trigger on _git_ events
@@ -40,8 +31,25 @@ git config --global core.autocrlf false
 - _ESLint_ : "Quality of code" tool, ensures chosen rules will be enforced
 - _Prettier_ : "Quality of code" tool as well, focuses on the styleguide
 - _ Airbnb Standard_ : One of the most known "standards", even though it's not officially linked to ES/JS
+- Axios: link between the front and the backend
+- React-Leaflet : use for create an interactive map
+- Lottie Files : for some of our animation
+- Supercluster: used to create terminal clusters
+- Dropzone : usefull for the drag'n drop
+- Emailjs/Browser : allow the user to send us an email
+- CSV-Parser
+- Express : allows us to create the router for our API Rest
+- Multer : used to store a file
+- Argon2 : hash the password
+- JWT : usefull for the connexion 
 
-## Deployment with Traefik
+## ✏️ Languages
+-HTML
+-SCSS
+-Javascript
+-React/JSX
+
+## 🏹 Deployment with Traefik
 
 > ⚠️ Prerequisites : You must have installed and configured Traefik on your VPS beforehand.
 > https://github.com/WildCodeSchool/vps-traefik-starter-kit/
@@ -65,15 +73,19 @@ Because the backend will serve the front, the global variable VITE_BACKEND_URL w
 
 Your url will be ` https://${PROJECT-NAME}.${subdomain}.wilders.dev/`.
 
-### About the database
+### 💾 About the database
 
 The database is automaticaly deployed with the name of your repo. During the build of the projet (`docker-entry.sh`), the `node migrate.js` command is executed in the backend. If you want to seed automaticaly your database using the `seed.js` script, replace the command _build_ on you `backend/package.json` by `node migrate.js && node seed.js`.
 
-### About public assets (pictures, fonts...)
 
-Don't use any public folder on your frontend. This folder won't be accessible online. You may move your public assets in the `backend/public` folder. Prefer [static assets](https://vitejs.dev/guide/assets) when possible.
 
-### About Logs
+### ⚠️ About Logs
 
 If you want to access the logs of your online projet (to follow the deployement or to watch any bug error), connect to your VPS (`ssh user@host`).
 Then, go on your specific project and run  `docker compose logs -t -f`.
+
+## 🙏 The Team
+[Baptiste Save](https://github.com/Batsave)
+[Raphaël Foulon Binet](https://github.com/Rapha2202)
+[Jérémy Illien](https://github.com/Merafath)
+[Morgane Debarge](https://github.com/Enagrom5)
