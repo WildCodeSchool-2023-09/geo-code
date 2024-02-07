@@ -31,6 +31,7 @@ import AddVehicule from "./pages/Account/addVehicule";
 import AddYourVehicule from "./pages/Auth/addYourVehicule";
 import AddVehiculeSuccess from "./pages/Auth/addVehiculeSuccess";
 import ReservationSuccess from "./pages/Auth/reservationSuccess";
+import SuppressVehiculeSuccess from "./pages/Auth/suppressVehiculeSuccess";
 import AdminVehiculeList from "./pages/adminVehiculeList";
 import MyVehicule from "./pages/MyVehicule";
 
@@ -150,6 +151,10 @@ const router = createBrowserRouter([
       {
         path: "/MyVehicule",
         element: <MyVehicule />,
+      },
+      {
+        path: "/SuppressVehiculeSuccess",
+        element: <SuppressVehiculeSuccess />,
       },
     ],
   },

@@ -45,7 +45,7 @@ export default function AdminAddVehicule() {
           setIsAdmin(false);
           setTimeout(() => {
             window.location.href = "/";
-          }, 3800);
+          }, 1800);
         }
         setIsLoading(false);
       });
