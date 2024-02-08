@@ -39,7 +39,7 @@ function DoReservation() {
     borne_id: borneId.borne_id,
     vehicule_id: reservation,
   };
-
+  console.info(reservation);
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/api/checktoken`, {
@@ -76,10 +76,20 @@ function DoReservation() {
         `${import.meta.env.VITE_BACKEND_URL}/api/reservations`,
         reservationData
       )
+      .then((res) => {
+        if (res.data.insertId) {
+          setTimeout(() => {
+            window.location.href = "/reservationSuccess";
+          }, 1000);
+        } else {
+          document.getElementById("errorEmail").innerText =
+            "L'un des champs est manquant";
+          document
+            .getElementById("errorEmail")
+            .classList.add("errorOnPlaceholder");
+        }
+      })
       .catch((err) => console.error(err));
-    setTimeout(() => {
-      window.location.href = "/reservationSuccess";
-    }, 1000);
   };
 
   if (isLoading) {
@@ -102,6 +112,30 @@ function DoReservation() {
             <br /> {` Vous allez être redirigé(e) vers la page de connexion. `}
           </p>
           <PrimaryButton btnText="Se connecter" btnLink="/sign-in" />
+        </div>
+      </section>
+    );
+  }
+  if (reservation === "") {
+    return (
+      <section>
+        <div className="containererror">
+          <Lottie
+            loop
+            animationData={mailError}
+            play
+            style={{ width: 120, height: 120 }}
+          />
+          <h1>Aucun véhicule enregistré</h1>
+          <p className="message">
+            {`
+        Vous devez vous connecter pour acceder à cette page.  `}
+            <br /> {` Vous allez être redirigé(e) vers la page de connexion. `}
+          </p>
+          <PrimaryButton
+            btnText="Ajouter un véhicule"
+            btnLink="/AddYourVehicule"
+          />
         </div>
       </section>
     );
@@ -140,6 +174,7 @@ function DoReservation() {
             </button>
             <SecondaryButton btnLink="/" btnText="Annuler" />
           </div>
+          <p className="error_container" id="errorEmail" />
         </form>
       </div>
     </div>
