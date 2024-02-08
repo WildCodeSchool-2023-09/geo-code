@@ -82,11 +82,8 @@ function DoReservation() {
             window.location.href = "/reservationSuccess";
           }, 1000);
         } else {
-          document.getElementById("errorEmail").innerText =
-            "L'un des champs est manquant";
-          document
-            .getElementById("errorEmail")
-            .classList.add("errorOnPlaceholder");
+          document.getElementById("error").innerText = res.data.message;
+          document.getElementById("error").classList.add("errorOnPlaceholder");
         }
       })
       .catch((err) => console.error(err));
@@ -174,7 +171,7 @@ function DoReservation() {
             </button>
             <SecondaryButton btnLink="/" btnText="Annuler" />
           </div>
-          <p className="error_container" id="errorEmail" />
+          <p className="error_container" id="error" />
         </form>
       </div>
     </div>

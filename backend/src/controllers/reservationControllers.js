@@ -62,16 +62,21 @@ const readAll = async (req, res, next) => {
 };
 const add = async (req, res, next) => {
   const reservationData = req.body;
+  if (reservationData.date === "" || reservationData.heure === "") {
+    res.status(200).send({ message: "L'un des paramètres est manquant" });
+  } else {
+    try {
+      // Insert the item into the database
+      const insertId = await tables.reservation.create(reservationData);
+      console.info(insertId);
+      // Respond with HTTP 201 (Created) and the ID of the newly inserted item
 
-  try {
-    // Insert the item into the database
-    const insertId = await tables.reservation.create(reservationData);
-
-    // Respond with HTTP 201 (Created) and the ID of the newly inserted item
-    res.status(201).json({ insertId });
-  } catch (err) {
-    // Pass any errors to the error-handling middleware
-    next(err);
+      res.status(201).json({ insertId });
+    } catch (err) {
+      // Pass any errors to the error-handling middleware
+      res.status(200).send({ message: "L'un des paramètres est manquant" });
+      next(err);
+    }
   }
 };
 
